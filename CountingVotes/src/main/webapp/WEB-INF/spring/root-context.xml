@@ -5,4 +5,6 @@
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<import resource="hibernate-config.xml" />
+	
+	<bean id="mapper" class="com.fasterxml.jackson.databind.ObjectMapper"></bean>
 </beans>
