@@ -5,14 +5,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -76,7 +81,38 @@ public class HomeController {
 		String data = mapper.writeValueAsString(staffs);
 		logger.debug(data);
 		return data;
-
+	}
+	
+	@RequestMapping( value = "/update/{id}", method = RequestMethod.POST)
+	@ResponseBody
+	public String update(
+			@PathVariable(value = "id") int id,
+			HttpServletRequest request
+			) throws JsonProcessingException{
+		
+		//logger.info(staffList.getData().size() + "_");
+		//logger.info(staff);
+		Map<String, Object> map = request.getParameterMap();
+		
+		
+		if(map != null) {
+			for(Map.Entry<String, Object> entry : map.entrySet()){
+				logger.info("Key : " + entry.getKey() + " Value : " + ((String[])entry.getValue())[0]);
+			}
+		}
+		
+		
+		StaffList staffs = new StaffList();
+		
+		List<Staff> list = new ArrayList<Staff>();
+		Staff staffM = new Staff("fgh", 32, "1231231123");
+		staffM.setId(2);
+		list.add(staffM);
+		staffs.setData(list);
+		
+		String dataResp = mapper.writeValueAsString(staffs);
+		
+		return dataResp; 
 	}
 	
 }
