@@ -27,8 +27,8 @@ public class BallotDetail extends AbstractEntity{
 	private Date checkedTime;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "candidate_id", nullable = false)
-	private Delegate candidate;
+	@JoinColumn(name = "candidate_id", nullable = false, referencedColumnName = "id")
+	private CandidateDetail candidate;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "ballot_id", nullable = false)
@@ -58,11 +58,11 @@ public class BallotDetail extends AbstractEntity{
 		this.checkedTime = checkedTime;
 	}
 
-	public Delegate getCandidate() {
+	public CandidateDetail getCandidate() {
 		return candidate;
 	}
 
-	public void setCandidate(Delegate candidate) {
+	public void setCandidateDetail(CandidateDetail candidate) {
 		this.candidate = candidate;
 	}
 

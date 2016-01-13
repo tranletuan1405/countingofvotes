@@ -53,6 +53,9 @@ public class Voting extends AbstractEntity {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "voting")
 	private Set<Ballot> ballots = new HashSet<Ballot>(0);
 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "voting")
+	private Set<CandidateDetail> candidates = new HashSet<CandidateDetail>(0);
+	
 	public String getName() {
 		return name;
 	}
@@ -115,5 +118,21 @@ public class Voting extends AbstractEntity {
 
 	public void setCountingRule(CountingRule countingRule) {
 		this.countingRule = countingRule;
+	}
+
+	public Set<Ballot> getBallots() {
+		return ballots;
+	}
+
+	public void setBallots(Set<Ballot> ballots) {
+		this.ballots = ballots;
+	}
+
+	public Set<CandidateDetail> getCandidates() {
+		return candidates;
+	}
+
+	public void setCandidates(Set<CandidateDetail> candidates) {
+		this.candidates = candidates;
 	}
 }

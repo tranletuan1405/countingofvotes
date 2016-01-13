@@ -1,6 +1,8 @@
 package vn.edu.uit.models;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +21,7 @@ import vn.edu.uit.models.common.AbstractEntity;
 @Entity
 @Table(name = "Delegate")
 public class Delegate extends AbstractEntity {
+
 
 	@Column(name = "name", nullable = false)
 	private String name;
@@ -73,6 +76,9 @@ public class Delegate extends AbstractEntity {
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "congress_id", nullable = false)
 	private Congress congress;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "delegate")
+	private Set<CandidateDetail> candidateDetails = new HashSet<CandidateDetail>(0);
 
 	public String getName() {
 		return name;
@@ -200,6 +206,14 @@ public class Delegate extends AbstractEntity {
 
 	public void setCongress(Congress congress) {
 		this.congress = congress;
+	}
+
+	public Set<CandidateDetail> getCandidateDetails() {
+		return candidateDetails;
+	}
+
+	public void setCandidateDetails(Set<CandidateDetail> candidateDetails) {
+		this.candidateDetails = candidateDetails;
 	}
 	
 }

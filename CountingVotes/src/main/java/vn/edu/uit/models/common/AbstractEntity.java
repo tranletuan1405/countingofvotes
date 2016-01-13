@@ -14,7 +14,7 @@ public abstract class AbstractEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", nullable = false)
+	@Column(name = "id", nullable = false, unique = true)
 	private int id;
 	
 	@Column(name = "is_enabled", nullable = false)
