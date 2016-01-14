@@ -15,7 +15,7 @@ public abstract class AbstractEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, unique = true)
-	private int id;
+	private long id;
 	
 	@Column(name = "is_enabled", nullable = false)
 	protected boolean isEnabled = true;
@@ -23,9 +23,6 @@ public abstract class AbstractEntity {
 	@Column(name = "note", columnDefinition = "varchar(500)")
 	protected String note;
 
-	public boolean isEnabled() {
-		return isEnabled;
-	}
 
 	public void setEnabled(boolean isEnabled) {
 		this.isEnabled = isEnabled;
@@ -39,8 +36,12 @@ public abstract class AbstractEntity {
 		this.note = note;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
+	}
+
+	public boolean isEnabled() {
+		return isEnabled;
 	}
 	
 }

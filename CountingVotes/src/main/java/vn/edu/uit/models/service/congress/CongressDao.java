@@ -1,0 +1,40 @@
+package vn.edu.uit.models.service.congress;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Repository;
+
+import vn.edu.uit.models.Congress;
+import vn.edu.uit.models.common.AbstractDao;
+
+@Repository("congressDao")
+public class CongressDao extends AbstractDao implements ICongressDao {
+
+	@Override
+	public boolean persist(Congress congress) {
+		return this.persist(congress);
+	}
+
+	@Override
+	public Congress fetch(long id) {
+		return (Congress) getSession().get(Congress.class, id);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Congress> fetch(int min, int max) {
+		Criteria crit = getSession().createCriteria(Congress.class);
+		crit.add(Restrictions.eq("isEnabled", true));
+
+		if (min < max && min >= 0 && max > 0) {
+			crit.setFirstResult(min);
+			crit.setMaxResults(max);
+		}
+		
+		crit.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		return crit.list();
+	}
+}

@@ -40,6 +40,9 @@ public class CandidateDetail implements Serializable {
 	
 	@Column(name = "note", columnDefinition = "varchar(500)")
 	private String note;
+	
+	@Column(name = "is_enabled", nullable = false)
+	private boolean isEnabled = true;
 
 	public Voting getVoting() {
 		return voting;
@@ -67,5 +70,13 @@ public class CandidateDetail implements Serializable {
 
 	public long getId() {
 		return id;
+	}
+
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
 	}
 }
