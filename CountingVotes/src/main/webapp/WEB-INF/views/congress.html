@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Congress</title>
+
+	<!-- Boot strap -->
+	<script type="text/javascript" th:src="@{/js/common/jquery-2.1.4.min.js}"></script>
+	
+	<script type="text/javascript" th:src="@{js/bootstrap/metro.min.js}"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/metro.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/metro-icons.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/metro-responsive.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/metro-schemes.min.css}"/>
+	
+	<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/common/common.css}"/>
+	
+	<script type="text/javascript" th:src="@{/js/pages/congress.js}"></script>
+
+</head>
+<body>
+	<div class="container">
+
+		<!-- Create congress form -->
+		<div class="panel">
+			<div class="heading">
+				<span class="title">Tạo thông tin Đại hội</span>
+			</div>
+			<div class="content">
+				<div class="grid">
+					<div class="row cells5">
+						<div class="cell"></div>
+						<div class="cell colspan3">
+
+							<form data-role="validator">
+								<br></br> <br></br>
+								
+								<div class="input-control text required full-size">
+									<label for="congress_name">Tên Đại hội</label>
+									<input name="congress_name" type="text" data-validate-func="required" data-show-error-hint="false"/> 
+									<span class="input-state-error mif-warning"></span> 
+									<span class="input-state-success mif-checkmark"></span>
+								</div>
+									
+								<br></br> <br></br>
+								
+								<div class="input-control text full-size" data-role="datepicker">
+									<label for="congress_start_time">Thời gian bắt đầu</label>
+									<input name="congress_start_time" type="text" />
+									<button class="button">
+										<span class="mif-calendar"></span>
+									</button>
+								</div>
+								
+								<br></br> <br></br>
+																
+								<div class="input-control file full-size" data-role="input">
+									<label for="congress_delegate_file">Danh sách Đại biểu</label>
+									<input name="congress_delegate_file" type="file"/>
+									<button class="button">
+										<span class="mif-folder"></span>
+									</button>
+								</div>
+								
+								<br></br> <br></br>
+								
+								<div class="input-control file full-size" data-role="input">
+									<label for="congress_logo_file">Ảnh biểu trưng Đại hội</label>
+									<input name="congress_logo_file" type="file"/>
+									<button class="button">
+										<span class="mif-folder"></span>
+									</button>
+								</div>
+								
+								<br></br> <br></br>
+								
+								<div class="input-control file full-size" data-role="input">
+									<label for="congress_banner_file">Ảnh bìa Đại hội</label>
+									<input name="congress_banner_file" type="file" accept="image/*"/>
+									<button class="button">
+										<span class="mif-folder"></span>
+									</button>
+								</div>
+													
+								<div>
+									<button class="button success">Tạo</button>
+								</div>
+								
+								<br></br> <br></br>
+							</form>
+
+						</div>
+						<div class="cell"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<br></br> <br></br>
+		
+		<!-- Datatables -->
+		<div class="panel">
+			<div class="heading">
+				<span class="title">Danh sách Đại hội</span>
+			</div>
+			
+			
+		</div>
+	</div>
+</body>
+</html>
