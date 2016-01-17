@@ -78,7 +78,7 @@ public class Delegate extends AbstractEntity {
 	private Congress congress;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "delegate")
-	private Set<CandidateDetail> candidateDetails = new HashSet<CandidateDetail>(0);
+	private Set<Candidate> candidateDetails = new HashSet<Candidate>(0);
 
 	public String getName() {
 		return name;
@@ -200,11 +200,11 @@ public class Delegate extends AbstractEntity {
 		this.congress = congress;
 	}
 
-	public Set<CandidateDetail> getCandidateDetails() {
+	public Set<Candidate> getCandidateDetails() {
 		return candidateDetails;
 	}
 
-	public void setCandidateDetails(Set<CandidateDetail> candidateDetails) {
+	public void setCandidateDetails(Set<Candidate> candidateDetails) {
 		this.candidateDetails = candidateDetails;
 	}
 

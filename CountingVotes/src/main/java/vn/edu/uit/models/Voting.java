@@ -54,8 +54,27 @@ public class Voting extends AbstractEntity {
 	private Set<Ballot> ballots = new HashSet<Ballot>(0);
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "voting")
-	private Set<CandidateDetail> candidates = new HashSet<CandidateDetail>(0);
-	
+	private Set<Candidate> candidates = new HashSet<Candidate>(0);
+
+	public Voting() {
+
+	}
+
+	public Voting(Voting v) {
+		this.setName(v.getName());
+		this.setVersion(v.getVersion() + 1);
+		this.setCongress(v.getCongress());
+		this.setCountingRule(v.getCountingRule());
+		this.setCandidates(v.getCandidates());
+		this.copyBallot(v.getBallots());
+	}
+
+	private void copyBallot(Set<Ballot> ballots) {
+		for (Ballot b : ballots) {
+			this.ballots.add(new Ballot(b));
+		}
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -128,11 +147,11 @@ public class Voting extends AbstractEntity {
 		this.ballots = ballots;
 	}
 
-	public Set<CandidateDetail> getCandidates() {
+	public Set<Candidate> getCandidates() {
 		return candidates;
 	}
 
-	public void setCandidates(Set<CandidateDetail> candidates) {
+	public void setCandidates(Set<Candidate> candidates) {
 		this.candidates = candidates;
 	}
 }

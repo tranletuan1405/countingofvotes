@@ -15,8 +15,8 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "Candidate_Detail")
-public class CandidateDetail implements Serializable {
+@Table(name = "Candidate")
+public class Candidate implements Serializable {
 	
 	/**
 	 * 
@@ -37,12 +37,14 @@ public class CandidateDetail implements Serializable {
 	@Column(name = "id", nullable = false, unique = true)
 	private long id;
 	
-	
 	@Column(name = "note", columnDefinition = "varchar(500)")
 	private String note;
 	
 	@Column(name = "is_enabled", nullable = false)
 	private boolean isEnabled = true;
+	
+	@Column(name = "is_updatable", nullable = false)
+	private boolean isUpdatable = true;
 
 	public Voting getVoting() {
 		return voting;
@@ -78,5 +80,13 @@ public class CandidateDetail implements Serializable {
 
 	public void setEnabled(boolean isEnabled) {
 		this.isEnabled = isEnabled;
+	}
+
+	public boolean isUpdatable() {
+		return isUpdatable;
+	}
+
+	public void setUpdatable(boolean isUpdatable) {
+		this.isUpdatable = isUpdatable;
 	}
 }

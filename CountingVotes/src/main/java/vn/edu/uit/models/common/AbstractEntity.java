@@ -20,6 +20,9 @@ public abstract class AbstractEntity {
 	@Column(name = "is_enabled", nullable = false)
 	protected boolean isEnabled = true;
 	
+	@Column(name = "is_updatable", nullable = false)
+	protected boolean isUpdatable = true;
+	
 	@Column(name = "note", columnDefinition = "varchar(500)")
 	protected String note;
 
@@ -42,6 +45,14 @@ public abstract class AbstractEntity {
 
 	public boolean isEnabled() {
 		return isEnabled;
+	}
+
+	public boolean isUpdatable() {
+		return isUpdatable;
+	}
+
+	public void setUpdatable(boolean isUpdatable) {
+		this.isUpdatable = isUpdatable;
 	}
 	
 }

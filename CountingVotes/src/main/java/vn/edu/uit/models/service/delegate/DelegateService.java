@@ -14,8 +14,6 @@ import vn.edu.uit.models.service.congress.CongressService;
 @Service("delegateService")
 @Transactional
 public class DelegateService {
-
-	private static final Logger logger = LoggerFactory.getLogger(CongressService.class);
 	
 	@Autowired
 	private IDelegateDao delegateDao;

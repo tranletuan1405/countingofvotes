@@ -22,29 +22,45 @@ import vn.edu.uit.models.common.AbstractEntity;
 
 @Entity
 @Table(name = "Ballot")
-public class Ballot extends AbstractEntity{
+public class Ballot extends AbstractEntity {
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "start_time", columnDefinition = "DATETIME")
 	private Date startTime;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "end_time", columnDefinition = "DATETIME")
 	private Date endTime;
-	
+
 	@Column(name = "is_valid")
 	private Boolean isValid;
-	
+
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "hash_code_id", nullable = false)
 	private Barcode hashCode;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "voting_id", nullable = false)
 	private Voting voting;
-	
+
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "ballot")
 	private Set<BallotDetail> details = new HashSet<BallotDetail>(0);
+
+	public Ballot() {
+
+	}
+
+	public Ballot(Ballot b) {
+		this.setVoting(b.getVoting());
+		this.setHashCode(b.getHashCode());
+		this.copyBallotDetail(b.getDetails());
+	}
+
+	public void copyBallotDetail(Set<BallotDetail> details) {
+		for (BallotDetail bd : details) {
+			this.details.add(new BallotDetail(bd));
+		}
+	}
 
 	public Date getStartTime() {
 		return startTime;
@@ -93,5 +109,5 @@ public class Ballot extends AbstractEntity{
 	public void setDetails(Set<BallotDetail> details) {
 		this.details = details;
 	}
-	
+
 }

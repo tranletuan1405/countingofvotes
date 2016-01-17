@@ -15,8 +15,6 @@ import vn.edu.uit.models.service.congress.CongressService;
 @Transactional
 public class UnitService {
 
-	private static final Logger logger = LoggerFactory.getLogger(UnitService.class);
-	
 	@Autowired
 	private IUnitDao unitDao;
 	

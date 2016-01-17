@@ -14,8 +14,6 @@ import vn.edu.uit.models.service.congress.CongressService;
 @Service("bannerService")
 @Transactional
 public class BannerService {
-
-	private static final Logger logger = LoggerFactory.getLogger(BannerService.class);
 	
 	@Autowired
 	private IBannerDao bannerDao;

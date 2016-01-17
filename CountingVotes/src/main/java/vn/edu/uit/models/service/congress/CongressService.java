@@ -14,8 +14,6 @@ import vn.edu.uit.models.Congress;
 @Transactional
 public class CongressService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CongressService.class);
-	
 	@Autowired
 	private ICongressDao congressDao;
 	
