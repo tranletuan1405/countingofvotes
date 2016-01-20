@@ -7,8 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import vn.edu.uit.models.service.congress.CongressService;
-
 public abstract class AbstractDao {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AbstractDao.class);

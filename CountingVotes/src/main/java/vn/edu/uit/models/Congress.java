@@ -36,7 +36,7 @@ public class Congress extends AbstractEntity{
 	@Column(name = "end_time", columnDefinition = "DATETIME")
 	private Date endTime;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "congress")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "congress")
 	private Set<Unit> units = new HashSet<Unit>(0);
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "congress") 
@@ -45,7 +45,7 @@ public class Congress extends AbstractEntity{
 	@OneToMany(fetch = FetchType.EAGER , mappedBy = "congress")
 	private Set<Voting> votings = new HashSet<Voting>(0);
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "congress")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "congress")
 	private Set<Delegate> delegates = new HashSet<Delegate>(0);
 	
 	public String getName() {

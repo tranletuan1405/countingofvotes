@@ -6,24 +6,29 @@
 	<!-- Boot strap -->
 	<script type="text/javascript" th:src="@{/js/common/jquery-2.1.4.min.js}"></script>
 	
+	<!-- Metro UI -->
 	<script type="text/javascript" th:src="@{js/bootstrap/metro.min.js}"></script>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/metro.min.css}"/>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/metro-icons.min.css}"/>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/metro-responsive.min.css}"/>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/metro-schemes.min.css}"/>
 	
+	<!-- Datatables -->
+	<script type="text/javascript" th:src="@{/js/datatables/jquery.dataTables.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/datatables/editor/dataTables.select.min.js}"></script>
+	
 	<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/common/common.css}"/>
 	
-	<script type="text/javascript" th:src="@{/js/pages/congress.js}"></script>
-
+	<script type="text/javascript" th:src="@{/js/pages/congress_list.js}"></script>
+	
 </head>
 <body>
 	<div class="container">
 
 		<!-- Create congress form -->
-		<div class="panel">
-			<div class="heading">
+		<div class="panel collapsed">
+			<div class="heading primary_color">
 				<span class="title">Tạo thông tin Đại hội</span>
 			</div>
 			<div class="content">
@@ -44,7 +49,7 @@
 									
 								<br></br> <br></br>
 								
-								<div class="input-control text full-size" data-role="datepicker">
+								<div class="input-control text full-size" id="datepicker">
 									<label for="congress_start_time">Thời gian bắt đầu</label>
 									<input name="congress_start_time" type="text" />
 									<button class="button">
@@ -56,7 +61,8 @@
 																
 								<div class="input-control file full-size" data-role="input">
 									<label for="congress_delegate_file">Danh sách Đại biểu</label>
-									<input name="congress_delegate_file" type="file"/>
+									<input name="congress_delegate_file" type="file"
+										accept="application/msword, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
 									<button class="button">
 										<span class="mif-folder"></span>
 									</button>
@@ -66,7 +72,7 @@
 								
 								<div class="input-control file full-size" data-role="input">
 									<label for="congress_logo_file">Ảnh biểu trưng Đại hội</label>
-									<input name="congress_logo_file" type="file"/>
+									<input name="congress_logo_file" type="file" accept="image/*"/>
 									<button class="button">
 										<span class="mif-folder"></span>
 									</button>
@@ -81,12 +87,14 @@
 										<span class="mif-folder"></span>
 									</button>
 								</div>
-													
+								
+								<br></br><br></br>
+												
 								<div>
-									<button class="button success">Tạo</button>
+									<button class="button info block-shadow-info text-shadow">Tạo</button>
 								</div>
 								
-								<br></br> <br></br>
+								<br></br> 
 							</form>
 
 						</div>
@@ -96,7 +104,7 @@
 			</div>
 		</div>
 		
-		<br></br> <br></br>
+		<br></br> 
 		
 		<!-- Datatables -->
 		<div class="panel">
@@ -104,7 +112,20 @@
 				<span class="title">Danh sách Đại hội</span>
 			</div>
 			
-			
+			<div class="content" style="padding-left: 10px; padding-right: 10px;">
+				<table id="example" class="dataTable">
+					<thead>
+						<tr>
+							<th>Tên Đại hội</th>
+							<th>Số đơn vị</th>
+							<th>Số Đại biểu</th>
+							<th>Số bầu cử</th>
+							<th>Thời gian bắt đầu</th>
+							<th>Thời gian kết thúc</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
 		</div>
 	</div>
 </body>

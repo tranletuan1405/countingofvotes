@@ -24,6 +24,15 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+           /WEB-INF/spring/hibernate-config.xml,
+           /WEB-INF/spring/transaction-config.xml,
+           /WEB-INF/spring/root-context.xml
+         </param-value>
+	</context-param>
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
