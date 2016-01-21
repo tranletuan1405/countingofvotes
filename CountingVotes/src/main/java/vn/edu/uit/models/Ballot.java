@@ -35,10 +35,6 @@ public class Ballot extends AbstractEntity {
 	@Column(name = "is_valid")
 	private Boolean isValid;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "hash_code_id", nullable = false)
-	private Barcode hashCode;
-
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "voting_id", nullable = false)
 	private Voting voting;
@@ -48,18 +44,6 @@ public class Ballot extends AbstractEntity {
 
 	public Ballot() {
 
-	}
-
-	public Ballot(Ballot b) {
-		this.setVoting(b.getVoting());
-		this.setHashCode(b.getHashCode());
-		this.copyBallotDetail(b.getDetails());
-	}
-
-	public void copyBallotDetail(Set<BallotDetail> details) {
-		for (BallotDetail bd : details) {
-			this.details.add(new BallotDetail(bd));
-		}
 	}
 
 	public Date getStartTime() {
@@ -84,14 +68,6 @@ public class Ballot extends AbstractEntity {
 
 	public void setIsValid(Boolean isValid) {
 		this.isValid = isValid;
-	}
-
-	public Barcode getHashCode() {
-		return hashCode;
-	}
-
-	public void setHashCode(Barcode hashCode) {
-		this.hashCode = hashCode;
 	}
 
 	public Voting getVoting() {

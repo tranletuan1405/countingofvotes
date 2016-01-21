@@ -66,13 +66,6 @@ public class Voting extends AbstractEntity {
 		this.setCongress(v.getCongress());
 		this.setCountingRule(v.getCountingRule());
 		this.setCandidates(v.getCandidates());
-		this.copyBallot(v.getBallots());
-	}
-
-	private void copyBallot(Set<Ballot> ballots) {
-		for (Ballot b : ballots) {
-			this.ballots.add(new Ballot(b));
-		}
 	}
 
 	public String getName() {

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import vn.edu.uit.models.Congress;
 import vn.edu.uit.models.common.AbstractDao;
 
+
 @Repository
 public class CongressDao extends AbstractDao implements ICongressDao {
 
@@ -51,4 +52,5 @@ public class CongressDao extends AbstractDao implements ICongressDao {
 			return new  ArrayList<Congress>(0);
 		}*/
 	}
+
 }

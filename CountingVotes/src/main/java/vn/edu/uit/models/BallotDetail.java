@@ -49,14 +49,6 @@ public class BallotDetail implements Serializable {
 	@Column(name = "checked_time", columnDefinition = "DATETIME")
 	private Date checkedTime;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "selected_code_id", nullable = false)
-	private Barcode selectedCode; //It Always exists
-	
-	@OneToOne(fetch  =FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "unselected_code_id")
-	private Barcode unselectedCode; //Use it for non-residue
-
 	@Column(name = "is_enabled", nullable = false)
 	private boolean isEnabled = true;
 	
@@ -65,12 +57,6 @@ public class BallotDetail implements Serializable {
 	
 	public BallotDetail(){
 		
-	}
-	
-	public BallotDetail(BallotDetail bd){
-		this.setCandidate(bd.getCandidate());
-		this.setSelectedCode(bd.getSelectedCode());
-		this.setUnselectedCode(bd.getUnselectedCode());
 	}
 			
 	public Boolean getIsSelected() {
@@ -96,22 +82,6 @@ public class BallotDetail implements Serializable {
 
 	public void setBallot(Ballot ballot) {
 		this.ballot = ballot;
-	}
-
-	public Barcode getSelectedCode() {
-		return selectedCode;
-	}
-
-	public void setSelectedCode(Barcode selectedCode) {
-		this.selectedCode = selectedCode;
-	}
-
-	public Barcode getUnselectedCode() {
-		return unselectedCode;
-	}
-
-	public void setUnselectedCode(Barcode unselectedCode) {
-		this.unselectedCode = unselectedCode;
 	}
 
 	public boolean isEnabled() {

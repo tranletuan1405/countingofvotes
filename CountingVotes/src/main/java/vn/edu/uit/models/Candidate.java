@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -36,6 +37,14 @@ public class Candidate implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, unique = true)
 	private long id;
+	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "selected_barcode", nullable = false)
+	private Barcode selectedBarcode;
+	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "unselected_barcode", nullable = false)
+	private Barcode unselectedBarcode;
 	
 	@Column(name = "note", columnDefinition = "varchar(500)")
 	private String note;
@@ -88,5 +97,21 @@ public class Candidate implements Serializable {
 
 	public void setUpdatable(boolean isUpdatable) {
 		this.isUpdatable = isUpdatable;
+	}
+
+	public Barcode getSelectedBarcode() {
+		return selectedBarcode;
+	}
+
+	public void setSelectedBarcode(Barcode selectedBarcode) {
+		this.selectedBarcode = selectedBarcode;
+	}
+
+	public Barcode getUnselectedBarcode() {
+		return unselectedBarcode;
+	}
+
+	public void setUnselectedBarcode(Barcode unselectedBarcode) {
+		this.unselectedBarcode = unselectedBarcode;
 	}
 }
