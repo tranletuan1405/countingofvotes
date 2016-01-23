@@ -1,8 +1,16 @@
 package vn.edu.uit.models.service.congress;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
@@ -13,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import vn.edu.uit.models.Congress;
 import vn.edu.uit.models.common.AbstractDao;
-
 
 @Repository
 public class CongressDao extends AbstractDao implements ICongressDao {
@@ -36,21 +43,23 @@ public class CongressDao extends AbstractDao implements ICongressDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Congress> fetch(int min, int max) {
-		//try {
+		try {
 			Criteria crit = getSession().createCriteria(Congress.class);
 			crit.add(Restrictions.eq("isEnabled", true));
-			
+
 			if (min < max && min >= 0 && max > 0) {
 				crit.setFirstResult(min);
 				crit.setMaxResults(max);
 			}
-			
+
 			crit.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 			return crit.list();
-		/*} catch (Exception e) {
+
+		} catch (Exception e) {
 			logger.error("fetch(min , max)");
-			return new  ArrayList<Congress>(0);
-		}*/
+			return new ArrayList<Congress>(0);
+		}
+
 	}
 
 }

@@ -12,4 +12,5 @@ public interface IUnitDao {
 	
 	List<Unit> fetch();
 	
+	Unit fetch(String name);
 }

@@ -22,15 +22,17 @@ import vn.edu.uit.models.common.AbstractEntity;
 @Table(name = "Delegate")
 public class Delegate extends AbstractEntity {
 
+	@Column(name = "ordinal", columnDefinition="VARCHAR(10)")
+	private String ordinal;
+	
 	@Column(name = "name", nullable = false)
 	private String name;
 
 	@Column(name = "gender", columnDefinition = "varchar(20)")
 	private String gender;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "date_of_birth", columnDefinition = "DATETIME")
-	private Date dateOfBirth;
+	@Column(name = "date_of_birth")
+	private String dateOfBirth;
 
 	@Column(name = "place_of_birth")
 	private String placeOfBirth;
@@ -41,13 +43,11 @@ public class Delegate extends AbstractEntity {
 	@Column(name = "religion")
 	private String religion;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "date_of_youth_union", columnDefinition = "DATETIME")
-	private Date dateOfYouthUnion;
+	@Column(name = "date_of_youth_union")
+	private String dateOfYouthUnion;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "date_of_party", columnDefinition = "DATETIME")
-	private Date dateOfParty;
+	@Column(name = "date_of_party")
+	private String dateOfParty;
 
 	@Column(name = "field_of_study")
 	private String fieldOfStudy;
@@ -55,6 +55,9 @@ public class Delegate extends AbstractEntity {
 	@Column(name = "political_theory")
 	private String politicalTheory;
 
+	@Column(name = "position")
+	private String position;
+	
 	@Column(name = "achievement", columnDefinition = "varchar(2000)")
 	private String achievement;
 
@@ -77,7 +80,7 @@ public class Delegate extends AbstractEntity {
 	@JoinColumn(name = "congress_id", nullable = false)
 	private Congress congress;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "delegate")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "delegate")
 	private Set<Candidate> candidateDetails = new HashSet<Candidate>(0);
 
 	public String getName() {
@@ -96,11 +99,11 @@ public class Delegate extends AbstractEntity {
 		this.gender = gender;
 	}
 
-	public Date getDateOfBirth() {
+	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
@@ -128,19 +131,19 @@ public class Delegate extends AbstractEntity {
 		this.religion = religion;
 	}
 
-	public Date getDateOfYouthUnion() {
+	public String getDateOfYouthUnion() {
 		return dateOfYouthUnion;
 	}
 
-	public void setDateOfYouthUnion(Date dateOfYouthUnion) {
+	public void setDateOfYouthUnion(String dateOfYouthUnion) {
 		this.dateOfYouthUnion = dateOfYouthUnion;
 	}
 
-	public Date getDateOfParty() {
+	public String getDateOfParty() {
 		return dateOfParty;
 	}
 
-	public void setDateOfParty(Date dateOfParty) {
+	public void setDateOfParty(String dateOfParty) {
 		this.dateOfParty = dateOfParty;
 	}
 
@@ -214,6 +217,22 @@ public class Delegate extends AbstractEntity {
 
 	public void setUnit(Unit unit) {
 		this.unit = unit;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public String getOrdinal() {
+		return ordinal;
+	}
+
+	public void setOrdinal(String ordinal) {
+		this.ordinal = ordinal;
 	}
 
 }

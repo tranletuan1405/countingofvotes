@@ -26,33 +26,8 @@ public class App {
 	public static void main(String[] args) throws Exception {
 		String fileName = "C:\\Users\\tuantran\\Desktop\\test.docx";
 
-		FileInputStream is = new FileInputStream(new File(fileName));
-		/*XWPFDocument document = new XWPFDocument(is);
+		
 
-		List<XWPFTable> table = document.getTables();
-		
-		if(table.size() > 0){
-			XWPFTable t = table.get(0);
-			List<XWPFTableRow> rows =  t.getRows();
-			
-			for(int i = 0; i < rows.size(); i++){
-				XWPFTableRow row = rows.get(i);
-				
-				List<XWPFTableCell> cells = row.getTableCells();
-				for(int j = 0; j < cells.size(); j++){
-					XWPFTableCell cell = cells.get(j);
-					System.out.print(cell.getText() + " ");
-					
-				}
-				
-				System.out.println("");
-			}
-		}*/
-		
-		HWPFDocument doc = new HWPFDocument(is);
-		ListTables tables = doc.getListTables();
-		
-		
 
 	}
 

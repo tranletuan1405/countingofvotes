@@ -13,7 +13,7 @@ import vn.edu.uit.models.Unit;
 import vn.edu.uit.models.common.AbstractDao;
 import vn.edu.uit.models.service.voting.VotingDao;
 
-@Repository("unitDao")
+@Repository
 public class UnitDao extends AbstractDao implements IUnitDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(UnitDao.class);
@@ -42,6 +42,15 @@ public class UnitDao extends AbstractDao implements IUnitDao {
 
 		crit.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		return crit.list();
+	}
+
+	@Override
+	public Unit fetch(String name) {
+		Criteria crit = getSession().createCriteria(Unit.class);
+		crit.add(Restrictions.eq("isEnabled", true));
+		crit.add(Restrictions.and(Restrictions.eq("name", name)));
+
+		return (Unit) crit.uniqueResult();
 	}
 
 }

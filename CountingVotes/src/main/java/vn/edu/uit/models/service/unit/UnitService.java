@@ -11,22 +11,30 @@ import org.springframework.transaction.annotation.Transactional;
 import vn.edu.uit.models.Unit;
 import vn.edu.uit.models.service.congress.CongressService;
 
-@Service("unitService")
+@Service
 @Transactional
-public class UnitService {
+public class UnitService implements IUnitDao{
 
 	@Autowired
 	private IUnitDao unitDao;
 	
+	@Override
     public boolean persist(Unit unit){
     	return unitDao.persist(unit);
     }
 	
+	@Override
 	public boolean delete(Unit unit){
 		return unitDao.delete(unit);
 	}
 	
+	@Override
 	public List<Unit> fetch() {
 		return unitDao.fetch();
+	}
+
+	@Override
+	public Unit fetch(String name) {
+		return unitDao.fetch(name);
 	}
 }

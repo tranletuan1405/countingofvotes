@@ -13,25 +13,34 @@ import vn.edu.uit.models.service.congress.CongressService;
 
 @Service("delegateService")
 @Transactional
-public class DelegateService {
+public class DelegateService implements IDelegateDao{
 	
 	@Autowired
 	private IDelegateDao delegateDao;
 	
+	@Override
 	public boolean persist(Delegate delegate){
 		return delegateDao.persist(delegate);
 	}
 	
+	@Override
 	public boolean delete(Delegate delegate){
 		return delegateDao.delete(delegate);
 	}
 	
+	@Override
 	public Delegate fetch(long id){
 		return delegateDao.fetch(id);
 	}
 	
+	@Override
 	public List<Delegate> fetch(int min, int max){
 		return delegateDao.fetch(min, max);
 	}
-	
+
+	@Override
+	public List<Delegate> getByDocument(String filePath) {
+		return delegateDao.getByDocument(filePath);
+	}
+
 }

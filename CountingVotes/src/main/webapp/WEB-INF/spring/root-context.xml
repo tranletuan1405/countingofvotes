@@ -18,9 +18,11 @@
 	
 	<!-- DAO -->
 	<bean id="congressDao" class="vn.edu.uit.models.service.congress.CongressDao"></bean>
+	<bean id="delegateDao" class="vn.edu.uit.models.service.delegate.DelegateDao"></bean>
+	<bean id="unitDao" class="vn.edu.uit.models.service.unit.UnitDao"></bean>
 	
 	<!-- Data service -->
 	<bean id="congressService" class="vn.edu.uit.models.service.congress.CongressService"></bean>
-	
-	
+	<bean id="delegateService" class="vn.edu.uit.models.service.delegate.DelegateService"></bean>
+	<bean id="unitService" class="vn.edu.uit.models.service.unit.UnitService"></bean>
 </beans>
