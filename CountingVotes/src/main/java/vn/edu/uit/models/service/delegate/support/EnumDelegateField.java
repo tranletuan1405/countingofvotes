@@ -14,7 +14,10 @@ public enum EnumDelegateField {
 	PoliticalTheory ("llct"),
 	Position ("chucvu"),
 	Achievement ("thanhtich"),
-	Unit ("donvi");
+	Unit ("donvi"),
+	AddressHouse ("noio"),
+	DelegateType ("cocau");
+	
 	
 	private final String fieldDescription;
 	private EnumDelegateField(String value){

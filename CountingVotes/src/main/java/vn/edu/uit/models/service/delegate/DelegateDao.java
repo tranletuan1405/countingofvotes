@@ -25,10 +25,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import vn.edu.uit.models.Delegate;
+import vn.edu.uit.models.DelegateType;
 import vn.edu.uit.models.Unit;
 import vn.edu.uit.models.common.AbstractDao;
 import vn.edu.uit.models.service.delegate.support.DelegateFieldPosition;
 import vn.edu.uit.models.service.delegate.support.EnumDelegateField;
+import vn.edu.uit.models.service.delegate_type.IDelegateTypeDao;
+import vn.edu.uit.models.service.unit.IUnitDao;
 import vn.edu.uit.models.service.unit.UnitDao;
 
 @Repository
@@ -37,8 +40,11 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 	private static final Logger logger = LoggerFactory.getLogger(DelegateDao.class);
 
 	@Autowired
-	UnitDao unitDao;
+	private IUnitDao unitDao;
 
+	@Autowired
+	private IDelegateTypeDao delegateTypeDao;
+	
 	@Override
 	public boolean persist(Delegate delegate) {
 		return this.persist(delegate);
@@ -135,8 +141,8 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 			int cell = 0;
 			for (int j = 0; j < paragraphs.size(); j++) {
 				String text = paragraphs.get(j).getText();
-				String[] split1 = text.split("\\(");
-				String[] split2 = split1[split1.length - 1].split("\\)");
+				String[] split1 = text.split("\\@");
+				String[] split2 = split1[split1.length - 1].split("");
 				String field = split2[0];
 
 				try {
@@ -145,8 +151,11 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 						DelegateFieldPosition position = new DelegateFieldPosition(i, cell++);
 						map.put(enumField, position);
 
-						/*logger.info(enumField.getDescription() + " | column : " + position.getColumn() + " | cell : "
-								+ position.getCell());*/
+						/*
+						 * logger.info(enumField.getDescription() +
+						 * " | column : " + position.getColumn() + " | cell : "
+						 * + position.getCell());
+						 */
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -170,8 +179,12 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 				String content = paragraphs.get(pos.getCell()).getParagraphText();
 				
 				switch (entry.getKey()) {
+				
 				case Achievement:
 					delegate.setAchievement(content);
+					break;
+				case AddressHouse:
+					delegate.setAddressHouse(content);
 					break;
 				case DateOfBirth:
 					delegate.setDateOfBirth(content);
@@ -210,6 +223,14 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 					if(content == null || content.isEmpty()) content = String.valueOf(rowOrdinal);
 					delegate.setOrdinal(content);
 					break;
+		
+				case DelegateType:
+					DelegateType type = delegateTypeDao.fetch(content);
+					if(type != null){
+						delegate.setDelegateType(type);
+					}
+					
+					break;
 				case Unit:
 					Unit unit = unitDao.fetch(content);
 
@@ -220,6 +241,7 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 
 					delegate.setUnit(unit);
 					break;
+				
 				default:
 					break;
 				}

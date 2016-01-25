@@ -82,6 +82,13 @@ public class Delegate extends AbstractEntity {
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "delegate")
 	private Set<Candidate> candidateDetails = new HashSet<Candidate>(0);
+	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "type_id")
+	private DelegateType delegateType;
+	
+	@Column(name = "address_house")
+	private String addressHouse;
 
 	public String getName() {
 		return name;
@@ -233,6 +240,22 @@ public class Delegate extends AbstractEntity {
 
 	public void setOrdinal(String ordinal) {
 		this.ordinal = ordinal;
+	}
+
+	public DelegateType getDelegateType() {
+		return delegateType;
+	}
+
+	public void setDelegateType(DelegateType delegateType) {
+		this.delegateType = delegateType;
+	}
+
+	public String getAddressHouse() {
+		return addressHouse;
+	}
+
+	public void setAddressHouse(String addressHouse) {
+		this.addressHouse = addressHouse;
 	}
 
 }
