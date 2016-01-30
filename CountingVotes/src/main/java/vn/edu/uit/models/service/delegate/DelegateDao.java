@@ -24,11 +24,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import vn.edu.uit.extra.DataConfig;
+import vn.edu.uit.extra.SupportMethods;
 import vn.edu.uit.models.Delegate;
 import vn.edu.uit.models.DelegateType;
 import vn.edu.uit.models.Unit;
 import vn.edu.uit.models.common.AbstractDao;
-import vn.edu.uit.models.service.delegate.support.DelegateFieldPosition;
+import vn.edu.uit.models.service.delegate.support.AnotationDetecter;
 import vn.edu.uit.models.service.delegate.support.EnumDelegateField;
 import vn.edu.uit.models.service.delegate_type.IDelegateTypeDao;
 import vn.edu.uit.models.service.unit.IUnitDao;
@@ -44,7 +46,7 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 
 	@Autowired
 	private IDelegateTypeDao delegateTypeDao;
-	
+
 	@Override
 	public boolean persist(Delegate delegate) {
 		return this.persist(delegate);
@@ -85,7 +87,7 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 	public List<Delegate> getByDocument(String filePath) {
 
 		List<Delegate> delegates = new ArrayList<Delegate>(0);
-
+		
 		try {
 			FileInputStream is = new FileInputStream(new File(filePath));
 			XWPFDocument document = new XWPFDocument(is);
@@ -102,84 +104,52 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 			}
 
 			if (table == null)
+			{
+				logger.info("Table is Null");
 				return delegates;
-
+			}
+			
 			// Detect title form
 			XWPFTableRow title = table.getRow(0);
-			Map<EnumDelegateField, DelegateFieldPosition> format = getFormat(title);
-
-			List<XWPFTableRow> rows = table.getRows();
-			for (int i = 1; i < rows.size(); i++) {
-				try {
-					XWPFTableRow row = rows.get(i);
-					Delegate delegate = new Delegate();
-					fillDataDelegate(delegate, row, i, format);
-					delegates.add(delegate);
-				} catch (Exception e) {
-
-				}
+			XWPFTableRow title2 = table.getRow(1);
+			//List<AnotationDetecter> format = AnotationDetecter.getFormat(title, title2);
+		
+			for(int i = 2; i < table.getNumberOfRows(); i++){
+				
 			}
 
 			return delegates;
 		} catch (FileNotFoundException e) {
+			logger.info("Table is Null");
 			e.printStackTrace();
 			return delegates;
 		} catch (IOException e) {
+			logger.info("Table is Null");
 			e.printStackTrace();
 			return delegates;
 		}
 	}
 
 	// Support Method
-	private Map<EnumDelegateField, DelegateFieldPosition> getFormat(XWPFTableRow title) {
-		Map<EnumDelegateField, DelegateFieldPosition> map = new HashMap<EnumDelegateField, DelegateFieldPosition>();
-		List<XWPFTableCell> columns = title.getTableCells();
+	
 
-		for (int i = 0; i < columns.size(); i++) {
-			List<XWPFParagraph> paragraphs = columns.get(i).getParagraphs();
 
-			int cell = 0;
-			for (int j = 0; j < paragraphs.size(); j++) {
-				String text = paragraphs.get(j).getText();
-				String[] split1 = text.split("\\@");
-				String[] split2 = split1[split1.length - 1].split("");
-				String field = split2[0];
+	/*private void fillDataDelegate(Delegate delegate, XWPFTableRow row, int rowOrdinal,
+			Map<EnumDelegateField, AnotationDetecter> format) {
 
-				try {
-					EnumDelegateField enumField = EnumDelegateField.getEnumByDescription(field);
-					if (enumField != null) {
-						DelegateFieldPosition position = new DelegateFieldPosition(i, cell++);
-						map.put(enumField, position);
-
-						/*
-						 * logger.info(enumField.getDescription() +
-						 * " | column : " + position.getColumn() + " | cell : "
-						 * + position.getCell());
-						 */
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		return map;
-	}
-
-	private void fillDataDelegate(Delegate delegate, XWPFTableRow row , int rowOrdinal, 
-			Map<EnumDelegateField, DelegateFieldPosition> format) {
-		
 		List<XWPFTableCell> columns = row.getTableCells();
-		for (Map.Entry<EnumDelegateField, DelegateFieldPosition> entry : format.entrySet()) {
+		
+		for (Map.Entry<EnumDelegateField, AnotationDetecter> entry : format.entrySet()) {
+			
 			try {
-				DelegateFieldPosition pos = entry.getValue();
+				AnotationDetecter pos = entry.getValue();
 				XWPFTableCell column = columns.get(pos.getColumn());
-				
+
 				List<XWPFParagraph> paragraphs = column.getParagraphs();
-				String content = paragraphs.get(pos.getCell()).getParagraphText();
-				
+				String content = paragraphs.get(pos.getParagraph()).getParagraphText();
+
 				switch (entry.getKey()) {
-				
+
 				case Achievement:
 					delegate.setAchievement(content);
 					break;
@@ -220,16 +190,17 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 					delegate.setReligion(content);
 					break;
 				case Ordinal:
-					if(content == null || content.isEmpty()) content = String.valueOf(rowOrdinal);
+					if (content == null || content.isEmpty())
+						content = String.valueOf(rowOrdinal);
 					delegate.setOrdinal(content);
 					break;
-		
+
 				case DelegateType:
 					DelegateType type = delegateTypeDao.fetch(content);
-					if(type != null){
+					if (type != null) {
 						delegate.setDelegateType(type);
 					}
-					
+
 					break;
 				case Unit:
 					Unit unit = unitDao.fetch(content);
@@ -241,7 +212,7 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 
 					delegate.setUnit(unit);
 					break;
-				
+
 				default:
 					break;
 				}
@@ -249,5 +220,5 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 
 			}
 		}
-	}
+	}*/
 }
