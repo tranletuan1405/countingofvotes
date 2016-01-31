@@ -1,54 +1,20 @@
 package vn.edu.uit.models.service.delegate.support;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
-public final class AnotationDetecter {
+public class AnotationDetecter {
 
 	private static final String ACCESS_STRING = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
 
-	private String mergeField;
-	private List<AnotationField> fields = new ArrayList<AnotationField>();
-
-	public String toString() {
-
-		String result = "";
-		if(mergeField != null && !mergeField.isEmpty()){
-			result += "Merge field : " + mergeField + "\n";
-		}
-		
-		for(int i = 0; i < fields.size(); i++){
-			result += fields.get(i).toString();
-		}
-		
-		return result;
-	}
-
-	public String getMergeField() {
-		return mergeField;
-	}
-
-	public void setMergeField(String mergeField) {
-		this.mergeField = mergeField;
-	}
-
-	public List<AnotationField> getFields() {
-		return fields;
-	}
-
-	public void setFields(List<AnotationField> fields) {
-		this.fields = fields;
-	}
-
 	// Support Methods
+
 	public static boolean isMerged(XWPFTable table) {
 
 		if (table.getNumberOfRows() < 1)
@@ -65,8 +31,8 @@ public final class AnotationDetecter {
 		return false;
 	}
 
-	public static Map<Integer, AnotationDetecter> getFormat(XWPFTableRow title, XWPFTableRow title2) {
-		Map<Integer, AnotationDetecter> format = new HashMap<Integer, AnotationDetecter>();
+	public static Map<Integer, AnotationColumnDetecter> getFormat(XWPFTableRow title, XWPFTableRow title2) {
+		Map<Integer, AnotationColumnDetecter> format = new HashMap<Integer, AnotationColumnDetecter>(0);
 
 		List<XWPFTableCell> columns = title.getTableCells();
 		int mergeColumns = 0;
@@ -88,18 +54,16 @@ public final class AnotationDetecter {
 				for (int j = i; j < mergeColumns + i; j++) {
 					XWPFTableCell subColumn = subColumns.get(j);
 
-					Map<Integer, AnotationDetecter> detecters = getColumnField(subColumn, j, mergeField);
-					if (detecters.size() > 0) {
-						// format.addAll(detecters);
-						format.putAll(detecters);
+					AnotationColumnDetecter columnFormat = getColumnFormat(subColumn, mergeField);
+					if (columnFormat.getParagraphFormat().size() > 0) {
+						format.put(j, columnFormat);
 					}
 				}
 
 			} else {
-				Map<Integer, AnotationDetecter> detecters = getColumnField(column, i + mergeColumns - numOfMerge,
-						mergeField);
-				if (detecters.size() > 0) {
-					format.putAll(detecters);
+				AnotationColumnDetecter columnFormat = getColumnFormat(column, mergeField);
+				if (columnFormat.getParagraphFormat().size() > 0) {
+					format.put(i + mergeColumns - numOfMerge, columnFormat);
 				}
 			}
 		}
@@ -107,16 +71,16 @@ public final class AnotationDetecter {
 		return format;
 	}
 
-	private static Map<Integer, AnotationDetecter> getColumnField(XWPFTableCell column, int index, String mergeField) {
-		Map<Integer, AnotationDetecter> columnDetecter = new HashMap<Integer, AnotationDetecter>(0);
-		AnotationDetecter detecter = new AnotationDetecter();
+	private static AnotationColumnDetecter getColumnFormat(XWPFTableCell column, String mergeField) {
+		AnotationColumnDetecter columnDetecter = new AnotationColumnDetecter();
+		Map<Integer, AnotationParagraphDetecter> paragraphFormat = new HashMap<Integer, AnotationParagraphDetecter>(0);
 
 		List<XWPFParagraph> paragraphs = column.getParagraphs();
-		int paragraphIndex = 0;
+		int paraIndex = 0;
+		for (int i = 0; i < paragraphs.size(); i++) {
+			AnotationParagraphDetecter paraDetecter = new AnotationParagraphDetecter();
 
-		for (int j = 0; j < paragraphs.size(); j++) {
-
-			String text = paragraphs.get(j).getText();
+			String text = paragraphs.get(i).getText();
 			String anotaionString = getAnotationString(text);
 			String[] anotations = anotaionString.split("@");
 			boolean isNotNull = false;
@@ -124,38 +88,38 @@ public final class AnotationDetecter {
 			for (int k = 1; k < anotations.length; k++) {
 
 				AnotationField anotationField = new AnotationField();
-				anotationField.setParagraphIndex(paragraphIndex);
 
 				String anotation = anotations[k];
 				String linkField = getLinkString(anotation, ACCESS_STRING);
 				String fieldName = anotation;
 				anotationField.setFieldName(fieldName);
-				
-				if (!linkField.isEmpty()) {
+
+				if (linkField != null && !linkField.isEmpty()) {
 					fieldName = anotation.split(linkField)[0];
 					anotationField.setFieldName(fieldName);
-					anotationField.setLinkField(linkField);
+					paraDetecter.setLinkRegexs(linkField);
 				}
 
 				if (mergeField != null && !mergeField.isEmpty()) {
 					String defaultValue = text.split("@")[0];
-					detecter.setMergeField(mergeField);
 					anotationField.setDefaultValue(defaultValue);
+					columnDetecter.setMergeField(mergeField);
 				}
 
 				if (fieldName != null && !fieldName.isEmpty()) {
-					detecter.getFields().add(anotationField);
+					paraDetecter.getFields().add(anotationField);
 					isNotNull = true;
 				}
 			}
 
 			if (isNotNull) {
-				paragraphIndex++;
+				paragraphFormat.put(paraIndex, paraDetecter);
+				paraIndex++;
 			}
 		}
 
-		if (detecter.getFields().size() > 0) {
-			columnDetecter.put(index, detecter);
+		if (paragraphFormat.size() > 0) {
+			columnDetecter.setParagraphFormat(paragraphFormat);
 		}
 
 		return columnDetecter;
@@ -186,5 +150,4 @@ public final class AnotationDetecter {
 
 		return "";
 	}
-
 }

@@ -30,7 +30,9 @@ import vn.edu.uit.models.Delegate;
 import vn.edu.uit.models.DelegateType;
 import vn.edu.uit.models.Unit;
 import vn.edu.uit.models.common.AbstractDao;
+import vn.edu.uit.models.service.delegate.support.AnotationColumnDetecter;
 import vn.edu.uit.models.service.delegate.support.AnotationDetecter;
+import vn.edu.uit.models.service.delegate.support.AnotationParagraphDetecter;
 import vn.edu.uit.models.service.delegate.support.EnumDelegateField;
 import vn.edu.uit.models.service.delegate_type.IDelegateTypeDao;
 import vn.edu.uit.models.service.unit.IUnitDao;
@@ -87,8 +89,9 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 	public List<Delegate> getByDocument(String filePath) {
 
 		List<Delegate> delegates = new ArrayList<Delegate>(0);
-		
+
 		try {
+
 			FileInputStream is = new FileInputStream(new File(filePath));
 			XWPFDocument document = new XWPFDocument(is);
 
@@ -103,122 +106,47 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 				}
 			}
 
-			if (table == null)
-			{
-				logger.info("Table is Null");
+			if (table == null || table.getNumberOfRows() < 1) {
+				System.out.println("Table is Null");
 				return delegates;
 			}
-			
-			// Detect title form
+
+			// Detect title format
 			XWPFTableRow title = table.getRow(0);
-			XWPFTableRow title2 = table.getRow(1);
-			//List<AnotationDetecter> format = AnotationDetecter.getFormat(title, title2);
-		
-			for(int i = 2; i < table.getNumberOfRows(); i++){
+			XWPFTableRow title2 = null;
+			int firstData = 1;
+			if (AnotationDetecter.isMerged(table)) {
+				title2 = table.getRow(1);
+				firstData = 2;
+			}
+
+			Map<Integer, AnotationColumnDetecter> format = AnotationDetecter.getFormat(title, title2);
+			List<XWPFTableRow> rows = table.getRows();
+			for(int i = firstData, j = 1; i < rows.size(); i++, j++){
 				
 			}
+		
 
 			return delegates;
 		} catch (FileNotFoundException e) {
-			logger.info("Table is Null");
+			System.out.println("Table is Null");
 			e.printStackTrace();
 			return delegates;
 		} catch (IOException e) {
-			logger.info("Table is Null");
+			System.out.println("Table is Null");
 			e.printStackTrace();
 			return delegates;
 		}
 	}
 
 	// Support Method
-	
-
-
-	/*private void fillDataDelegate(Delegate delegate, XWPFTableRow row, int rowOrdinal,
-			Map<EnumDelegateField, AnotationDetecter> format) {
+	private void getDelegateData(XWPFTableRow row, int rowOrdinal, Map<Integer, AnotationColumnDetecter> format) {
 
 		List<XWPFTableCell> columns = row.getTableCells();
 		
-		for (Map.Entry<EnumDelegateField, AnotationDetecter> entry : format.entrySet()) {
+		for (Map.Entry<Integer, AnotationColumnDetecter> entry : format.entrySet()) {
 			
-			try {
-				AnotationDetecter pos = entry.getValue();
-				XWPFTableCell column = columns.get(pos.getColumn());
-
-				List<XWPFParagraph> paragraphs = column.getParagraphs();
-				String content = paragraphs.get(pos.getParagraph()).getParagraphText();
-
-				switch (entry.getKey()) {
-
-				case Achievement:
-					delegate.setAchievement(content);
-					break;
-				case AddressHouse:
-					delegate.setAddressHouse(content);
-					break;
-				case DateOfBirth:
-					delegate.setDateOfBirth(content);
-					break;
-				case DateOfParty:
-					delegate.setDateOfParty(content);
-					break;
-				case DateOfYouthUnion:
-					delegate.setDateOfYouthUnion(content);
-					break;
-				case Ethnic:
-					delegate.setEthnic(content);
-					break;
-				case FieldOfStudy:
-					delegate.setFieldOfStudy(content);
-					break;
-				case Gender:
-					delegate.setGender(content);
-					break;
-				case Name:
-					delegate.setName(content);
-					break;
-				case PlaceOfBirth:
-					delegate.setPlaceOfBirth(content);
-					break;
-				case PoliticalTheory:
-					delegate.setPoliticalTheory(content);
-					break;
-				case Position:
-					delegate.setPosition(content);
-					break;
-				case Religion:
-					delegate.setReligion(content);
-					break;
-				case Ordinal:
-					if (content == null || content.isEmpty())
-						content = String.valueOf(rowOrdinal);
-					delegate.setOrdinal(content);
-					break;
-
-				case DelegateType:
-					DelegateType type = delegateTypeDao.fetch(content);
-					if (type != null) {
-						delegate.setDelegateType(type);
-					}
-
-					break;
-				case Unit:
-					Unit unit = unitDao.fetch(content);
-
-					if (unit == null) {
-						unit = new Unit();
-						unit.setName(content);
-					}
-
-					delegate.setUnit(unit);
-					break;
-
-				default:
-					break;
-				}
-			} catch (Exception e) {
-
-			}
+			
 		}
-	}*/
+	}
 }

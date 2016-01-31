@@ -32,7 +32,10 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTc;
 import vn.edu.uit.models.Delegate;
 import vn.edu.uit.models.DelegateType;
 import vn.edu.uit.models.Unit;
+import vn.edu.uit.models.service.delegate.support.AnotationParagraphDetecter;
+import vn.edu.uit.models.service.delegate.support.AnotationColumnDetecter;
 import vn.edu.uit.models.service.delegate.support.AnotationDetecter;
+import vn.edu.uit.models.service.delegate.support.AnotationField;
 import vn.edu.uit.models.service.delegate.support.EnumDelegateField;
 
 public class App {
@@ -55,6 +58,7 @@ public class App {
 		 */
 
 		List<Delegate> delegates = getByDocument(fileName);
+
 	}
 
 	public static List<Delegate> getByDocument(String filePath) {
@@ -91,24 +95,12 @@ public class App {
 				firstData = 2;
 			}
 
-			Map<Integer, AnotationDetecter> format = AnotationDetecter.getFormat(title, title2);
-			List<XWPFTableRow> dataRows = table.getRows();
-
-			for(Entry<Integer, AnotationDetecter> entry : format.entrySet()){
-				System.out.println("Column : " + (entry.getKey() + 1));
-				System.out.println(entry.getValue().toString());
-				System.out.println("++++++++++++++++++++++");
+			Map<Integer, AnotationColumnDetecter> format = AnotationDetecter.getFormat(title, title2);
+			List<XWPFTableRow> rows = table.getRows();
+			for(int i = firstData; i < rows.size(); i++){
 				
 			}
-			/*for (int i = firstData; i < dataRows.size(); i++) {
-				List<XWPFTableCell> columns = dataRows.get(0).getTableCells();
-				
-				for(int j = 0; j < columns.size(); j++){
-					XWPFTableCell column = columns.get(i);
-					
-				}
-				
-			}*/
+		
 
 			return delegates;
 		} catch (FileNotFoundException e) {
@@ -122,10 +114,4 @@ public class App {
 		}
 	}
 
-	public static Delegate fillData(){
-		Delegate delegate = new Delegate();
-		
-		
-		return delegate;
-	}
 }
