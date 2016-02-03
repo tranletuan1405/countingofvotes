@@ -7,7 +7,7 @@ import vn.edu.uit.models.common.AbstractEntity;
 
 
 @Entity
-@Table(name = "delegate_type")
+@Table(name = "Delegate_Type")
 public class DelegateType extends AbstractEntity {
 
 	private String typeName;

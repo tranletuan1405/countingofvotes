@@ -32,6 +32,7 @@ import vn.edu.uit.models.Unit;
 import vn.edu.uit.models.common.AbstractDao;
 import vn.edu.uit.models.service.delegate.support.AnotationColumnDetecter;
 import vn.edu.uit.models.service.delegate.support.AnotationDetecter;
+import vn.edu.uit.models.service.delegate.support.AnotationField;
 import vn.edu.uit.models.service.delegate.support.AnotationParagraphDetecter;
 import vn.edu.uit.models.service.delegate.support.EnumDelegateField;
 import vn.edu.uit.models.service.delegate_type.IDelegateTypeDao;
@@ -42,7 +43,8 @@ import vn.edu.uit.models.service.unit.UnitDao;
 public class DelegateDao extends AbstractDao implements IDelegateDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(DelegateDao.class);
-
+	private static int Ordinal = 1;
+	
 	@Autowired
 	private IUnitDao unitDao;
 
@@ -107,7 +109,7 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 			}
 
 			if (table == null || table.getNumberOfRows() < 1) {
-				System.out.println("Table is Null");
+				logger.info("Table is Null");
 				return delegates;
 			}
 
@@ -122,31 +124,168 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 
 			Map<Integer, AnotationColumnDetecter> format = AnotationDetecter.getFormat(title, title2);
 			List<XWPFTableRow> rows = table.getRows();
-			for(int i = firstData, j = 1; i < rows.size(); i++, j++){
-				
-			}
+			
 		
+			
+			for (int i = firstData, Ordinal = 1; i < rows.size(); i++, Ordinal++) {
+				logger.info("Row : " + i);
+				XWPFTableRow row = rows.get(i);
+				Delegate delegate = new Delegate();
+				fillDataDelegate(row, format, delegate);
+				delegates.add(delegate);
+			}
 
 			return delegates;
 		} catch (FileNotFoundException e) {
-			System.out.println("Table is Null");
+			logger.error("Table is Null");
 			e.printStackTrace();
 			return delegates;
 		} catch (IOException e) {
-			System.out.println("Table is Null");
+			logger.error("Table is Null");
 			e.printStackTrace();
 			return delegates;
 		}
 	}
 
 	// Support Method
-	private void getDelegateData(XWPFTableRow row, int rowOrdinal, Map<Integer, AnotationColumnDetecter> format) {
+	private void fillDataDelegate(XWPFTableRow row, Map<Integer, AnotationColumnDetecter> format,
+			Delegate delegate) {
 
 		List<XWPFTableCell> columns = row.getTableCells();
-		
-		for (Map.Entry<Integer, AnotationColumnDetecter> entry : format.entrySet()) {
-			
-			
+
+		// Loop column format
+		for (Map.Entry<Integer, AnotationColumnDetecter> entryCol : format.entrySet()) {
+			XWPFTableCell column = columns.get(entryCol.getKey());
+
+			AnotationColumnDetecter colDetecter = entryCol.getValue();
+			Map<Integer, AnotationParagraphDetecter> paraFormat = colDetecter.getParagraphFormat();
+
+			if (colDetecter.getMergeField() != null && !colDetecter.getMergeField().isEmpty()) {
+				String fieldName = colDetecter.getMergeField();
+				String value = column.getText();
+				if (value != null && !value.isEmpty()) {
+					fillDataField(fieldName, value, delegate); // Fill Data
+				}
+			}
+
+			// Loop paragraph format
+			List<XWPFParagraph> paragraphs = column.getParagraphs();
+			for (Map.Entry<Integer, AnotationParagraphDetecter> entryPara : paraFormat.entrySet()) {
+				
+				try {
+					XWPFParagraph paragraph = paragraphs.get(entryPara.getKey());
+					AnotationParagraphDetecter paragraphDetecter = entryPara.getValue();
+					List<AnotationField> fields = paragraphDetecter.getFields();
+					String [] values = paragraph.getText().split(paragraphDetecter.getLinkRegexs());
+				
+					// Loop anotation field
+					for (int i = 0; i < fields.size(); i++) {
+						AnotationField field = fields.get(i);
+						String fieldName = field.getFieldName();
+						String value = "";
+						if(paragraphDetecter.getLinkRegexs() != null && !paragraphDetecter.getLinkRegexs().isEmpty()){
+							value = values[i];
+						}
+						else {
+							value = paragraph.getText();
+						}
+											
+						if (paragraph.getText() != null && !paragraph.getText().isEmpty()
+								&& field.getDefaultValue() != null && !field.getDefaultValue().isEmpty()) {
+							value = field.getDefaultValue();
+						}
+						
+						fillDataField(fieldName, value, delegate); // Fill Data
+					}
+				} catch (Exception e) {
+
+				}
+			}
 		}
 	}
+
+	private void fillDataField(String field, String value, Delegate delegate) {
+
+		try {
+			if (field == null || field.isEmpty()) return;
+			// if(value == null || value.isEmpty()) return;
+			logger.info("Field : " + field + ", value : " + value);
+			
+			EnumDelegateField enumField = EnumDelegateField.getEnumByDescription(field);
+
+			switch (enumField) {
+			case Address:
+				delegate.setAddress(value);
+				break;
+			case DateOfBirth:
+				delegate.setDateOfBirth(value);
+				break;
+			case DateOfPartyOfficial:
+				delegate.setDateOfPartyOfficial(value);
+				break;
+			case DateOfPartyPreparatory:
+				delegate.setDateOfPartyPreparatory(value);
+				break;
+			case DateOfYouthUnion:
+				delegate.setDateOfYouthUnion(value);
+				break;
+			case Ethnic:
+				delegate.setEthnic(value);
+				break;
+			case Gender:
+				delegate.setGender(value);
+				break;
+			case Name:
+				delegate.setName(value);
+				break;
+			case Ordinal:
+				if(value == null || value.isEmpty()){
+					value = String.valueOf(this.Ordinal);
+				}
+				
+				delegate.setOrdinal(value);
+				break;
+			case PlaceOfBirth:
+				delegate.setPlaceOfBirth(value);
+				break;
+			case Position:
+				delegate.setPosition(value);
+				break;
+			case Religion:
+				delegate.setReligion(value);
+				break;
+			case Type:
+				if (value == null || value.isEmpty()) return;
+				
+				DelegateType type = delegateTypeDao.fetch(value);
+				if (type == null) {
+					type = new DelegateType();
+					type.setShortName(value);
+				}
+
+				delegate.setType(type);
+				break;
+			case Unit:
+				if (value == null || value.isEmpty()) return;
+				
+				Unit unit = unitDao.fetch(value);
+				if (unit == null) {
+					unit = new Unit();
+					unit.setName(value);
+				}
+
+				delegate.setUnit(unit);
+				break;
+			case Note:
+				delegate.setNote(value);
+			default:
+				break;
+
+			}
+		} catch (Exception e) {
+
+		}
+
+	}
+
 }

@@ -57,7 +57,14 @@ public class App {
 		 * anotation.split(linkStr)[0]; } }
 		 */
 
-		List<Delegate> delegates = getByDocument(fileName);
+		String str = "ashjdkjasdkjasda";
+		String[] rs = str.split("");
+		
+		System.out.print(rs[1]);
+		for(String r : rs){
+			
+		}
+ 		//List<Delegate> delegates = getByDocument(fileName);
 
 	}
 
@@ -98,7 +105,7 @@ public class App {
 			Map<Integer, AnotationColumnDetecter> format = AnotationDetecter.getFormat(title, title2);
 			List<XWPFTableRow> rows = table.getRows();
 			for(int i = firstData; i < rows.size(); i++){
-				
+				XWPFTableRow row = rows.get(i);
 			}
 		
 
@@ -114,4 +121,5 @@ public class App {
 		}
 	}
 
+	
 }

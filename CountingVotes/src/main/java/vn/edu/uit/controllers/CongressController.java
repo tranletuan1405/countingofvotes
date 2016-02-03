@@ -38,8 +38,8 @@ public class CongressController {
 	@RequestMapping(value = "/")
 	public ModelAndView congress() {
 		ModelAndView model = new ModelAndView("congress");
-		String filePath = "C:\\Users\\tuantran\\Desktop\\test.docx";
-		List<Delegate> delegates = delegateService.getByDocument(filePath);
+		/*String filePath = "C:\\Users\\tuantran\\Desktop\\test.docx";
+		List<Delegate> delegates = delegateService.getByDocument(filePath);*/
 		return model;
 	}
 

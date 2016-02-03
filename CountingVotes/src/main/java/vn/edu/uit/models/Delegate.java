@@ -22,51 +22,60 @@ import vn.edu.uit.models.common.AbstractEntity;
 @Table(name = "Delegate")
 public class Delegate extends AbstractEntity {
 
-	@Column(name = "ordinal", columnDefinition="VARCHAR(10)")
+	//Basic field
+	@Column(name = "ordinal", columnDefinition="VARCHAR(10)") //STT
 	private String ordinal;
 	
-	@Column(name = "name", nullable = false)
+	@Column(name = "name", nullable = false) //Ho Ten
 	private String name;
 
-	@Column(name = "gender", columnDefinition = "varchar(20)")
+	@Column(name = "place_of_birth") //Que Quan
+	private String placeOfBirth;
+	
+	@Column(name = "address") //Noi O
+	private String address;
+	
+	@Column(name = "date_of_birth") //NamSinh
+	private String dateOfBirth;
+	
+	@Column(name = "gender", columnDefinition = "varchar(20)")  //Gioi Tinh
 	private String gender;
 
-	@Column(name = "date_of_birth")
-	private String dateOfBirth;
-
-	@Column(name = "place_of_birth")
-	private String placeOfBirth;
-
-	@Column(name = "ethnic")
+	@Column(name = "ethnic") //Dan Toc
 	private String ethnic;
 
-	@Column(name = "religion")
+	@Column(name = "religion") //Ton Giao
 	private String religion;
 
-	@Column(name = "date_of_youth_union")
+	@Column(name = "date_of_youth_union") //Ngay Vao Doan
 	private String dateOfYouthUnion;
 
-	@Column(name = "date_of_party")
-	private String dateOfParty;
+	@Column(name = "date_of_party_preparatory") //Ngay Vao Dang Du Bi
+	private String dateOfPartyPreparatory;
+	
+	@Column(name = "date_of_party_offical") //Ngay Vao Dang Chinh Thuc
+	private String dateOfPartyOfficial;
 
-	@Column(name = "field_of_study")
-	private String fieldOfStudy;
-
-	@Column(name = "political_theory")
-	private String politicalTheory;
-
-	@Column(name = "position")
+	@Column(name = "position") //Chuc Vu
 	private String position;
 	
-	@Column(name = "achievement", columnDefinition = "varchar(2000)")
-	private String achievement;
-
-	@Column(name = "image_path")
-	private String imagePath;
-
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL) //Don Vi
 	@JoinColumn(name = "unit_id")
 	private Unit unit;
+	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL) //Co Cau
+	@JoinColumn(name = "type_id")
+	private DelegateType type;
+	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL) //Mo rong (danh cho ung cu vien)
+	@JoinColumn(name = "extension_id")
+	private DelegateExtension extension;
+	
+	
+	
+	//Manage Field
+	@Column(name = "image_path")
+	private String imagePath;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "arivalTime", columnDefinition = "DATETIME")
@@ -82,13 +91,21 @@ public class Delegate extends AbstractEntity {
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "delegate")
 	private Set<Candidate> candidateDetails = new HashSet<Candidate>(0);
+
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "type_id")
-	private DelegateType delegateType;
 	
-	@Column(name = "address_house")
-	private String addressHouse;
+	
+	
+	
+	
+	///////////////////////////////////
+	public String getOrdinal() {
+		return ordinal;
+	}
+
+	public void setOrdinal(String ordinal) {
+		this.ordinal = ordinal;
+	}
 
 	public String getName() {
 		return name;
@@ -98,12 +115,20 @@ public class Delegate extends AbstractEntity {
 		this.name = name;
 	}
 
-	public String getGender() {
-		return gender;
+	public String getPlaceOfBirth() {
+		return placeOfBirth;
 	}
 
-	public void setGender(String gender) {
-		this.gender = gender;
+	public void setPlaceOfBirth(String placeOfBirth) {
+		this.placeOfBirth = placeOfBirth;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getDateOfBirth() {
@@ -114,12 +139,12 @@ public class Delegate extends AbstractEntity {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public String getPlaceOfBirth() {
-		return placeOfBirth;
+	public String getGender() {
+		return gender;
 	}
 
-	public void setPlaceOfBirth(String placeOfBirth) {
-		this.placeOfBirth = placeOfBirth;
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	public String getEthnic() {
@@ -146,36 +171,52 @@ public class Delegate extends AbstractEntity {
 		this.dateOfYouthUnion = dateOfYouthUnion;
 	}
 
-	public String getDateOfParty() {
-		return dateOfParty;
+	public String getDateOfPartyPreparatory() {
+		return dateOfPartyPreparatory;
 	}
 
-	public void setDateOfParty(String dateOfParty) {
-		this.dateOfParty = dateOfParty;
+	public void setDateOfPartyPreparatory(String dateOfPartyPreparatory) {
+		this.dateOfPartyPreparatory = dateOfPartyPreparatory;
 	}
 
-	public String getFieldOfStudy() {
-		return fieldOfStudy;
+	public String getDateOfPartyOfficial() {
+		return dateOfPartyOfficial;
 	}
 
-	public void setFieldOfStudy(String fieldOfStudy) {
-		this.fieldOfStudy = fieldOfStudy;
+	public void setDateOfPartyOfficial(String dateOfPartyOfficial) {
+		this.dateOfPartyOfficial = dateOfPartyOfficial;
 	}
 
-	public String getPoliticalTheory() {
-		return politicalTheory;
+	public String getPosition() {
+		return position;
 	}
 
-	public void setPoliticalTheory(String politicalTheory) {
-		this.politicalTheory = politicalTheory;
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
-	public String getAchievement() {
-		return achievement;
+	public Unit getUnit() {
+		return unit;
 	}
 
-	public void setAchievement(String achievement) {
-		this.achievement = achievement;
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
+
+	public DelegateType getType() {
+		return type;
+	}
+
+	public void setType(DelegateType type) {
+		this.type = type;
+	}
+
+	public DelegateExtension getExtension() {
+		return extension;
+	}
+
+	public void setExtension(DelegateExtension extension) {
+		this.extension = extension;
 	}
 
 	public String getImagePath() {
@@ -185,7 +226,7 @@ public class Delegate extends AbstractEntity {
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
-	
+
 	public Date getArivalTime() {
 		return arivalTime;
 	}
@@ -217,45 +258,5 @@ public class Delegate extends AbstractEntity {
 	public void setCandidateDetails(Set<Candidate> candidateDetails) {
 		this.candidateDetails = candidateDetails;
 	}
-
-	public Unit getUnit() {
-		return unit;
-	}
-
-	public void setUnit(Unit unit) {
-		this.unit = unit;
-	}
-
-	public String getPosition() {
-		return position;
-	}
-
-	public void setPosition(String position) {
-		this.position = position;
-	}
-
-	public String getOrdinal() {
-		return ordinal;
-	}
-
-	public void setOrdinal(String ordinal) {
-		this.ordinal = ordinal;
-	}
-
-	public DelegateType getDelegateType() {
-		return delegateType;
-	}
-
-	public void setDelegateType(DelegateType delegateType) {
-		this.delegateType = delegateType;
-	}
-
-	public String getAddressHouse() {
-		return addressHouse;
-	}
-
-	public void setAddressHouse(String addressHouse) {
-		this.addressHouse = addressHouse;
-	}
-
+	
 }

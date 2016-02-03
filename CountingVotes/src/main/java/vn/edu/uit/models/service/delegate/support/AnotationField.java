@@ -5,7 +5,6 @@ public class AnotationField {
 	private String fieldName;
 	private String defaultValue;
 
-
 	public String getFieldName() {
 		return fieldName;
 	}

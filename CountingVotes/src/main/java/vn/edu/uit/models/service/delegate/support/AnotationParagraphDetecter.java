@@ -14,7 +14,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 public final class AnotationParagraphDetecter {
 
 	private List<AnotationField> fields = new ArrayList<AnotationField>();
-	private String linkRegexs;
+	private String linkRegexs = "";
 
 	public List<AnotationField> getFields() {
 		return fields;
@@ -41,7 +41,7 @@ public final class AnotationParagraphDetecter {
 		String result = "";
 		if (linkRegexs != null && !linkRegexs.isEmpty())
 			result += "Regexs : " + linkRegexs + "\n";
-		
+
 		for (int i = 0; i < fields.size(); i++) {
 			result += fields.get(i).toString();
 		}

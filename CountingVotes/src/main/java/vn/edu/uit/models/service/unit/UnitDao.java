@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,8 +49,12 @@ public class UnitDao extends AbstractDao implements IUnitDao {
 	public Unit fetch(String name) {
 		Criteria crit = getSession().createCriteria(Unit.class);
 		crit.add(Restrictions.eq("isEnabled", true));
-		crit.add(Restrictions.and(Restrictions.eq("name", name)));
 
+		Criterion rest1 = Restrictions.eq("shortName", name);
+		Criterion rest2 = Restrictions.eq("name", name);
+		
+		crit.add(Restrictions.and(Restrictions.or(rest1, rest2)));
+		
 		return (Unit) crit.uniqueResult();
 	}
 
