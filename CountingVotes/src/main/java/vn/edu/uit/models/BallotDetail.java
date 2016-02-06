@@ -23,9 +23,6 @@ import vn.edu.uit.models.common.AbstractEntity;
 @Table(name = "Ballot_Detail")
 public class BallotDetail implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

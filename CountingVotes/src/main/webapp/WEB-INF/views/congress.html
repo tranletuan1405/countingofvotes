@@ -1,132 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Congress</title>
+<title>Congress</title>
 
-	<!-- Boot strap -->
-	<script type="text/javascript" th:src="@{/js/common/jquery-2.1.4.min.js}"></script>
-	
-	<!-- Metro UI -->
-	<script type="text/javascript" th:src="@{js/bootstrap/metro.min.js}"></script>
-	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/metro.min.css}"/>
-	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/metro-icons.min.css}"/>
-	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/metro-responsive.min.css}"/>
-	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/metro-schemes.min.css}"/>
-	
-	<!-- Datatables -->
-	<script type="text/javascript" th:src="@{/js/datatables/jquery.dataTables.min.js}"></script>
-	<script type="text/javascript" th:src="@{/js/datatables/editor/dataTables.select.min.js}"></script>
-	
-	<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
-	<link rel="stylesheet" type="text/css" th:href="@{/css/common/common.css}"/>
-	
-	<script type="text/javascript" th:src="@{/js/pages/congress_list.js}"></script>
-	
+<!-- JQuery -->
+<script type="text/javascript" th:src="@{/js/common/jquery-2.1.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}" />
+<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/common/common.css}" />
+
+<!-- Datatables -->
+<script type="text/javascript" th:src="@{/js/datatables/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/dataTables.bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/dataTables.select.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/datatables/dataTables.bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/datatables/select.bootstrap.min.css}" />
+
+
+<script type="text/javascript" th:src="@{/js/pages/congress_list.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/pages/congress_list.css}" />
+
 </head>
 <body>
 	<div class="container">
 
-		<!-- Create congress form -->
-		<div class="panel collapsed">
-			<div class="heading primary_color">
-				<span class="title">Tạo thông tin Đại hội</span>
-			</div>
-			<div class="content">
-				<div class="grid">
-					<div class="row cells5">
-						<div class="cell"></div>
-						<div class="cell colspan3">
+		<div class="panel-group" id="congress" role="tablist"
+			aria-multiselectable="true">
 
-							<form data-role="validator">
-								<br></br> <br></br>
-								
-								<div class="input-control text required full-size">
-									<label for="congress_name">Tên Đại hội</label>
-									<input name="congress_name" type="text" data-validate-func="required" data-show-error-hint="false"/> 
-									<span class="input-state-error mif-warning"></span> 
-									<span class="input-state-success mif-checkmark"></span>
-								</div>
-									
-								<br></br> <br></br>
-								
-								<div class="input-control text full-size" id="datepicker">
-									<label for="congress_start_time">Thời gian bắt đầu</label>
-									<input name="congress_start_time" type="text" />
-									<button class="button">
-										<span class="mif-calendar"></span>
-									</button>
-								</div>
-								
-								<br></br> <br></br>
-																
-								<div class="input-control file full-size" data-role="input">
-									<label for="congress_delegate_file">Danh sách Đại biểu</label>
-									<input name="congress_delegate_file" type="file"
-										accept="application/msword, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
-									<button class="button">
-										<span class="mif-folder"></span>
-									</button>
-								</div>
-								
-								<br></br> <br></br>
-								
-								<div class="input-control file full-size" data-role="input">
-									<label for="congress_logo_file">Ảnh biểu trưng Đại hội</label>
-									<input name="congress_logo_file" type="file" accept="image/*"/>
-									<button class="button">
-										<span class="mif-folder"></span>
-									</button>
-								</div>
-								
-								<br></br> <br></br>
-								
-								<div class="input-control file full-size" data-role="input">
-									<label for="congress_banner_file">Ảnh bìa Đại hội</label>
-									<input name="congress_banner_file" type="file" accept="image/*"/>
-									<button class="button">
-										<span class="mif-folder"></span>
-									</button>
-								</div>
-								
-								<br></br><br></br>
-												
-								<div>
-									<button class="button info block-shadow-info text-shadow">Tạo</button>
-								</div>
-								
-								<br></br> 
-							</form>
+			<!-- Panel Table -->
+			<div class="panel panel-info">
+				<div class="panel-heading" role="tab" id="congress_list">
+					<h2 class="panel-title">
+						<a class="collapsed" id="title-list-congress" role="button"
+							data-toggle="collapse" data-parent="#congress"
+							href="#congress_list_content" aria-expanded="true"
+							aria-controls="congress_list_content">Danh sách Đại hội</a>
+					</h2>
+				</div>
 
-						</div>
-						<div class="cell"></div>
+				<div id="congress_list_content" class="panel-collapse collapsed in"
+					role="tabpanel" aria-labelledby="congress_list">
+					<div class="panel-body">
+
+						<table id="congress-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th>STT</th>
+									<th>Tên Đại hội</th>
+									<th>Số đơn vị</th>
+									<th>Số đại biểu</th>
+									<th>Số lần bầu cử</th>
+									<th>Bắt đầu</th>
+									<th>Kết thúc</th>
+									<th></th>
+								</tr>
+							</thead>
+							
+							<tfoot>
+								<tr>
+									<th>STT</th>
+									<th>Tên Đại hội</th>
+									<th>Số đơn vị</th>
+									<th>Số đại biểu</th>
+									<th>Số lần bầu cử</th>
+									<th>Bắt đầu</th>
+									<th>Kết thúc</th>
+									<th></th>
+								</tr>
+							</tfoot>
+							
+						</table>
 					</div>
 				</div>
 			</div>
-		</div>
-		
-		<br></br> 
-		
-		<!-- Datatables -->
-		<div class="panel">
-			<div class="heading">
-				<span class="title">Danh sách Đại hội</span>
+
+			<!-- Panel Create -->
+			<div class="panel panel-info">
+				<div class="panel-heading" role="tab" id="create_congress">
+					<h2 class="panel-title" style="font-size: 25;">
+						<a id="title-create-congress" role="button" data-toggle="collapse"
+							data-parent="#congress" href="#create_congress_content"
+							aria-expanded="false" aria-controls="create_congress_content">Tạo
+							thông tin Đại hội</a>
+					</h2>
+				</div>
+
+				<div id="create_congress_content" class="panel-collapse collapse"
+					role="tabpanel" aria-labelledby="create_congress">
+					<div class="panel-body">123</div>
+				</div>
 			</div>
-			
-			<div class="content" style="padding-left: 10px; padding-right: 10px;">
-				<table id="example" class="dataTable">
-					<thead>
-						<tr>
-							<th>Tên Đại hội</th>
-							<th>Số đơn vị</th>
-							<th>Số Đại biểu</th>
-							<th>Số bầu cử</th>
-							<th>Thời gian bắt đầu</th>
-							<th>Thời gian kết thúc</th>
-						</tr>
-					</thead>
-				</table>
-			</div>
+
 		</div>
+
 	</div>
 </body>
 </html>

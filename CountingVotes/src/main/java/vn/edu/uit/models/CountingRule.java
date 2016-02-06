@@ -14,6 +14,7 @@ import vn.edu.uit.models.common.AbstractEntity;
 @Table(name = "Counting_Rule")
 public class CountingRule extends AbstractEntity {
 
+	
 	@Column(name = "max_selected", nullable = false)
 	private int maxSelected;
 	

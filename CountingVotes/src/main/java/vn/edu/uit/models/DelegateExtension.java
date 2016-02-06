@@ -10,6 +10,7 @@ import vn.edu.uit.models.common.AbstractEntity;
 @Table(name = "Delegate_Extension")
 public class DelegateExtension extends AbstractEntity {
 
+	
 	@Column(name = "educational") //Hoc Van
 	private String educational;
 	

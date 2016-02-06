@@ -17,6 +17,7 @@ import vn.edu.uit.models.common.AbstractEntity;
 @Table(name = "Unit")
 public class Unit extends AbstractEntity {
 
+	
 	@Column(name =  "code")
 	private String code;
 	

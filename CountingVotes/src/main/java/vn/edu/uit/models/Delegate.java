@@ -22,6 +22,7 @@ import vn.edu.uit.models.common.AbstractEntity;
 @Table(name = "Delegate")
 public class Delegate extends AbstractEntity {
 
+	
 	//Basic field
 	@Column(name = "ordinal", columnDefinition="VARCHAR(10)") //STT
 	private String ordinal;

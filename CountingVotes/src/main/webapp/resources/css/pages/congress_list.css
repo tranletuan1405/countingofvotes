@@ -1,0 +1,20 @@
+@CHARSET "UTF-8";
+
+#congress_list {
+	background-color: #00aff0;
+}
+
+#create_congress {
+	background-color: #00aff0;
+}
+
+#title-list-congress {
+	font-weight: bold;
+	color: white;
+}
+
+#title-create-congress {
+	font-weight: bold;
+	color: white;
+}
+

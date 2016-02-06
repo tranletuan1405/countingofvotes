@@ -25,6 +25,7 @@ import vn.edu.uit.models.common.AbstractEntity;
 @Table(name = "Congress")
 public class Congress extends AbstractEntity{
 
+	
 	@Column(name = "name", nullable = false)
 	private String name;
 	
