@@ -17,10 +17,10 @@
 	<bean id="mapper" class="com.fasterxml.jackson.databind.ObjectMapper"></bean>
 	
 	<!-- DAO -->
-	<bean id="congressDao" class="vn.edu.uit.models.service.congress.CongressDao"></bean>
-	<bean id="delegateDao" class="vn.edu.uit.models.service.delegate.DelegateDao"></bean>
 	<bean id="unitDao" class="vn.edu.uit.models.service.unit.UnitDao"></bean>
 	<bean id="delegateTypeDao" class="vn.edu.uit.models.service.delegate_type.DelegateTypeDao"></bean>
+	<bean id="congressDao" class="vn.edu.uit.models.service.congress.CongressDao"></bean>
+	<bean id="delegateDao" class="vn.edu.uit.models.service.delegate.DelegateDao"></bean>
 	
 	<!-- Data service -->
 	<bean id="congressService" class="vn.edu.uit.models.service.congress.CongressService"></bean>

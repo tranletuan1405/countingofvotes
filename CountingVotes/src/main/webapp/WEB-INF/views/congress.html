@@ -17,6 +17,9 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/datatables/dataTables.bootstrap.min.css}" />
 <link rel="stylesheet" type="text/css" th:href="@{/css/datatables/select.bootstrap.min.css}" />
 
+<!-- Date Time Picker -->
+<script type="text/javascript" th:src="@{/js/bootstrap/bootstrap-datetimepicker.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap-datetimepicker.min.css}" />
 
 <script type="text/javascript" th:src="@{/js/pages/congress_list.js}"></script>
 <link rel="stylesheet" type="text/css" th:href="@{/css/pages/congress_list.css}" />
@@ -24,7 +27,6 @@
 </head>
 <body>
 	<div class="container">
-
 		<div class="panel-group" id="congress" role="tablist"
 			aria-multiselectable="true">
 
@@ -88,12 +90,103 @@
 
 				<div id="create_congress_content" class="panel-collapse collapse"
 					role="tabpanel" aria-labelledby="create_congress">
-					<div class="panel-body">123</div>
+					<div class="panel-body">
+						<form class="form-horizontal">
+							
+							<!-- Congress Name -->
+							<div class="form-group">
+								<label for="congress-name" class="col-sm-2 control-label">Tên Đại hội</label>
+								<div class="col-sm-8 input-group">
+									<div class="input-group-addon"><span class="glyphicon glyphicon-pencil"/></div>
+									<input type="text" required="true" class="form-control" id="congress-name" placeholder="Tên Đại hội" />
+								</div>
+							
+							</div>
+							
+							
+							<!-- Start Time -->
+							<div class="form-group">
+								<label for="start-time" class="col-sm-2 control-label">Thời gian bắt đầu</label>
+								<div class="col-sm-8 input-group">
+									<div class="input-group-addon"><span class="glyphicon glyphicon-time"/></div>
+									<input type="text" required="true" class="form-control form-datetime date" id="start-time"
+										placeholder="Thời gian bắt đầu"/>
+								
+								</div>
+								
+							</div>
+							
+							<!-- Delegates File  -->
+							<div class="form-group">
+								<label for="delegates-file" class="col-sm-2 control-label">Danh sách Đại biểu</label>
+								<div class="col-sm-8 input-group">
+									<div class="input-group-addon"><span class="glyphicon glyphicon-list-alt"/></div>
+									<input type="file" required="true" class="form-control" id="delegates-file" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
+								
+									<div class="input-group-addon">
+										<span class="glyphicon glyphicon-search"></span>
+										<a data-toggle="modal" data-target="#delegates-table">Kiểm tra thông tin</a>
+									</div>
+								</div>
+								
+							</div>
+							
+							<!-- Avatar -->
+							<div class="form-group">
+								<label for="avatar-file" class="col-sm-2 control-label">Ảnh biểu trưng</label>
+								<div class="col-sm-8 input-group">
+									<div class="input-group-addon"><span class="glyphicon glyphicon-picture"/></div>
+									<input type="file" class="form-control" id="avatar-file" accept="images/*"/>
+								</div>
+								
+							</div>
+							
+							<!-- Banner -->
+							<div class="form-group">
+								<label for="banner-file" class="col-sm-2 control-label">Ảnh bìa</label>
+								<div class="col-sm-8 input-group">
+									<div class="input-group-addon"><span class="glyphicon glyphicon-picture"/></div>
+									<input type="file" class="form-control" id="banner-file" accept="images/*"/>
+								</div>
+								
+							</div>
+							
+							<!-- Submit Button -->
+							<div class="form-group">
+								<label for="submit-button" class="col-sm-2 control-label"></label>
+								<div class="col-sm-8 input-group">
+									<button type="submit" class="btn btn-success" id="submit-button">Tạo</button>
+								</div>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 
 		</div>
-
+	</div>
+	
+	<!-- Model Delegates Table -->
+	<div class="modal fade" id="delegates-table" tabindex="-1" role="dialog"
+		aria-labelledby="delegatesTableModalLabel">
+		<div class="modal-dialog  modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Danh sách Đại biểu</h4>
+				</div>
+				<div class="modal-body">
+				
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
