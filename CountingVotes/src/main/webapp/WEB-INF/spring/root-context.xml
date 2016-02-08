@@ -6,26 +6,27 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-	
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	
+
 	<context:component-scan base-package="vn.edu.uit">
 		<context:exclude-filter expression="org.springframework.stereotype.Controller"
 			type="annotation" />
 	</context:component-scan>
-	
+
 	<bean id="mapper" class="com.fasterxml.jackson.databind.ObjectMapper"></bean>
-	
+
 	<!-- DAO -->
 	<bean id="unitDao" class="vn.edu.uit.models.service.unit.UnitDao"></bean>
 	<bean id="delegateTypeDao" class="vn.edu.uit.models.service.delegate_type.DelegateTypeDao"></bean>
 	<bean id="congressDao" class="vn.edu.uit.models.service.congress.CongressDao"></bean>
 	<bean id="delegateDao" class="vn.edu.uit.models.service.delegate.DelegateDao"></bean>
-	
+
 	<!-- Data service -->
 	<bean id="congressService" class="vn.edu.uit.models.service.congress.CongressService"></bean>
 	<bean id="delegateService" class="vn.edu.uit.models.service.delegate.DelegateService"></bean>
 	<bean id="unitService" class="vn.edu.uit.models.service.unit.UnitService"></bean>
-	<bean id="delegateTypeService" class="vn.edu.uit.models.service.delegate_type.DelegateTypeService"></bean>
-	
+	<bean id="delegateTypeService"
+		class="vn.edu.uit.models.service.delegate_type.DelegateTypeService"></bean>
+
 </beans>

@@ -13,8 +13,10 @@ $(document).ready(function() {
 	
 });
 
-function showDialog(id) {
-	var dialog = $(id).data('dialog');
-	dialog.open();
+function showModal(target){
+	var modal = $(target).modal({
+		keyboard: false,
+    	backdrop: 'static'
+	});
 };
 

@@ -29,6 +29,60 @@ $(document).ready(function() {
         select: 'single'
     } );
     
+    
+    var file = $('#delegates-file').on('change', prepareUpload);
+    
+    function prepareUpload(event) {
+    	var file = event.target.files[0];
+    	if(file == null) return;
+    	showModal('#process-modal');
+    	
+    	var data = new FormData();
+    	data.append("delegatesFile", file);
   
+    	$.ajax(
+		{
+			url : "checking_delegates_file",
+			type : "POST",
+			data : data,
+			contentType: false,
+	        processData: false,
+	        cache: false,
 
+			success : function(data){
+				console.log(data);
+				var delegate_table = $('#delegate-table').DataTable({
+		    		ajax : "delegates_table",
+		    		"order": [[ 0, "desc" ]],
+		    		rowId : "id",
+		    		columns: [
+		    		   { data : "ordinal" },
+		    		   { data : "name" },
+		    		   { data : "placeOfBirth" },
+		    		   { data : "address" },
+		    		   { data : "dateOfBirth" },
+		    		   { data : "gender" },
+		    		   { data : "ethnic" },
+		    		   { data : "religion" },
+		    		   { data : "dateOfYouthUnion" },
+		    		   { data : "dateOfPartyPreparatory" },
+		    		   { data : "dateOfPartyOfficial" },
+		    		   { data : "unit.shortName" },
+		    		   { data : "position" },
+		    		   { data : "type.shortName" },
+		    		   { data : "note" }
+		    		],
+		    		
+		    		select: 'single'
+		    	});
+				
+				$('#process-modal').modal('toggle');
+				$('#modal-delegate-table').modal('show');
+			},
+			error : function(){
+				console.log("Error");
+				$('#process-modal').modal('toggle');
+			}
+		});	
+    };
 });
