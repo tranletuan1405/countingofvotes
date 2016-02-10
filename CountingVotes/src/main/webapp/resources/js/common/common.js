@@ -20,3 +20,7 @@ function showModal(target){
 	});
 };
 
+function removeInput(input){
+	var inp = $(input).val('');
+}
+

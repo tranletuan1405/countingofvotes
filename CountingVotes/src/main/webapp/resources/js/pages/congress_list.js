@@ -1,13 +1,15 @@
 
 $(document).ready(function() {
-
+	var table;
+	var delegate_table;
 	/*$('#congress-table tfoot th').each( function () {
 	  var title = $(this).text();
 	  	$(this).html("<input type='text' class='form-control' placeholder='" + title + "'/>" );
 	});
 	  */
 	
-    var table = $('#congress-table').DataTable( {
+
+	table = $('#congress-table').DataTable( {
         ajax: "congress_table",
         "order": [[ 0, "desc" ]],
         "columnDefs": [{
@@ -50,8 +52,9 @@ $(document).ready(function() {
 	        cache: false,
 
 			success : function(data){
-				console.log(data);
-				var delegate_table = $('#delegate-table').DataTable({
+				//if(delegate_table != null) delegate_table.destroy();
+				delegate_table = $('#delegate-table').DataTable({
+					destroy : true,
 		    		ajax : "delegates_table",
 		    		"order": [[ 0, "desc" ]],
 		    		rowId : "id",

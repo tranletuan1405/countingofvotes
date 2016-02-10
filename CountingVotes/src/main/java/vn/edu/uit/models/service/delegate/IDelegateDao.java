@@ -1,5 +1,7 @@
 package vn.edu.uit.models.service.delegate;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 import vn.edu.uit.models.Delegate;
 
@@ -14,6 +16,6 @@ public interface IDelegateDao {
 	
 	List<Delegate> fetch(int min, int max);
 	
-	List<Delegate> getByDocument(String filePath);
+	List<Delegate> getByDocument(InputStream is);
 
 }

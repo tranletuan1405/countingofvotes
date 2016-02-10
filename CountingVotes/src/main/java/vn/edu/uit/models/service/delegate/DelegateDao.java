@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +44,6 @@ import vn.edu.uit.models.service.unit.UnitDao;
 public class DelegateDao extends AbstractDao implements IDelegateDao {
 
 	private static final Logger logger = LoggerFactory.getLogger(DelegateDao.class);
-	private static int Ordinal = 1;
 	
 	@Autowired
 	private IUnitDao unitDao;
@@ -88,13 +88,11 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 	}
 
 	@Override
-	public List<Delegate> getByDocument(String filePath) {
+	public List<Delegate> getByDocument(InputStream is) {
 
 		List<Delegate> delegates = new ArrayList<Delegate>(0);
-
 		try {
 
-			FileInputStream is = new FileInputStream(new File(filePath));
 			XWPFDocument document = new XWPFDocument(is);
 
 			List<XWPFTable> tables = document.getTables();
@@ -124,13 +122,11 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 
 			Map<Integer, AnotationColumnDetecter> format = AnotationDetecter.getFormat(title, title2);
 			List<XWPFTableRow> rows = table.getRows();
-			
-		
-			
+
 			for (int i = firstData, Ordinal = 1; i < rows.size(); i++, Ordinal++) {
-				logger.info("Row : " + i);
 				XWPFTableRow row = rows.get(i);
 				Delegate delegate = new Delegate();
+				delegate.setOrdinal(String.valueOf(Ordinal));
 				fillDataDelegate(row, format, delegate);
 				delegates.add(delegate);
 			}
@@ -148,8 +144,7 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 	}
 
 	// Support Method
-	private void fillDataDelegate(XWPFTableRow row, Map<Integer, AnotationColumnDetecter> format,
-			Delegate delegate) {
+	private void fillDataDelegate(XWPFTableRow row, Map<Integer, AnotationColumnDetecter> format, Delegate delegate) {
 
 		List<XWPFTableCell> columns = row.getTableCells();
 
@@ -171,30 +166,29 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 			// Loop paragraph format
 			List<XWPFParagraph> paragraphs = column.getParagraphs();
 			for (Map.Entry<Integer, AnotationParagraphDetecter> entryPara : paraFormat.entrySet()) {
-				
+
 				try {
 					XWPFParagraph paragraph = paragraphs.get(entryPara.getKey());
 					AnotationParagraphDetecter paragraphDetecter = entryPara.getValue();
 					List<AnotationField> fields = paragraphDetecter.getFields();
-					String [] values = paragraph.getText().split(paragraphDetecter.getLinkRegexs());
-				
+					String[] values = paragraph.getText().split(paragraphDetecter.getLinkRegexs());
+
 					// Loop anotation field
 					for (int i = 0; i < fields.size(); i++) {
 						AnotationField field = fields.get(i);
 						String fieldName = field.getFieldName();
 						String value = "";
-						if(paragraphDetecter.getLinkRegexs() != null && !paragraphDetecter.getLinkRegexs().isEmpty()){
+						if (paragraphDetecter.getLinkRegexs() != null && !paragraphDetecter.getLinkRegexs().isEmpty()) {
 							value = values[i];
-						}
-						else {
+						} else {
 							value = paragraph.getText();
 						}
-											
+
 						if (paragraph.getText() != null && !paragraph.getText().isEmpty()
 								&& field.getDefaultValue() != null && !field.getDefaultValue().isEmpty()) {
 							value = field.getDefaultValue();
 						}
-						
+
 						fillDataField(fieldName, value, delegate); // Fill Data
 					}
 				} catch (Exception e) {
@@ -207,10 +201,13 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 	private void fillDataField(String field, String value, Delegate delegate) {
 
 		try {
-			if (field == null || field.isEmpty()) return;
-			// if(value == null || value.isEmpty()) return;
+			if (field == null || field.isEmpty())
+				return;
+			if (value == null || value.isEmpty())
+				return;
+
 			logger.info("Field : " + field + ", value : " + value);
-			
+
 			EnumDelegateField enumField = EnumDelegateField.getEnumByDescription(field);
 
 			switch (enumField) {
@@ -239,10 +236,6 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 				delegate.setName(value);
 				break;
 			case Ordinal:
-				if(value == null || value.isEmpty()){
-					value = String.valueOf(this.Ordinal);
-				}
-				
 				delegate.setOrdinal(value);
 				break;
 			case PlaceOfBirth:
@@ -255,8 +248,7 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 				delegate.setReligion(value);
 				break;
 			case Type:
-				if (value == null || value.isEmpty()) return;
-				
+
 				DelegateType type = delegateTypeDao.fetch(value);
 				if (type == null) {
 					type = new DelegateType();
@@ -266,12 +258,11 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 				delegate.setType(type);
 				break;
 			case Unit:
-				if (value == null || value.isEmpty()) return;
-				
+
 				Unit unit = unitDao.fetch(value);
 				if (unit == null) {
 					unit = new Unit();
-					unit.setName(value);
+					unit.setShortName(value);
 				}
 
 				delegate.setUnit(unit);

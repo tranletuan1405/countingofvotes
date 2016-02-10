@@ -1,5 +1,7 @@
 package vn.edu.uit.controllers;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,7 @@ import vn.edu.uit.models.DelegateType;
 import vn.edu.uit.models.Unit;
 import vn.edu.uit.models.json.CongressJson;
 import vn.edu.uit.models.service.congress.CongressService;
+import vn.edu.uit.models.service.delegate.DelegateService;
 
 @Controller
 public class CongressController {
@@ -41,6 +44,9 @@ public class CongressController {
 
 	@Autowired
 	private CongressService congressService;
+	
+	@Autowired
+	private DelegateService delegateService;
 
 	@RequestMapping(value = "/")
 	public ModelAndView congress() {
@@ -63,41 +69,29 @@ public class CongressController {
 	@ResponseBody
 	public String checkingDelegatesFile(
 			@RequestParam(value = "delegatesFile") MultipartFile delegatesFile,
-			HttpServletRequest request) throws JsonProcessingException{
+			HttpServletRequest request) throws IOException{
 		
 		HttpSession session = request.getSession();
-		session.setAttribute("delegatesFile", delegatesFile);
+		session.setAttribute("delegatesIS", delegatesFile.getInputStream());
 		
 		return "success";
 	}
 	
 	@RequestMapping(value = "/delegates_table")
 	@ResponseBody
-	public String delegatesTable(HttpServletRequest request) throws JsonProcessingException {
+	public String delegatesTable(HttpServletRequest request) throws IOException {
 		
 		HttpSession session = request.getSession();
-		MultipartFile file = (MultipartFile) session.getAttribute("delegatesFile");
-		if(file == null) return "";
+		InputStream is = (InputStream) session.getAttribute("delegatesIS");
+		if(is == null) return "";
 		
-		Delegate delegate = new Delegate();
-		List<Delegate> list = new ArrayList<Delegate>();
-		delegate.setOrdinal("1");
-		delegate.setName(file.getOriginalFilename());
-		Unit unit = new Unit();
-		unit.setShortName("CNPM");
-		delegate.setUnit(unit);
-		DelegateType type = new DelegateType();
-		type.setShortName("ÐBÐN");
-		delegate.setType(type);
-		
-		list.add(delegate);
+		List<Delegate> delegates = delegateService.getByDocument(is);
 		
 		ListHolder<Delegate> json = new ListHolder<Delegate>();
-		json.setData(list);
-		
-		
-		
+		json.setData(delegates);
+
 		return mapper.writeValueAsString(json);
+		
 	}
 
 	@RequestMapping(value = "/create_congress", method = RequestMethod.POST)

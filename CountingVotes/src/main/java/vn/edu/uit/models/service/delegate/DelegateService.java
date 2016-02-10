@@ -1,5 +1,7 @@
 package vn.edu.uit.models.service.delegate;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -39,8 +41,8 @@ public class DelegateService implements IDelegateDao{
 	}
 
 	@Override
-	public List<Delegate> getByDocument(String filePath) {
-		return delegateDao.getByDocument(filePath);
+	public List<Delegate> getByDocument(InputStream is) {
+		return delegateDao.getByDocument(is);
 	}
 
 }
