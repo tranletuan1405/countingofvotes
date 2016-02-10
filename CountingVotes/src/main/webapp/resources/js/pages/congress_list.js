@@ -56,7 +56,6 @@ $(document).ready(function() {
 				delegate_table = $('#delegate-table').DataTable({
 					destroy : true,
 		    		ajax : "delegates_table",
-		    		"order": [[ 0, "desc" ]],
 		    		rowId : "id",
 		    		columns: [
 		    		   { data : "ordinal" },
@@ -76,16 +75,24 @@ $(document).ready(function() {
 		    		   { data : "note" }
 		    		],
 		    		
-		    		select: 'single'
+		    		select: 'single',
+		    		fixedColumns: true,
+		    		"lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "Tất cả"]],
+		    		"initComplete": function(settings, json) {
+		    			$('#process-modal').modal('hide');
+						$('#modal-delegate-table').modal('show');
+		    		  }
 		    	});
-				
-				$('#process-modal').modal('toggle');
-				$('#modal-delegate-table').modal('show');
+			
 			},
 			error : function(){
 				console.log("Error");
-				$('#process-modal').modal('toggle');
+				$('#process-modal').modal('hide');
 			}
 		});	
     };
+    
+    $('#modal-delegate-table').on('hidden.bs.modal', function (e) {
+    	 $('#modal-delegate-table .modal-body').removeClass('modal-body-show-table');
+    });
 });

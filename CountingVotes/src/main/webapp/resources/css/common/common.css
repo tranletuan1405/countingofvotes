@@ -5,3 +5,8 @@
 .standard-color {
 	background-color: #00aff0;
 }
+
+.modal-body-show-table {
+    max-height: calc(70vh);
+    overflow-y: auto;
+}
