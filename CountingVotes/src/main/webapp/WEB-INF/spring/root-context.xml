@@ -15,6 +15,7 @@
 	</context:component-scan>
 
 	<bean id="mapper" class="com.fasterxml.jackson.databind.ObjectMapper"></bean>
+	<bean id="barcode" class="vn.edu.uit.extra.BarcodeGenerator"></bean>
 
 	<!-- DAO -->
 	<bean id="unitDao" class="vn.edu.uit.models.service.unit.UnitDao"></bean>

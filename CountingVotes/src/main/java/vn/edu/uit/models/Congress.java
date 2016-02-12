@@ -49,6 +49,20 @@ public class Congress extends AbstractEntity{
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "congress")
 	private Set<Delegate> delegates = new HashSet<Delegate>(0);
 	
+	@Column(name = "congress_key", nullable = false, updatable = false, columnDefinition = "varchar(24)")
+	private String congressKey;
+
+	@Column(name = "congress_iv", nullable = false, updatable = false, columnDefinition = "varchar(8)")
+	private String congressIv;
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public String getName() {
 		return name;
 	}
@@ -104,5 +118,22 @@ public class Congress extends AbstractEntity{
 	public void setDelegates(Set<Delegate> delegates) {
 		this.delegates = delegates;
 	}
+
+	public String getCongressKey() {
+		return congressKey;
+	}
+
+	public void setCongressKey(String congressKey) {
+		this.congressKey = congressKey;
+	}
+
+	public String getCongressIv() {
+		return congressIv;
+	}
+
+	public void setCongressIv(String congressIv) {
+		this.congressIv = congressIv;
+	}
+
 	
 }

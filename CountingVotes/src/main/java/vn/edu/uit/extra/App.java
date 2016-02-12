@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import org.apache.poi.POIXMLProperties;
 import org.apache.poi.hwpf.HWPFDocument;
@@ -42,84 +44,28 @@ public class App {
 
 	public static void main(String[] args) throws Exception {
 		String fileName = "C:\\Users\\tuantran\\Desktop\\test.docx";
+		String imagePath = "test.png";
 
-		/*
-		 * String str = "  @ChucVu[123]";
-		 * 
-		 * String anotaionStr = getAnotationString(str);
-		 * 
-		 * System.out.println("Anotation String : " + anotaionStr);
-		 * 
-		 * String[] anotations = anotaionStr.split("@"); for(int i = 1; i <
-		 * anotations.length; i++){ String anotation = anotations[i]; String
-		 * linkStr = getLinkString(anotation, DataConfig.ACCESS_STRING); String
-		 * field = anotation; if(!linkStr.isEmpty()){ field =
-		 * anotation.split(linkStr)[0]; } }
-		 */
-
-		String str = "ashjdkjasdkjasda";
-		String[] rs = str.split("");
+		/*String uniqueID = UUID.randomUUID().toString(); //1da80825-f4be-4887-94ee-d44967efb559
+		String congressKey = SupportMethods.getRandomString(24);
+		String congressIv = SupportMethods.getRandomString(8);
 		
-		System.out.print(rs[1]);
-		for(String r : rs){
-			
-		}
- 		//List<Delegate> delegates = getByDocument(fileName);
-
-	}
-
-	public static List<Delegate> getByDocument(String filePath) {
-
-		List<Delegate> delegates = new ArrayList<Delegate>(0);
-
-		try {
-
-			FileInputStream is = new FileInputStream(new File(filePath));
-			XWPFDocument document = new XWPFDocument(is);
-
-			List<XWPFTable> tables = document.getTables();
-			XWPFTable table = null;
-			int maxRow = 1;
-			for (XWPFTable t : tables) {
-				int rowCount = t.getNumberOfRows();
-				if (rowCount > maxRow) {
-					maxRow = rowCount;
-					table = t;
-				}
-			}
-
-			if (table == null || table.getNumberOfRows() < 1) {
-				System.out.println("Table is Null");
-				return delegates;
-			}
-
-			// Detect title format
-			XWPFTableRow title = table.getRow(0);
-			XWPFTableRow title2 = null;
-			int firstData = 1;
-			if (AnotationDetecter.isMerged(table)) {
-				title2 = table.getRow(1);
-				firstData = 2;
-			}
-
-			Map<Integer, AnotationColumnDetecter> format = AnotationDetecter.getFormat(title, title2);
-			List<XWPFTableRow> rows = table.getRows();
-			for(int i = firstData; i < rows.size(); i++){
-				XWPFTableRow row = rows.get(i);
-			}
+		TripleDes tDes = new TripleDes(congressKey, congressIv);
+		String encrypt = tDes.encryptText(uniqueID);
+		String decrypt = tDes.decryptText(encrypt);
 		
-
-			return delegates;
-		} catch (FileNotFoundException e) {
-			System.out.println("Table is Null");
-			e.printStackTrace();
-			return delegates;
-		} catch (IOException e) {
-			System.out.println("Table is Null");
-			e.printStackTrace();
-			return delegates;
-		}
+		//df07c5ea-71d0-49bd-b63d-a127a0a247fe
+		//020d3144-abd1-4368-adf8-e8d5de265c14
+		BarcodeGenerator barcode = new BarcodeGenerator();
+		String result = barcode.generateQR("barcode/123123", "test.png", encrypt, 350);
+		
+		System.out.println(uniqueID);
+		System.out.println(encrypt);
+		System.out.println(decrypt);
+		System.out.println("Create barcode " + result);*/
+		
+		String path = SupportMethods.dateToString(new Date(), DataConfig.DATE_TIME_FORMAT) + "_" + SupportMethods.getUID();
+		System.out.println(path);
 	}
-
 	
 }

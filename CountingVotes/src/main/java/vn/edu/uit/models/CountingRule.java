@@ -22,14 +22,10 @@ public class CountingRule extends AbstractEntity {
 	private int minPercent;
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "start_code_id", nullable = false)
-	private Barcode startCode;
+	@JoinColumn(name = "submit_code", nullable = false)
+	private Barcode submitCode;
 	
-	@Column(name = "voting_key", nullable = false, updatable = false, columnDefinition = "varchar(24)")
-	private String votingKey;
 
-	@Column(name = "voting_iv", nullable = false, updatable = false, columnDefinition = "varchar(8)")
-	private String votingIv;
 
 	public int getMaxSelected() {
 		return maxSelected;
@@ -47,28 +43,13 @@ public class CountingRule extends AbstractEntity {
 		this.minPercent = minPercent;
 	}
 
-	public Barcode getStartCode() {
-		return startCode;
+	public Barcode getSubmitCode() {
+		return submitCode;
 	}
 
-	public void setStartCode(Barcode startCode) {
-		this.startCode = startCode;
+	public void setSubmitCode(Barcode submitCode) {
+		this.submitCode = submitCode;
 	}
 
-	public String getVotingKey() {
-		return votingKey;
-	}
-
-	public void setVotingKey(String votingKey) {
-		this.votingKey = votingKey;
-	}
-
-	public String getVotingIv() {
-		return votingIv;
-	}
-
-	public void setVotingIv(String votingIv) {
-		this.votingIv = votingIv;
-	}
 
 }

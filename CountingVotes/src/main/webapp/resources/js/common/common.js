@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
 	 $('.form-datetime').datetimepicker({
-		format: "dd / mm / yyyy - hh:ii",
+		format: "dd/mm/yyyy - hh:ii",
 		weekStart : 1,
 		todayBtn : 1,
 		autoclose : 1,

@@ -76,7 +76,7 @@ $(document).ready(function() {
 		    		],
 		    		
 		    		select: 'single',
-		    		fixedColumns: true,
+		    		fixedColumns: false,
 		    		"lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "Tất cả"]],
 		    		"initComplete": function(settings, json) {
 		    			$('#process-modal').modal('hide');
