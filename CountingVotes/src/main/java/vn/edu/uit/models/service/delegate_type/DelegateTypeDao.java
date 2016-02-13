@@ -20,7 +20,7 @@ public class DelegateTypeDao extends AbstractDao implements IDelegateTypeDao {
 	
 	@Override
 	public boolean persist(DelegateType type) {
-		return this.persist(type);
+		return this.saveOrUpdate(type);
 	}
 
 	@Override

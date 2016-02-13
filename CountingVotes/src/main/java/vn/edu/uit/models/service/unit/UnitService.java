@@ -13,21 +13,21 @@ import vn.edu.uit.models.service.congress.CongressService;
 
 @Service
 @Transactional
-public class UnitService implements IUnitDao{
+public class UnitService implements IUnitDao {
 
 	@Autowired
 	private IUnitDao unitDao;
-	
+
 	@Override
-    public boolean persist(Unit unit){
-    	return unitDao.persist(unit);
-    }
-	
+	public boolean persist(Unit unit) {
+		return unitDao.persist(unit);
+	}
+
 	@Override
-	public boolean delete(Unit unit){
+	public boolean delete(Unit unit) {
 		return unitDao.delete(unit);
 	}
-	
+
 	@Override
 	public List<Unit> fetch() {
 		return unitDao.fetch();

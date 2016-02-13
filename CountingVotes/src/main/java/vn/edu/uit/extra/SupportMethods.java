@@ -46,6 +46,7 @@ public class SupportMethods {
 
 	// Convert Date to String
 	public static String dateToString(Date date, String dateFormat) {
+		if(date == null) return "";
 		DateFormat df = new SimpleDateFormat(dateFormat);
 		String rsDate = df.format(date);
 		return rsDate;

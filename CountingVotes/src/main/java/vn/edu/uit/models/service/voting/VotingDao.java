@@ -19,7 +19,7 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 
 	@Override
 	public boolean persist(Voting voting) {
-		return this.persist(voting);
+		return this.saveOrUpdate(voting);
 	}
 
 	@Override

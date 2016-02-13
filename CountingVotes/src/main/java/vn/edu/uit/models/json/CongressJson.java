@@ -2,6 +2,8 @@ package vn.edu.uit.models.json;
 
 import java.util.Date;
 
+import vn.edu.uit.extra.DataConfig;
+import vn.edu.uit.extra.SupportMethods;
 import vn.edu.uit.models.Congress;
 
 public class CongressJson {
@@ -11,8 +13,8 @@ public class CongressJson {
 	private int totalUnit;
 	private int totalDelegate;
 	private int totalVoting;
-	private Date startTime;
-	private Date endTime;
+	private String startTime;
+	private String endTime;
 	
 	public CongressJson(Congress congress){
 		this.setId(congress.getId());
@@ -20,8 +22,8 @@ public class CongressJson {
 		this.setTotalUnit(congress.getUnits().size());
 		this.setTotalDelegate(congress.getDelegates().size());
 		this.setTotalVoting(congress.getVotings().size());
-		this.setStartTime(congress.getStartTime());
-		this.setEndTime(congress.getEndTime());
+		this.setStartTime(SupportMethods.dateToString(congress.getStartTime(), DataConfig.DATE_TIME_FORMAT));
+		this.setEndTime(SupportMethods.dateToString(congress.getEndTime(), DataConfig.DATE_TIME_FORMAT));
 	}
 
 	public long getId() {
@@ -64,19 +66,19 @@ public class CongressJson {
 		this.totalVoting = totalVoting;
 	}
 
-	public Date getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Date startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 }

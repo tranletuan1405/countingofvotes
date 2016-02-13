@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,25 +30,26 @@ public class Congress extends AbstractEntity{
 	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "start_time", columnDefinition = "DATETIME")
 	private Date startTime;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "end_time", columnDefinition = "DATETIME")
 	private Date endTime;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "congress")
+	@OneToMany(targetEntity = Unit.class, fetch = FetchType.EAGER, mappedBy = "congress")
 	private Set<Unit> units = new HashSet<Unit>(0);
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "congress") 
+	@OneToMany(targetEntity = Banner.class, fetch = FetchType.EAGER, mappedBy = "congress") 
 	private Set<Banner> banners = new HashSet<Banner>(0);
 	
-	@OneToMany(fetch = FetchType.EAGER , mappedBy = "congress")
+	@OneToMany(targetEntity = Voting.class, fetch = FetchType.EAGER , mappedBy = "congress")
 	private Set<Voting> votings = new HashSet<Voting>(0);
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "congress")
+	@OneToMany(targetEntity = Delegate.class, fetch = FetchType.EAGER, mappedBy = "congress", cascade = CascadeType.ALL)
 	private Set<Delegate> delegates = new HashSet<Delegate>(0);
+	
 	
 	@Column(name = "congress_key", nullable = false, updatable = false, columnDefinition = "varchar(24)")
 	private String congressKey;
@@ -55,6 +57,8 @@ public class Congress extends AbstractEntity{
 	@Column(name = "congress_iv", nullable = false, updatable = false, columnDefinition = "varchar(8)")
 	private String congressIv;
 	
+	@Column(name = "congress_path", nullable = false, updatable = false)
+	private String congressPath;
 	
 	
 	
@@ -133,6 +137,14 @@ public class Congress extends AbstractEntity{
 
 	public void setCongressIv(String congressIv) {
 		this.congressIv = congressIv;
+	}
+
+	public String getCongressPath() {
+		return congressPath;
+	}
+
+	public void setCongressPath(String congressPath) {
+		this.congressPath = congressPath;
 	}
 
 	

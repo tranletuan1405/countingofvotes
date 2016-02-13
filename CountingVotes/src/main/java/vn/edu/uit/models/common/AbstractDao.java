@@ -18,13 +18,13 @@ public abstract class AbstractDao {
 		return sessionFactory.getCurrentSession();
 	}
 	
-	protected boolean persist(Object obj){
+	protected boolean saveOrUpdate(Object obj){
 		try {
 			getSession().saveOrUpdate(obj);
 			return true;
 		}
 		catch (HibernateException e){
-			logger.error("ERROR : Can't persist object : " + obj.getClass() + "cause of :" + e.getMessage());
+			logger.error("ERROR : Can't persist object : " + obj.getClass() + " cause of :" + e.getMessage());
 			return false;
 		}
 	}

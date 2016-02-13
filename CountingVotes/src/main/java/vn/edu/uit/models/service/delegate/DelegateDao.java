@@ -53,7 +53,7 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 
 	@Override
 	public boolean persist(Delegate delegate) {
-		return this.persist(delegate);
+		return this.saveOrUpdate(delegate);
 	}
 
 	@Override
@@ -206,7 +206,7 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 			if (value == null || value.isEmpty())
 				return;
 
-			logger.info("Field : " + field + ", value : " + value);
+			//logger.info("Field : " + field + ", value : " + value);
 
 			EnumDelegateField enumField = EnumDelegateField.getEnumByDescription(field);
 
@@ -250,9 +250,10 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 			case Type:
 
 				DelegateType type = delegateTypeDao.fetch(value);
-				if (type == null) {
+				if (type == null || type.getShortName() == null || type.getShortName().isEmpty()) {
 					type = new DelegateType();
 					type.setShortName(value);
+					delegateTypeDao.persist(type);
 				}
 
 				delegate.setType(type);
@@ -260,9 +261,10 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 			case Unit:
 
 				Unit unit = unitDao.fetch(value);
-				if (unit == null) {
+				if (unit == null || unit.getShortName() == null || unit.getShortName().isEmpty()) {
 					unit = new Unit();
 					unit.setShortName(value);
+					unitDao.persist(unit);
 				}
 
 				delegate.setUnit(unit);

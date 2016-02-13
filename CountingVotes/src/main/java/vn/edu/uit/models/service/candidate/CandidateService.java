@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("candidateService")
 @Transactional
-public class CandidateService {
+public class CandidateService implements ICandidateDao {
 
 	@Autowired
 	private ICandidateDao candidateDao;

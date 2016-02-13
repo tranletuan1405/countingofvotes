@@ -30,10 +30,14 @@ public class Unit extends AbstractEntity {
 	@Column(name = "num_of_delegate")
 	private int numOfDelegate;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "congress_id", nullable = false)
+	@ManyToOne(targetEntity = Congress.class)
+	@JoinColumn(name = "congress_id")
 	private Congress congress;
-
+	
+	
+	
+	
+	
 	public String getCode() {
 		return code;
 	}
@@ -73,5 +77,6 @@ public class Unit extends AbstractEntity {
 	public void setCongress(Congress congress) {
 		this.congress = congress;
 	}
+
 	
 }

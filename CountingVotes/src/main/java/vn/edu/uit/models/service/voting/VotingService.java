@@ -12,26 +12,25 @@ import vn.edu.uit.models.Voting;
 
 @Service("votingService")
 @Transactional
-public class VotingService {
-	
+public class VotingService implements IVotingDao {
+
 	@Autowired
 	private IVotingDao votingDao;
-	
-	public boolean persist(Voting voting){
+
+	public boolean persist(Voting voting) {
 		return votingDao.persist(voting);
 	}
-	
-	public long recreate(long oldId){
+
+	public long recreate(long oldId) {
 		return votingDao.recreate(oldId);
 	}
-	
-	public Voting fetch(long id){
+
+	public Voting fetch(long id) {
 		return votingDao.fetch(id);
 	}
-	
-	public List<Voting> fetch(int min, int max){
+
+	public List<Voting> fetch(int min, int max) {
 		return votingDao.fetch(min, max);
 	}
-	
-	
+
 }

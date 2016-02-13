@@ -27,18 +27,20 @@ public class BarcodeGenerator {
 	private static final String CHARSET = "UTF-8";
 
 	public String generateQR(String imagePath, String imageName, String content, int width) {
+		String filePath = imagePath + "\\" + imageName + ".png";
+
 		try {
-			
+
 			File path = new File(imagePath);
-			
+
 			if (!path.exists()) {
 				String.valueOf(path.mkdirs());
 			}
-			
-			File file = new File(imagePath + "/" + imageName);
+
+			File file = new File(filePath);
 			OutputStream stream = new FileOutputStream(file);
-			
-			if(!file.exists()){
+
+			if (!file.exists()) {
 				file.createNewFile();
 			}
 
@@ -49,13 +51,12 @@ public class BarcodeGenerator {
 					BarcodeFormat.QR_CODE, width, width, hintMap);
 
 			MatrixToImageWriter.writeToStream(matrix, "PNG", stream);
-			
+
 		} catch (Exception e) {
 			return "";
 		}
 
-		return imagePath;
+		return filePath;
 	}
-	
-	
+
 }

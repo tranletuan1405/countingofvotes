@@ -13,7 +13,7 @@ import vn.edu.uit.models.service.congress.CongressService;
 
 @Service("bannerService")
 @Transactional
-public class BannerService {
+public class BannerService implements IBannerDao{
 	
 	@Autowired
 	private IBannerDao bannerDao;
@@ -24,5 +24,11 @@ public class BannerService {
 	
 	public List<Banner> fetch(){
 		return bannerDao.fetch();
+	}
+
+	@Override
+	public boolean delete(Banner banner) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -11,6 +11,7 @@ $(document).ready(function() {
 
 	table = $('#congress-table').DataTable( {
         ajax: "congress_table",
+        "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Tất cả"]],
         "order": [[ 0, "desc" ]],
         "columnDefs": [{
 			"render" : function(data, type, row) {
@@ -56,7 +57,7 @@ $(document).ready(function() {
 				delegate_table = $('#delegate-table').DataTable({
 					destroy : true,
 		    		ajax : "delegates_table",
-		    		rowId : "id",
+		    		//rowId : "id",
 		    		columns: [
 		    		   { data : "ordinal" },
 		    		   { data : "name" },
@@ -69,9 +70,9 @@ $(document).ready(function() {
 		    		   { data : "dateOfYouthUnion" },
 		    		   { data : "dateOfPartyPreparatory" },
 		    		   { data : "dateOfPartyOfficial" },
-		    		   { data : "unit.shortName" },
+		    		   { data : "unitName" },
 		    		   { data : "position" },
-		    		   { data : "type.shortName" },
+		    		   { data : "typeName" },
 		    		   { data : "note" }
 		    		],
 		    		
