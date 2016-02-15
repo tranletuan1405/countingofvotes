@@ -13,11 +13,18 @@ $(document).ready(function() {
         ajax: "congress_table",
         "lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Tất cả"]],
         "order": [[ 0, "desc" ]],
-        "columnDefs": [{
+        "columnDefs": [
+        {
 			"render" : function(data, type, row) {
-				return "<a class='btn btn-default' href='id/" + data + "'>Chi tiết</a>";
+				return "<a class='btn btn-default' href='view/" + data + "'>Chi tiết</a>";
 			},
 			"targets" : 7
+		},
+		{
+			"render" : function(data, type, row) {
+				return "<a class='btn btn-default' href='remove/" + data + "'>Xóa</a>";
+			},
+			"targets" : 8
 		} ],
         columns: [
             { data : "id", "searchable" : false},
@@ -28,6 +35,7 @@ $(document).ready(function() {
             { data: "startTime" },
             { data: "endTime" },
             { data : "id", "searchable" : false, "orderable": false},
+            { data : "id", "searchable" : false, "orderable": false}
         ],
         select: 'single'
     } );
@@ -39,7 +47,7 @@ $(document).ready(function() {
     	var file = event.target.files[0];
     	if(file == null) return;
     	showModal('#process-modal');
-    	
+
     	var data = new FormData();
     	data.append("delegatesFile", file);
   
@@ -95,5 +103,9 @@ $(document).ready(function() {
     
     $('#modal-delegate-table').on('hidden.bs.modal', function (e) {
     	 $('#modal-delegate-table .modal-body').removeClass('modal-body-show-table');
+    });
+    
+    $('#form-create-congress').submit(function(){
+    	showModal('#process-modal');
     });
 });

@@ -248,25 +248,13 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 				delegate.setReligion(value);
 				break;
 			case Type:
-
-				DelegateType type = delegateTypeDao.fetch(value);
-				if (type == null || type.getShortName() == null || type.getShortName().isEmpty()) {
-					type = new DelegateType();
-					type.setShortName(value);
-					delegateTypeDao.persist(type);
-				}
-
+				DelegateType type = new DelegateType();
+				type.setShortName(value);
 				delegate.setType(type);
 				break;
 			case Unit:
-
-				Unit unit = unitDao.fetch(value);
-				if (unit == null || unit.getShortName() == null || unit.getShortName().isEmpty()) {
-					unit = new Unit();
-					unit.setShortName(value);
-					unitDao.persist(unit);
-				}
-
+				Unit unit = new Unit();
+				unit.setShortName(value);
 				delegate.setUnit(unit);
 				break;
 			case Note:

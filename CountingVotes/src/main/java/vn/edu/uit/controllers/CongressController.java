@@ -41,6 +41,7 @@ import vn.edu.uit.models.json.CongressJson;
 import vn.edu.uit.models.json.DelegateJson;
 import vn.edu.uit.models.service.congress.CongressService;
 import vn.edu.uit.models.service.delegate.DelegateService;
+import vn.edu.uit.models.service.delegate_type.DelegateTypeService;
 import vn.edu.uit.models.service.unit.UnitService;
 
 @Controller
@@ -67,7 +68,11 @@ public class CongressController {
 
 	@Autowired
 	private UnitService unitService;
-
+	
+	@Autowired
+	private DelegateTypeService typeService;
+	
+	
 	@RequestMapping(value = "/")
 	public ModelAndView congress() {
 		ModelAndView model = new ModelAndView("congress");
@@ -134,7 +139,7 @@ public class CongressController {
 
 		Congress congress = new Congress();
 		String congressPath = SupportMethods.dateToString(new Date(), "dd-MM-yyyy") + "_" + SupportMethods.getUID();
-
+		
 		// Create key & Iv
 		String congressKey = SupportMethods.getRandomString(24);
 		String congressIv = SupportMethods.getRandomString(8);
@@ -152,18 +157,43 @@ public class CongressController {
 		congress.setCongressPath(congressPath);
 		congressService.persist(congress);
 
-		// Create barcode for each delegate
+		// Create delegate for each detected delegate
 		for (int i = 0; i < delegates.size(); i++) {
 			try {
-
 				Delegate delegate = delegates.get(i);
 				Barcode barcode = new Barcode();
+				Unit unitTemp = delegate.getUnit();
+				DelegateType typeTemp = delegate.getType();
 				String content = SupportMethods.getUID();
-
+				
+				//Barcode
 				barcode.setContent(content);
-				String imagePath = barcodeGenerator.generateQR("barcode\\" + congressPath, SupportMethods.getUID(),
-						content, 320);
-				barcode.setImagePath(imagePath);
+				String directory = barcodeGenerator.generateQR("barcode\\" + congressPath, SupportMethods.getUID(), content, 320);
+				barcode.setImagePath(directory);
+				
+				// Unit
+				if (unitTemp != null && unitTemp.getShortName() != null && !unitTemp.getShortName().isEmpty()) {
+					Unit unit = unitService.fetch(unitTemp.getShortName(), congress.getId());
+
+					if (unit == null) {
+						unitTemp.setCongress(congress);
+						unitService.persist(unitTemp);
+					} else {
+						delegate.setUnit(unit);
+					}
+				}
+
+				// Type
+				if (typeTemp != null && typeTemp.getShortName() != null && !typeTemp.getShortName().isEmpty()) {
+					DelegateType type = typeService.fetch(typeTemp.getShortName());
+					
+					if (type == null) {
+						typeService.persist(typeTemp);
+					} else {
+						delegate.setType(type);
+					}
+				}
+
 				delegate.setHashCode(barcode);
 				delegate.setCongress(congress);
 				delegateService.persist(delegate);
@@ -173,15 +203,7 @@ public class CongressController {
 			}
 		}
 
-		// Set Units
-		List<Unit> units = unitService.fetch();
-		for (int i = 0; i < units.size(); i++) {
-
-			Unit unit = units.get(i);
-			unit.setCongress(congress);
-			unitService.persist(unit);
-		}
-
+	
 		return model;
 	}
 

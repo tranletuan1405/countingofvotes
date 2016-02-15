@@ -46,10 +46,11 @@ public class UnitDao extends AbstractDao implements IUnitDao {
 	}
 
 	@Override
-	public Unit fetch(String name) {
+	public Unit fetch(String name, long congressId) {
 		Criteria crit = getSession().createCriteria(Unit.class);
 		crit.add(Restrictions.eq("isEnabled", true));
-
+		crit.add(Restrictions.and(Restrictions.eq("congress.id", congressId)));
+		
 		Criterion rest1 = Restrictions.eq("shortName", name);
 		Criterion rest2 = Restrictions.eq("name", name);
 		

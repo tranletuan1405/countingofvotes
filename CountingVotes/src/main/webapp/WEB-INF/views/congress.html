@@ -21,6 +21,7 @@
 <script type="text/javascript" th:src="@{/js/bootstrap/bootstrap-datetimepicker.min.js}"></script>
 <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap-datetimepicker.min.css}" />
 
+<script type="text/javascript" th:src="@{/js/common/countid.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/pages/congress_list.js}"></script>
 <link rel="stylesheet" type="text/css" th:href="@{/css/pages/congress_list.css}" />
 
@@ -55,6 +56,7 @@
 									<th>Bắt đầu</th>
 									<th>Kết thúc</th>
 									<th></th>
+									<th></th>
 								</tr>
 							</thead>
 							
@@ -67,6 +69,7 @@
 									<th>Số lần bầu cử</th>
 									<th>Bắt đầu</th>
 									<th>Kết thúc</th>
+									<th></th>
 									<th></th>
 								</tr>
 							</tfoot>
@@ -201,23 +204,7 @@
 						<table id="delegate-table"
 							class="table table-striped table-bordered" cellspacing="0"
 							width="100%">
-							<!-- <colgroup>
-								<col class="col-md-1" /> STT
-								<col class="col-md-12" /> Tên Đại biểu
-								<col class="col-md-1" /> Nơi sinh
-								<col class="col-md-12" /> Nơi ở
-								<col class="col-md-1" /> Năm sinh
-								<col class="col-md-1" /> Giới tính
-								<col class="col-md-1" /> Dân tộc
-								<col class="col-md-1" /> Tôn giáo
-								<col class="col-md-1" /> Ngày vào Đoàn
-								<col class="col-md-1" /> Ngày vào Đảng (dự bị)
-								<col class="col-md-1" /> Ngày vào Đảng (chính thức)
-								<col class="col-md-1" /> Đơn vị
-								<col class="col-md-12" /> Chức vụ
-								<col class="col-md-1" /> Cơ cấu
-								<col class="col-md-1" /> Ghi chú
-							</colgroup> -->
+		
 							<thead>
 								<tr>
 									<th>STT</th>
@@ -279,6 +266,9 @@
 						<span class="glyphicon glyphicon-hourglass"/>
 						<span>Vui lòng chờ trong giây lát, hệ thống đang xử lý...</span>
 					</div>
+					
+					<div id="stopwatch" class="badge">00:00</div>
+
 				</div>
 			</div>
 		</div>

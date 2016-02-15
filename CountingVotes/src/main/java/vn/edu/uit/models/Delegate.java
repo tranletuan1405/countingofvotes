@@ -60,15 +60,15 @@ public class Delegate extends AbstractEntity {
 	@Column(name = "position") //Chuc Vu
 	private String position;
 	
-	@OneToOne(targetEntity = Unit.class, fetch = FetchType.EAGER) //Don Vi
+	@OneToOne(targetEntity = Unit.class, fetch = FetchType.LAZY) //Don Vi
 	@JoinColumn(name = "unit_id")
 	private Unit unit;
 	
-	@OneToOne(targetEntity = DelegateType.class, fetch = FetchType.EAGER) //Co Cau
+	@OneToOne(targetEntity = DelegateType.class, fetch = FetchType.LAZY) //Co Cau
 	@JoinColumn(name = "type_id")
 	private DelegateType type;
 	
-	@OneToOne(targetEntity = DelegateExtension.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL) //Mo rong (danh cho ung cu vien)
+	@OneToOne(targetEntity = DelegateExtension.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL) //Mo rong (danh cho ung cu vien)
 	@JoinColumn(name = "extension_id")
 	private DelegateExtension extension;
 	
@@ -82,7 +82,7 @@ public class Delegate extends AbstractEntity {
 	@Column(name = "arivalTime", columnDefinition = "DATETIME")
 	private Date arivalTime;
 
-	@OneToOne(targetEntity = Barcode.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(targetEntity = Barcode.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "hash_code_id", nullable = false)
 	private Barcode hashCode;
 
@@ -90,7 +90,7 @@ public class Delegate extends AbstractEntity {
 	@JoinColumn(name = "congress_id", nullable = false)
 	private Congress congress;
 
-	@OneToMany(targetEntity = Candidate.class, fetch = FetchType.EAGER, mappedBy = "delegate")
+	@OneToMany(targetEntity = Candidate.class, fetch = FetchType.LAZY, mappedBy = "delegate")
 	private Set<Candidate> candidateDetails = new HashSet<Candidate>(0);
 
 	

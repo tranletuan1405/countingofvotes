@@ -42,6 +42,7 @@ public class BarcodeGenerator {
 
 			if (!file.exists()) {
 				file.createNewFile();
+				filePath = file.getAbsolutePath();
 			}
 
 			Map hintMap = new HashMap();

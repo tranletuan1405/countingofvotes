@@ -38,16 +38,16 @@ public class Congress extends AbstractEntity{
 	@Column(name = "end_time", columnDefinition = "DATETIME")
 	private Date endTime;
 	
-	@OneToMany(targetEntity = Unit.class, fetch = FetchType.EAGER, mappedBy = "congress")
+	@OneToMany(targetEntity = Unit.class, fetch = FetchType.LAZY, mappedBy = "congress")
 	private Set<Unit> units = new HashSet<Unit>(0);
 
-	@OneToMany(targetEntity = Banner.class, fetch = FetchType.EAGER, mappedBy = "congress") 
+	@OneToMany(targetEntity = Banner.class, fetch = FetchType.LAZY, mappedBy = "congress") 
 	private Set<Banner> banners = new HashSet<Banner>(0);
 	
-	@OneToMany(targetEntity = Voting.class, fetch = FetchType.EAGER , mappedBy = "congress")
+	@OneToMany(targetEntity = Voting.class, fetch = FetchType.LAZY , mappedBy = "congress")
 	private Set<Voting> votings = new HashSet<Voting>(0);
 	
-	@OneToMany(targetEntity = Delegate.class, fetch = FetchType.EAGER, mappedBy = "congress", cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Delegate.class, fetch = FetchType.LAZY, mappedBy = "congress", cascade = CascadeType.ALL)
 	private Set<Delegate> delegates = new HashSet<Delegate>(0);
 	
 	
