@@ -5,8 +5,11 @@ import java.io.InputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import javax.servlet.ServletRequest;
@@ -39,8 +42,10 @@ import vn.edu.uit.models.DelegateType;
 import vn.edu.uit.models.Unit;
 import vn.edu.uit.models.json.CongressJson;
 import vn.edu.uit.models.json.DelegateJson;
+import vn.edu.uit.models.json.UnitJson;
 import vn.edu.uit.models.service.congress.CongressService;
 import vn.edu.uit.models.service.delegate.DelegateService;
+import vn.edu.uit.models.service.delegate.support.EnumDelegateType;
 import vn.edu.uit.models.service.delegate_type.DelegateTypeService;
 import vn.edu.uit.models.service.unit.UnitService;
 
@@ -110,17 +115,81 @@ public class CongressController {
 		if (is == null) return "";
 
 		List<Delegate> delegates = delegateService.getByDocument(is);
-		session.setAttribute("delegates", delegates);
+
 
 		ListHolder<DelegateJson> json = new ListHolder<DelegateJson>();
+		Map<String, UnitJson> units = new HashMap<String, UnitJson>();
+		
 		for (int i = 0; i < delegates.size(); i++) {
+			Delegate delegate = delegates.get(i);
+			Unit unit = delegate.getUnit();
+			DelegateType type = delegate.getType();
+			
 			json.getData().add(new DelegateJson(delegates.get(i)));
+			
+			if(unit  != null && unit.getName() != null && !unit.getName().isEmpty()){
+	
+				UnitJson unitJson = units.get(unit.getName());
+				if(unitJson == null) {
+					unitJson = new UnitJson();
+					unitJson.setName(unit.getName());
+					units.put(unit.getName(), unitJson);
+				}
+				
+				try {
+					String typeName = type.getShortName();
+					EnumDelegateType enumType = EnumDelegateType.getEnumByDescription(typeName);
+				
+					switch (enumType) {
+					case DBBC:
+						unitJson.numOfDBBC++;
+						unitJson.total++;
+						break;
+					case DBCD:
+						unitJson.numOfDBCD++;
+						unitJson.total++;
+						break;
+					case DBDK:
+						unitJson.numOfDBDK++;
+						unitJson.total++;
+						break;
+					case DBDN:
+						unitJson.numOfDBDN++;
+						unitJson.total++;
+						break;
+					}	
+				}
+				
+				catch (Exception e){	
+				}	
+			}
 		}
 
+		session.setAttribute("delegates", delegates);
+		session.setAttribute("units", units);
+		
 		return mapper.writeValueAsString(json);
 
 	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "units_table")
+	@ResponseBody
+	public String unitsTable(HttpServletRequest request) throws JsonProcessingException {
+		HttpSession session = request.getSession();
+		Map<String, UnitJson> unitsJson = (Map<String, UnitJson>) session.getAttribute("units");
+		
+		if(unitsJson == null) return "";
+		
+		ListHolder<UnitJson> json = new ListHolder<UnitJson>();
+		for(Entry<String, UnitJson> entry : unitsJson.entrySet()){
+			json.getData().add(entry.getValue());
+		}
+		
+		return mapper.writeValueAsString(json);
+	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/create_congress", method = RequestMethod.POST)
 	public ModelAndView createCongress(@RequestParam(value = "name") String name,
 			@RequestParam(value = "startTime", required = false) String startTimeString,

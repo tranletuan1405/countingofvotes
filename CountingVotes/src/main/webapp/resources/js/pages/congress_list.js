@@ -2,6 +2,8 @@
 $(document).ready(function() {
 	var table;
 	var delegate_table;
+	var unit_table;
+	
 	/*$('#congress-table tfoot th').each( function () {
 	  var title = $(this).text();
 	  	$(this).html("<input type='text' class='form-control' placeholder='" + title + "'/>" );
@@ -46,8 +48,16 @@ $(document).ready(function() {
     function prepareUpload(event) {
     	var file = event.target.files[0];
     	if(file == null) return;
-    	showModal('#process-modal');
+    	
+    	$('#stopwatch').timer('remove');
+    	$('#stopwatch').timer({
+    		action: 'start',
+    		seconds: 0,
+    		restart: true
+    	});
 
+    	showModal('#process-modal');
+    
     	var data = new FormData();
     	data.append("delegatesFile", file);
   
@@ -89,9 +99,27 @@ $(document).ready(function() {
 		    		"lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "Tất cả"]],
 		    		"initComplete": function(settings, json) {
 		    			$('#process-modal').modal('hide');
-						$('#modal-delegate-table').modal('show');
+		    			unit_table = $('#unit-table').DataTable({
+		    				destroy : true,
+		    	    		ajax : "units_table",
+		    	    		//rowId : "id",
+		    	    		columns: [
+		    	    		   { data : "name" },
+		    	    		   { data : "numOfDBDN" },
+		    	    		   { data : "numOfDBCD" },
+		    	    		   { data : "numOfDBBC" },
+		    	    		   { data : "numOfDBDK" },
+		    	    		   { data : "total" }
+		    	    		],
+		    	    		
+		    	    		select: 'single',
+		    	    		fixedColumns: false,
+		    	    		"lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "Tất cả"]]
+		    	    	});
 		    		  }
 		    	});
+				
+				
 			
 			},
 			error : function(){
@@ -101,11 +129,13 @@ $(document).ready(function() {
 		});	
     };
     
-    $('#modal-delegate-table').on('hidden.bs.modal', function (e) {
-    	 $('#modal-delegate-table .modal-body').removeClass('modal-body-show-table');
-    });
-    
     $('#form-create-congress').submit(function(){
     	showModal('#process-modal');
+    	$('#stopwatch').timer('remove');
+    	$('#stopwatch').timer({
+    		action: 'start',
+    		seconds: 0,
+    		restart: true
+    	});
     });
 });

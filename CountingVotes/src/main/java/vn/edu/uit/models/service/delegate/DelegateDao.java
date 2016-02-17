@@ -254,7 +254,7 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 				break;
 			case Unit:
 				Unit unit = new Unit();
-				unit.setShortName(value);
+				unit.setName(value);
 				delegate.setUnit(unit);
 				break;
 			case Note:
