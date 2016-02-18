@@ -1,9 +1,13 @@
-.container {
+.my-container {
 	margin-top: 40px;
 }
 
 .standard-color {
 	background-color: #00aff0;
+}
+
+.inactive-standard-color {
+	
 }
 
 .modal-body-show-table {

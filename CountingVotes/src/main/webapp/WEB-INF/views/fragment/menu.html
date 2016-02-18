@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"></meta>
+</head>
+<body>
+	<div th:fragment="menu">
+		<img th:if="${congress.logo}" th:src="@{congress.logo}" class="img-circle"/>
+		<img th:unless="${congress.logo}" th:src="@{/images/page/default-logo.png}" class="img-circle"/>
+	</div>
+</body>
+</html>

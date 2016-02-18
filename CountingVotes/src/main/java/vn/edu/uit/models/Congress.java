@@ -38,11 +38,14 @@ public class Congress extends AbstractEntity{
 	@Column(name = "end_time", columnDefinition = "DATETIME")
 	private Date endTime;
 	
+	@Column(name = "logo")
+	private String logo;
+	
+	@Column(name = "banner")
+	private String banner;
+	
 	@OneToMany(targetEntity = Unit.class, fetch = FetchType.LAZY, mappedBy = "congress")
 	private Set<Unit> units = new HashSet<Unit>(0);
-
-	@OneToMany(targetEntity = Banner.class, fetch = FetchType.LAZY, mappedBy = "congress") 
-	private Set<Banner> banners = new HashSet<Banner>(0);
 	
 	@OneToMany(targetEntity = Voting.class, fetch = FetchType.LAZY , mappedBy = "congress")
 	private Set<Voting> votings = new HashSet<Voting>(0);
@@ -99,14 +102,6 @@ public class Congress extends AbstractEntity{
 		this.units = units;
 	}
 
-	public Set<Banner> getBanners() {
-		return banners;
-	}
-
-	public void setBanners(Set<Banner> banners) {
-		this.banners = banners;
-	}
-
 	public Set<Voting> getVotings() {
 		return votings;
 	}
@@ -145,6 +140,22 @@ public class Congress extends AbstractEntity{
 
 	public void setCongressPath(String congressPath) {
 		this.congressPath = congressPath;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public String getBanner() {
+		return banner;
+	}
+
+	public void setBanner(String banner) {
+		this.banner = banner;
 	}
 
 	

@@ -27,8 +27,45 @@
 
 </head>
 <body>
-	<div class="container">
+	<div class="container my-container">
+		<!-- Logo & Info -->
+		<div class="col-md-2">
+			<!-- Logo -->
+			<div th:replace="fragment/menu :: menu"></div>
+		</div>
 		
+		<!-- Banner & Content -->
+		<div class="col-md-10">
+			<!-- Banner -->
+			<div class="container-fluid">
+				<img th:if="${congress.banner}" th:src="@{congress.banner}" class="img-responsive banner" alt="Responsive image"/>
+				<img th:unless="${congress.banner}" th:src="@{/images/page/default-banner.png}" class="img-responsive banner" alt="Responsive image"/>
+			</div>
+
+			<!-- Tab Manager -->
+			<div role="tablist" class="container-fluid">
+				<div role="presentation" class="col-md-4 tab-menu standard-color">
+					<a href="#congress" aria-controls="congress" role="tab" data-toggle="tab">Thông tin chung</a>
+				</div>
+				
+				<div role="presentation" class="col-md-4 tab-menu">
+					<a href="#delegates" aria-controls="delegates" role="tab"
+						data-toggle="tab">Danh sách Đại biểu</a>
+				</div>
+				
+				<div role="presentation" class="col-md-4 tab-menu">
+					<a href="#units" aria-controls="units" role="tab"
+						data-toggle="tab">Danh sách Đơn vị</a>
+				</div>
+			</div>
+			
+			<!-- Content -->
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane fade in active" id="congress">1</div>
+				<div role="tabpanel" class="tab-pane fade" id="delegates">2.</div>
+				<div role="tabpanel" class="tab-pane fade" id="units">3..</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
