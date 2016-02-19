@@ -1,19 +1,26 @@
 @CHARSET "UTF-8";
 
 img {
-	width : 100%;
+	width: 100%;
 }
 
 .banner {
-	width : 100%;
-	min-height : calc(35vh);
+	width: 100%;
+	min-height: calc(35vh);
 	max-height: calc(35vh);
 }
 
-.tab-menu {
-	margin : auto;
-	min-height: calc(10vh);
-	max-height: calc(10vh);
-	list-style: none;
+.tab-manager>li.active>a, .tab-manager>li.active>a:focus {
+	background-color: #00aff0;
 }
 
+.tab-manager {
+	margin-top: 10px;
+	border: 1px solid #00aff0;
+	border-radius: 5px;
+}
+
+.menu>a {
+	font-size: 18;
+	font-weight: bold;
+}

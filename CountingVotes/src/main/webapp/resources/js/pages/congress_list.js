@@ -39,7 +39,7 @@ $(document).ready(function() {
             { data : "id", "searchable" : false, "orderable": false},
             { data : "id", "searchable" : false, "orderable": false}
         ],
-        select: 'single'
+        select: false
     } );
     
     

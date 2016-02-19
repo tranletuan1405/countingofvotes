@@ -43,27 +43,38 @@
 			</div>
 
 			<!-- Tab Manager -->
-			<div role="tablist" class="container-fluid">
-				<div role="presentation" class="col-md-4 tab-menu standard-color">
-					<a href="#congress" aria-controls="congress" role="tab" data-toggle="tab">Thông tin chung</a>
-				</div>
-				
-				<div role="presentation" class="col-md-4 tab-menu">
-					<a href="#delegates" aria-controls="delegates" role="tab"
-						data-toggle="tab">Danh sách Đại biểu</a>
-				</div>
-				
-				<div role="presentation" class="col-md-4 tab-menu">
-					<a href="#units" aria-controls="units" role="tab"
-						data-toggle="tab">Danh sách Đơn vị</a>
-				</div>
+			<div class="container-fluid">
+				<ul class="nav nav-pills nav-justified tab-manager">
+					<li role="presentation" class="active menu">
+						<a href="#congress" aria-controls="congress" role="tab" data-toggle="tab">
+						 	Thông tin chung
+						</a>
+					</li>
+					
+					<li role="presentation" class="menu">
+						<a href="#delegates" aria-controls="delegates" role="tab" data-toggle="tab">
+							Danh sách Đại biểu
+						</a>
+					</li>
+					
+					<li role="presentation" class="menu">
+						<a href="#units" aria-controls="units" role="tab" data-toggle="tab">
+							Danh sách Đơn vị
+						</a>
+					</li>
+				</ul>
 			</div>
 			
 			<!-- Content -->
-			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane fade in active" id="congress">1</div>
-				<div role="tabpanel" class="tab-pane fade" id="delegates">2.</div>
-				<div role="tabpanel" class="tab-pane fade" id="units">3..</div>
+			<div class="container-fluid">
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane fade in active" id="congress">
+						
+						
+					</div>
+					<div role="tabpanel" class="tab-pane fade" id="delegates">2.</div>
+					<div role="tabpanel" class="tab-pane fade" id="units">3..</div>
+				</div>
 			</div>
 		</div>
 	</div>
