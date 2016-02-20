@@ -15,6 +15,8 @@ public class CongressJson {
 	private int totalVoting;
 	private String startTime;
 	private String endTime;
+	private String logo;
+	private String banner;
 	
 	public CongressJson(Congress congress){
 		this.setId(congress.getId());
@@ -24,6 +26,8 @@ public class CongressJson {
 		this.setTotalVoting(congress.getVotings().size());
 		this.setStartTime(SupportMethods.dateToString(congress.getStartTime(), DataConfig.DATE_TIME_FORMAT));
 		this.setEndTime(SupportMethods.dateToString(congress.getEndTime(), DataConfig.DATE_TIME_FORMAT));
+		this.setLogo(congress.getLogo());
+		this.setBanner(congress.getBanner());
 	}
 
 	public long getId() {
@@ -80,5 +84,21 @@ public class CongressJson {
 
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public String getBanner() {
+		return banner;
+	}
+
+	public void setBanner(String banner) {
+		this.banner = banner;
 	}
 }

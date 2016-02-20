@@ -44,13 +44,13 @@ public class Congress extends AbstractEntity{
 	@Column(name = "banner")
 	private String banner;
 	
-	@OneToMany(targetEntity = Unit.class, fetch = FetchType.LAZY, mappedBy = "congress")
+	@OneToMany(targetEntity = Unit.class, fetch = FetchType.EAGER, mappedBy = "congress")
 	private Set<Unit> units = new HashSet<Unit>(0);
 	
-	@OneToMany(targetEntity = Voting.class, fetch = FetchType.LAZY , mappedBy = "congress")
+	@OneToMany(targetEntity = Voting.class, fetch = FetchType.EAGER , mappedBy = "congress")
 	private Set<Voting> votings = new HashSet<Voting>(0);
 	
-	@OneToMany(targetEntity = Delegate.class, fetch = FetchType.LAZY, mappedBy = "congress", cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Delegate.class, fetch = FetchType.EAGER, mappedBy = "congress", cascade = CascadeType.ALL)
 	private Set<Delegate> delegates = new HashSet<Delegate>(0);
 	
 	

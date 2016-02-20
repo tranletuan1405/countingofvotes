@@ -229,7 +229,7 @@ public class CongressController {
 
 		// Create delegate for each detected delegate
 		for (int i = 0; i < delegates.size(); i++) {
-			try {
+			
 				Delegate delegate = delegates.get(i);
 				Barcode barcode = new Barcode();
 				Unit unitTemp = delegate.getUnit();
@@ -242,8 +242,8 @@ public class CongressController {
 				barcode.setImagePath(directory);
 				
 				// Unit
-				if (unitTemp != null && unitTemp.getShortName() != null && !unitTemp.getShortName().isEmpty()) {
-					Unit unit = unitService.fetch(unitTemp.getShortName(), congress.getId());
+				if (unitTemp != null && unitTemp.getName() != null && !unitTemp.getName().isEmpty()) {
+					Unit unit = unitService.fetch(unitTemp.getName(), congress.getId());
 
 					if (unit == null) {
 						unitTemp.setCongress(congress);
@@ -268,9 +268,7 @@ public class CongressController {
 				delegate.setCongress(congress);
 				delegateService.persist(delegate);
 
-			} catch (Exception e) {
-
-			}
+			
 		}
 
 	
@@ -281,7 +279,9 @@ public class CongressController {
 	public ModelAndView congressDetail(@PathVariable("id") long id){
 		ModelAndView model = new ModelAndView("congress_detail");
 		Congress congress = congressService.fetch(id);
+
 		model.addObject("congress", congress);
+
 		return model;
 	}
 }

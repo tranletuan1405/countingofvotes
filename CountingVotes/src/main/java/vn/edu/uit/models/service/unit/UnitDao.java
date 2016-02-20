@@ -50,12 +50,8 @@ public class UnitDao extends AbstractDao implements IUnitDao {
 		Criteria crit = getSession().createCriteria(Unit.class);
 		crit.add(Restrictions.eq("isEnabled", true));
 		crit.add(Restrictions.and(Restrictions.eq("congress.id", congressId)));
-		
-		Criterion rest1 = Restrictions.eq("shortName", name);
-		Criterion rest2 = Restrictions.eq("name", name);
-		
-		crit.add(Restrictions.and(Restrictions.or(rest1, rest2)));
-		
+		crit.add(Restrictions.and(Restrictions.eq("name", name)));
+	
 		return (Unit) crit.uniqueResult();
 	}
 

@@ -12,15 +12,39 @@ img {
 
 .tab-manager>li.active>a, .tab-manager>li.active>a:focus {
 	background-color: #00aff0;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px
 }
 
 .tab-manager {
 	margin-top: 10px;
 	border: 1px solid #00aff0;
-	border-radius: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.tab-content {
+	margin-bottom: 10px;
+	border: 1px solid #00aff0;
+	border-top: 0px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.tab-container {
+	padding-top: 10px;
 }
 
 .menu>a {
 	font-size: 18;
 	font-weight: bold;
+}
+
+.readonly-data {
+	text-align: center;
+}
+
+.title-readonly-data {
+	width: 50%;
+	text-align: left;
 }

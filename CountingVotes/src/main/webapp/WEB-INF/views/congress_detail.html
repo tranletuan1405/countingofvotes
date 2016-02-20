@@ -67,10 +67,87 @@
 			
 			<!-- Content -->
 			<div class="container-fluid">
-				<div class="tab-content">
+				<div class="tab-content tab-content">
 					<div role="tabpanel" class="tab-pane fade in active" id="congress">
-						
-						
+					
+						<div class="container-fluild tab-container">
+							
+							<!-- Tên đại hội -->
+							<div class="form-group">
+								<label for="congress-name" class="col-md-1 control-label"></label>
+								<div class="input-group col-md-8">
+									<div class="input-group-addon"><span class="glyphicon glyphicon-pencil"/></div>
+									<input th:value="${congress.name}" th:name="name" type="text" required="true" class="form-control" id="congress-name" placeholder="Tên Đại hội" />
+								
+									<div class="input-group-addon">
+										<span class="glyphicon glyphicon-refresh"></span>
+									</div>
+								</div>
+							</div>
+							
+							<!-- Thời gian bắt đầu -->
+							<div class="form-group">
+								<label for="start-time" class="col-md-1 control-label"></label>
+								<div class="input-group col-md-4">
+									<div class="input-group-addon"><span class="glyphicon glyphicon-time"/></div>
+									<input th:value="${congress.startTime}" th:name="startTime" type="text" required="true" class="form-control form-datetime date" id="start-time"
+										placeholder="Thời gian bắt đầu"/>
+
+									<div class="input-group-addon">
+										<span class="glyphicon glyphicon-refresh"></span>
+									</div>
+								</div>
+							</div>
+							
+							<!-- Thời gian kết thúc -->
+							<div class="form-group">
+								<label for="end-time" class="col-md-1 control-label"></label>
+								<div class="input-group col-md-4">
+									<div class="input-group-addon"><span class="glyphicon glyphicon-time"/></div>
+
+									<input th:value="${congress.endTime}" th:name="endTime" type="text" required="true" class="form-control form-datetime date" id="end-time"
+										placeholder="Thời gian kết thúc"/>
+
+									<div class="input-group-addon">
+										<span class="glyphicon glyphicon-refresh"></span>
+									</div>
+								</div>
+							</div>
+							
+							<!-- Số Đại biểu tham dự -->
+							<div class="form-group">
+								<label for="total-delegate" class="col-md-1 control-label"></label>
+								<div class="input-group col-md-4">
+									<div class="input-group-addon"><span class="glyphicon glyphicon-eye-open"/></div>
+									<div class="input-group-addon title-readonly-data">Tổng số Đại biểu</div>
+									<input th:value="${congress.delegates.size()}" th:name="totalDelegate" type="text" class="form-control readonly-data" id="total-delegate" readonly="true"/>
+			
+								</div>
+							</div>
+							
+							<!-- Số Đơn vị -->
+							<div class="form-group">
+								<label for="total-unit" class="col-md-1 control-label"></label>
+								<div class="input-group col-md-4">
+									<div class="input-group-addon"><span class="glyphicon glyphicon-eye-open"/></div>
+									<div class="input-group-addon title-readonly-data">Tổng số Đơn vị</div>
+									<input th:name="totalUnit" type="text" class="form-control readonly-data" id="total-unit" readonly="true"/>
+			
+								</div>
+							</div>
+							
+							<!-- Số lần bầu cử -->
+							<div class="form-group">
+								<label for="total-voting" class="col-md-1 control-label"></label>
+								<div class="input-group col-md-4">
+									<div class="input-group-addon"><span class="glyphicon glyphicon-eye-open"/></div>
+									<div class="input-group-addon title-readonly-data">Tổng số Bầu cử</div>
+									<input th:name="name" type="text" class="form-control readonly-data" id="total-voting" readonly="true" />
+					
+								</div>
+							</div>
+							
+						</div>
 					</div>
 					<div role="tabpanel" class="tab-pane fade" id="delegates">2.</div>
 					<div role="tabpanel" class="tab-pane fade" id="units">3..</div>
