@@ -48,3 +48,7 @@ img {
 	width: 50%;
 	text-align: left;
 }
+
+.img-thumbnail {
+	padding: 0px;
+}

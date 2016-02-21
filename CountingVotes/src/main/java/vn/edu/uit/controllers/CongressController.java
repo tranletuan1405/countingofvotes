@@ -36,6 +36,7 @@ import vn.edu.uit.extra.BarcodeGenerator;
 import vn.edu.uit.extra.DataConfig;
 import vn.edu.uit.extra.ListHolder;
 import vn.edu.uit.extra.SupportMethods;
+import vn.edu.uit.extra.TripleDes;
 import vn.edu.uit.models.Barcode;
 import vn.edu.uit.models.Congress;
 import vn.edu.uit.models.Delegate;
@@ -54,7 +55,7 @@ import vn.edu.uit.models.service.unit.UnitService;
 public class CongressController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CongressController.class);
-	private static final String BARCODE_DIRECTORY = "barcode\\";
+
 
 	public CongressController() {
 		logger.info("CongressController");
@@ -213,6 +214,7 @@ public class CongressController {
 		// Create key & Iv
 		String congressKey = SupportMethods.getRandomString(24);
 		String congressIv = SupportMethods.getRandomString(8);
+		TripleDes tDes = new TripleDes(congressKey, congressIv);
 
 		// Check start time format
 		Date startTime = SupportMethods.toDate(startTimeString, DataConfig.DATE_FORMAT);
@@ -236,9 +238,10 @@ public class CongressController {
 				DelegateType typeTemp = delegate.getType();
 				String content = SupportMethods.getUID();
 				
+				
 				//Barcode
 				barcode.setContent(content);
-				String directory = barcodeGenerator.generateQR("barcode\\" + congressPath, SupportMethods.getUID(), content, 320);
+				String directory = barcodeGenerator.generateQR(DataConfig.BARCODE_DIRECTORY + congressPath, SupportMethods.getUID(), content, 320);
 				barcode.setImagePath(directory);
 				
 				// Unit
@@ -275,13 +278,7 @@ public class CongressController {
 		return model;
 	}
 
-	@RequestMapping(value = "/view/{id}")
-	public ModelAndView congressDetail(@PathVariable("id") long id){
-		ModelAndView model = new ModelAndView("congress_detail");
-		Congress congress = congressService.fetch(id);
-
-		model.addObject("congress", congress);
-
-		return model;
-	}
+	
+	
+	
 }

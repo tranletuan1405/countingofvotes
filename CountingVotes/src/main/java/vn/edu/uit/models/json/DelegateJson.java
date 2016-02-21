@@ -26,8 +26,11 @@ public class DelegateJson {
 	private String unitName;
 	private String typeName;
 	private String note;
-	
-	public DelegateJson(Delegate delegate){
+
+	private String codeImage;
+	private String codeContent;
+
+	public DelegateJson(Delegate delegate) {
 		this.setOrdinal(delegate.getOrdinal());
 		this.setName(delegate.getName());
 		this.setPlaceOfBirth(delegate.getPlaceOfBirth());
@@ -40,9 +43,14 @@ public class DelegateJson {
 		this.setDateOfPartyPreparatory(delegate.getDateOfPartyPreparatory());
 		this.setDateOfPartyOfficial(delegate.getDateOfPartyOfficial());
 		this.setPosition(delegate.getPosition());
-		
+
+		if (delegate.getHashCode() != null) {
+			this.setCodeImage(delegate.getHashCode().getImagePath());
+			this.setCodeContent(delegate.getHashCode().getContent());
+		}
+
 		try {
-			this.setUnitName(delegate.getUnit().getShortName());
+			this.setUnitName(delegate.getUnit().getName());
 		} catch (Exception e) {
 		}
 
@@ -50,7 +58,7 @@ public class DelegateJson {
 			this.setTypeName(delegate.getType().getShortName());
 		} catch (Exception e) {
 		}
-		
+
 		this.setNote(delegate.getNote());
 	}
 
@@ -172,5 +180,22 @@ public class DelegateJson {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+
+	public String getCodeContent() {
+		return codeContent;
+	}
+
+	public void setCodeContent(String codeContent) {
+		this.codeContent = codeContent;
+	}
+
+	public String getCodeImage() {
+		return codeImage;
+	}
+
+	public void setCodeImage(String codeImage) {
+		this.codeImage = codeImage;
 	}
 }

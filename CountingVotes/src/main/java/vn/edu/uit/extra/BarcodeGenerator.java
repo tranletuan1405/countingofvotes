@@ -27,7 +27,7 @@ public class BarcodeGenerator {
 	private static final String CHARSET = "UTF-8";
 
 	public String generateQR(String imagePath, String imageName, String content, int width) {
-		String filePath = imagePath + "\\" + imageName + ".png";
+		String filePath = imagePath + "/" + imageName + ".png";
 
 		try {
 

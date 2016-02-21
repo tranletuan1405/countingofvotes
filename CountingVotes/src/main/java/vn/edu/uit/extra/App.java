@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.POIXMLProperties;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.HWPFOldDocument;
@@ -44,7 +45,7 @@ import vn.edu.uit.models.service.delegate.support.EnumDelegateField;
 public class App {
 
 	public static void main(String[] args) throws Exception {
-		String fileName = "C:\\Users\\tuantran\\Desktop\\test.docx";
+		String fileName = "C:\\Users\\ASUSLP\\Desktop\\test.docx";
 		String imagePath = "test.png";
 		BarcodeGenerator barcodeGenerator = new BarcodeGenerator();
 		
@@ -53,10 +54,16 @@ public class App {
 		String congressPath = SupportMethods.dateToString(new Date(), "dd-MM-yyyy") + "_" + SupportMethods.getUID();
 		
 		barcode.setContent(content);
-		String directory = barcodeGenerator.generateQR("barcode\\" + congressPath, SupportMethods.getUID(), content, 320);
+		String directory = barcodeGenerator.generateQR("barcode/" + congressPath, SupportMethods.getUID(), content, 320);
+		
+		InputStream is = new FileInputStream(directory);
+		byte[] image = IOUtils.toByteArray(is);
 		
 		System.out.println("Folder Name : " + congressPath);
 		System.out.println("Barcode " + directory);
+		System.out.println("Image " + image.toString());
+		
+		
 	}
 	
 }

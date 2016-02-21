@@ -18,7 +18,7 @@ $(document).ready(function() {
         "columnDefs": [
         {
 			"render" : function(data, type, row) {
-				return "<a class='btn btn-default' href='view/" + data + "'>Chi tiết</a>";
+				return "<a class='btn btn-default' href='detail/" + data + "'>Chi tiết</a>";
 			},
 			"targets" : 7
 		},

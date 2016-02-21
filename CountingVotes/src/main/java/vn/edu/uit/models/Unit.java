@@ -30,7 +30,7 @@ public class Unit extends AbstractEntity {
 	@Column(name = "num_of_delegate")
 	private int numOfDelegate;
 	
-	@ManyToOne(targetEntity = Congress.class)
+	@ManyToOne(targetEntity = Congress.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "congress_id")
 	private Congress congress;
 	
