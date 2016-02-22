@@ -198,7 +198,7 @@ public class CongressController {
 			@RequestParam(value = "delegatesFile") MultipartFile delegatesFile,
 			@RequestParam(value = "avatarFile", required = false) MultipartFile avatarFile,
 			@RequestParam(value = "bannerFile", required = false) MultipartFile bannerFile, HttpServletRequest request,
-			RedirectAttributes redirectAttr) throws ParseException {
+			RedirectAttributes redirectAttr) throws Exception {
 
 		ModelAndView model = new ModelAndView("redirect:/");
 		HttpSession session = request.getSession();
@@ -236,7 +236,7 @@ public class CongressController {
 				Barcode barcode = new Barcode();
 				Unit unitTemp = delegate.getUnit();
 				DelegateType typeTemp = delegate.getType();
-				String content = SupportMethods.getUID();
+				String content = tDes.encryptText(SupportMethods.getUID());
 				
 				
 				//Barcode

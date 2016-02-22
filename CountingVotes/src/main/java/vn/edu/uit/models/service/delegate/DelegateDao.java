@@ -18,7 +18,10 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -141,6 +144,21 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 			e.printStackTrace();
 			return delegates;
 		}
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Override
+	public long getNumOfDelegate(long congressId, long unitId, long typeId) {
+		String hql = "SELECT count(*) FROM Delegate WHERE congress.id = :congressId AND "
+				+ "unit.id = :unitId AND type.id = :typeId AND isEnabled = :isEnabled";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("congressId", congressId);
+		query.setParameter("unitId", unitId);
+		query.setParameter("typeId", typeId);
+		query.setParameter("isEnabled", true);
+	
+		long result = (Long) query.uniqueResult();
+		return result;
 	}
 
 	// Support Method
@@ -268,5 +286,7 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 		}
 
 	}
+
+	
 
 }

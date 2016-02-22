@@ -45,4 +45,9 @@ public class DelegateService implements IDelegateDao{
 		return delegateDao.getByDocument(is);
 	}
 
+	@Override
+	public long getNumOfDelegate(long congressId, long unitId, long typeId) {
+		return delegateDao.getNumOfDelegate(congressId, unitId, typeId);
+	}
+
 }

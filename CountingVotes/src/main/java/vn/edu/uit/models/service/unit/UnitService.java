@@ -37,4 +37,9 @@ public class UnitService implements IUnitDao {
 	public Unit fetch(String name, long congressId) {
 		return unitDao.fetch(name, congressId);
 	}
+
+	@Override
+	public List<Unit> fetch(Long congressId) {
+		return unitDao.fetch(congressId);
+	}
 }

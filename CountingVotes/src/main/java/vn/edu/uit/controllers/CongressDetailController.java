@@ -22,35 +22,49 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import vn.edu.uit.extra.ListHolder;
 import vn.edu.uit.models.Congress;
 import vn.edu.uit.models.Delegate;
+import vn.edu.uit.models.DelegateType;
+import vn.edu.uit.models.Unit;
 import vn.edu.uit.models.json.DelegateJson;
+import vn.edu.uit.models.json.UnitJson;
 import vn.edu.uit.models.service.congress.CongressService;
+import vn.edu.uit.models.service.delegate.DelegateService;
+import vn.edu.uit.models.service.delegate.support.EnumDelegateType;
+import vn.edu.uit.models.service.delegate_type.DelegateTypeService;
+import vn.edu.uit.models.service.unit.UnitService;
 
 @Controller
 @RequestMapping(value = "detail/**")
 public class CongressDetailController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CongressDetailController.class);
-	
+
 	@Autowired
 	private CongressService congressService;
-	
+
+	@Autowired
+	private UnitService unitService;
+
+	@Autowired
+	private DelegateTypeService typeService;
+
+	@Autowired
+	private DelegateService delegateService;
+
 	@Autowired
 	private ObjectMapper mapper;
-	
+
 	@RequestMapping(value = "/{id}")
-	public ModelAndView congressDetail(
-			@PathVariable("id") long id,
-			HttpServletRequest request){
+	public ModelAndView congressDetail(@PathVariable("id") long id, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView("congress_detail");
 		HttpSession session = request.getSession();
 		session.setAttribute("congress_id", id);
 		Congress congress = congressService.fetch(id);
-		
+
 		model.addObject("congress", congress);
 
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/delegates")
 	@ResponseBody
 	public String delegates(HttpServletRequest request) throws JsonProcessingException {
@@ -58,21 +72,59 @@ public class CongressDetailController {
 		long id = (Long) session.getAttribute("congress_id");
 		ListHolder<DelegateJson> json = new ListHolder<DelegateJson>();
 		List<Delegate> delegates = new ArrayList<Delegate>(congressService.fetch(id).getDelegates());
-		
+
 		for (int i = 0; i < delegates.size(); i++) {
 			json.getData().add(new DelegateJson(delegates.get(i)));
 		}
-		
+
 		return mapper.writeValueAsString(json);
 	}
-	
+
 	@RequestMapping(value = "/units")
 	@ResponseBody
-	public String units(HttpServletRequest request) {
+	public String units(HttpServletRequest request) throws JsonProcessingException {
 		HttpSession session = request.getSession();
-		long id = (Long) session.getAttribute("congress_id");
-		
-		
-		return "";
+		Long id = (Long) session.getAttribute("congress_id");
+		ListHolder<UnitJson> json = new ListHolder<UnitJson>();
+		List<Unit> units = unitService.fetch(id);
+		List<DelegateType> types = typeService.fetch();
+
+		for (int i = 0; i < units.size(); i++) {
+			Unit unit = units.get(i);
+			UnitJson unitJson = new UnitJson(unit);
+
+			for (int j = 0; j < types.size(); j++) {
+				DelegateType delegateType = types.get(j);
+				long result = 0;
+
+				EnumDelegateType type = EnumDelegateType.getEnumByDescription(delegateType.getShortName());
+				switch (type) {
+				case DBBC:
+					result = delegateService.getNumOfDelegate(id, unit.getId(), delegateType.getId());
+					unitJson.setNumOfDBBC(result);
+					break;
+				case DBCD:
+					result = delegateService.getNumOfDelegate(id, unit.getId(), delegateType.getId());
+					unitJson.setNumOfDBCD(result);
+					break;
+				case DBDK:
+					result = delegateService.getNumOfDelegate(id, unit.getId(), delegateType.getId());
+					unitJson.setNumOfDBDK(result);
+					break;
+				case DBDN:
+					result = delegateService.getNumOfDelegate(id, unit.getId(), delegateType.getId());
+					unitJson.setNumOfDBDN(result);
+					break;
+				}
+
+			}
+
+			long total = unitJson.getNumOfDBBC() + unitJson.getNumOfDBCD() + unitJson.getNumOfDBDK()
+					+ unitJson.getNumOfDBDN();
+			unitJson.setTotal(total);
+			json.getData().add(unitJson);
+		}
+
+		return mapper.writeValueAsString(json);
 	}
 }

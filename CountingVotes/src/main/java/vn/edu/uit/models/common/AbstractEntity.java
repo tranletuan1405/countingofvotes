@@ -15,7 +15,7 @@ public abstract class AbstractEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, unique = true)
-	private long id;
+	private Long id;
 	
 	@Column(name = "is_enabled", nullable = false)
 	protected boolean isEnabled = true;
@@ -39,7 +39,7 @@ public abstract class AbstractEntity {
 		this.note = note;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 

@@ -26,11 +26,8 @@ public class Unit extends AbstractEntity {
 	
 	@Column(name = "short_name", columnDefinition = "varchar(50)")
 	private String shortName;
-	
-	@Column(name = "num_of_delegate")
-	private int numOfDelegate;
-	
-	@ManyToOne(targetEntity = Congress.class, fetch = FetchType.LAZY)
+		
+	@ManyToOne(targetEntity = Congress.class)
 	@JoinColumn(name = "congress_id")
 	private Congress congress;
 	
@@ -60,14 +57,6 @@ public class Unit extends AbstractEntity {
 
 	public void setShortName(String shortName) {
 		this.shortName = shortName;
-	}
-
-	public int getNumOfDelegate() {
-		return numOfDelegate;
-	}
-
-	public void setNumOfDelegate(int numOfDelegate) {
-		this.numOfDelegate = numOfDelegate;
 	}
 
 	public Congress getCongress() {

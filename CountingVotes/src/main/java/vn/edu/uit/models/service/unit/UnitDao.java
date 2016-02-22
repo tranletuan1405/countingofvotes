@@ -3,9 +3,11 @@ package vn.edu.uit.models.service.unit;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.ResultTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -53,6 +55,16 @@ public class UnitDao extends AbstractDao implements IUnitDao {
 		crit.add(Restrictions.and(Restrictions.eq("name", name)));
 	
 		return (Unit) crit.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Unit> fetch(Long congressId) {
+		String hql = "FROM Unit U WHERE U.congress.id = :congress_id AND U.isEnabled = :is_enabled";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("is_enabled", true);
+		query.setParameter("congress_id", congressId);
+		return query.list();
 	}
 
 }

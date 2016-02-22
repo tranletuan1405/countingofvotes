@@ -90,7 +90,7 @@ public class Delegate extends AbstractEntity {
 	@JoinColumn(name = "congress_id", nullable = false)
 	private Congress congress;
 
-	@OneToMany(targetEntity = Candidate.class, fetch = FetchType.LAZY, mappedBy = "delegate")
+	@OneToMany(targetEntity = Candidate.class, mappedBy = "delegate")
 	private Set<Candidate> candidateDetails = new HashSet<Candidate>(0);
 
 	
