@@ -8,8 +8,18 @@ $(document).ready(function() {
 	var unit_table;
 	loadDelegates();
 	loadUnits();
-	
+	onShowDelegateModal();
 });
+
+function onShowDelegateModal() {
+	
+	$('#modal-delegate').on('shown.bs.modal', function(){
+		var cw = $('#img-avatar').width();
+		var ch = (cw * 4 / 3) + 'px';
+		console.log(ch);
+		$('#img-avatar').css('height', ch);
+	});
+}
 
 function loadUnits(){
 	var unit_table = $('#unit-table').DataTable({
@@ -68,7 +78,7 @@ function loadDelegates(){
 		     "targets" : 9
 		 }, {
 			"render" : function(data, type, row) {
-				return "<button type='button' class='btn btn-default'>Chi tiết</button>";
+				return "<button type='button' class='btn btn-default' data-toggle='modal' data-target='#modal-delegate'>Chi tiết</button>";
 
 			},
 			"targets" : 11

@@ -52,3 +52,7 @@ img {
 .img-thumbnail {
 	padding: 0px;
 }
+
+#modal-content-delegate {
+	width : 80%;
+}
