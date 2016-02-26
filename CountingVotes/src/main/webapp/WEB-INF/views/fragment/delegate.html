@@ -5,38 +5,168 @@
 </head>
 <body>
 	<div class="container-fluid form-horizontal" th:fragment="delegate">
-		<div class="row">
-			<div class="col-md-3">
-			</div>
-			<div class="col-md-9">
-				<div class="form-group">
-					<label for="ordinal" class="col-md-2  control-label">STT</label>
+		
+		<div class="row" id="row-1">
+			<!-- Avatar -->
+			<div class="col-md-5" id="panel-avatar"></div>
+			
+			<!-- Main Information -->
+			<div class="col-md-7" id="panel-main-info">
+				<!-- STT -->
+				<div class="form-group" style="margin-top: 15px;">
+					<label for="ordinal" class="col-md-3  control-label">STT</label>
 					<div class="col-md-2">
 						<input type="text" class="form-control" id="ordinal"
 							placeholder="STT" />
 					</div>
 				</div>
-			</div>
-		</div>
 
-		<div class="row">
-			<!-- Picture -->
-			<div class="col-md-3">
-				<img th:src="@{/images/page/default-avatar.png}" class="img-thumbnail" id="img-avatar"/>
-			</div>
-
-			<div class="col-md-9">
+				<!-- Tên Đại biểu -->
 				<div class="form-group">
-					<label for="name" class="col-md-2 control-label">Email</label>
-					<div class="col-md-8">
+					<label for="name" class="col-md-3 control-label">Tên Đại
+						biểu</label>
+					<div class="col-md-6">
 						<input type="text" class="form-control" id="name"
-							placeholder="Tên Đại biểu"/>
+							placeholder="Tên Đại biểu" />
+					</div>
+				</div>
+
+				<!-- Đơn vị -->
+				<div class="form-group">
+					<label for="unit" class="col-md-3 control-label">Đơn vị</label>
+					<div class="col-md-6">
+						<select class="form-control" id="unit" th:name="unit"
+							required="true">
+							<option th:each="unit : ${unitList}" th:value="${unit.id}"
+								th:text="${unit.name}"></option>
+						</select>
 					</div>
 				</div>
 				
-				
+				<!-- Chức vụ -->
+				<div class="form-group">
+					<label for="position" class="col-md-3 control-label">Chức
+						vụ</label>
+					<div class="col-md-3">
+						<input type="text" class="form-control" id="position"
+							placeholder="Chức vụ" />
+					</div>
+				</div>
+
+				<!-- Cơ cấu -->
+				<div class="form-group">
+					<label for="type" class="col-md-3 control-label">Cơ cấu</label>
+					<div class="col-md-3">
+						<select class="form-control" id="type" th:name="type"
+							required="true">
+							<option th:each="type : ${typeList}" th:value="${type.id}"
+								th:text="${type.name}"></option>
+						</select>
+					</div>
+				</div>
+
 			</div>
 		</div>
+		
+		<div class="row" id="row-2">
+			<!-- Other Information -->
+			<div class="col-md-5" id="panel-other-info">
+			
+				<!-- Ngày sinh -->
+				<div class="form-group" style="margin-top: 15px;">
+					<label for="dateOfBirth" class="col-md-5 control-label">Ngày
+						sinh</label>
+					<div class="col-md-5">
+						<input type="text" class="form-control" id="dateOfBirth"
+							placeholder="Ngày sinh" />
+					</div>
+				</div>
+
+				<!-- Giới tính -->
+				<div class="form-group">
+					<label for="gender" class="col-md-5 control-label">Giới
+						tính</label>
+					<div class="col-md-5">
+						<input type="text" class="form-control" id="gender"
+							placeholder="Giới tính" />
+					</div>
+				</div>
+
+				<!-- Quê quán -->
+				<div class="form-group">
+					<label for="placeOfBirth" class="col-md-5 control-label">Quê
+						quán</label>
+					<div class="col-md-7">
+						<input type="text" class="form-control" id="placeOfBirth"
+							placeholder="Nơi sinh" />
+					</div>
+				</div>
+
+				<!--  Nơi ở -->
+				<div class="form-group">
+					<label for="address" class="col-md-5 control-label">Nơi ở</label>
+					<div class="col-md-7">
+						<input type="text" class="form-control" id="address"
+							placeholder="Nơi ở" />
+					</div>
+				</div>
+
+				<!-- Dân tộc -->
+				<div class="form-group">
+					<label for="ethnic" class="col-md-5 control-label">Dân tộc</label>
+					<div class="col-md-5">
+						<input type="text" class="form-control" id="ethnic"
+							placeholder="Dân tộc" />
+					</div>
+				</div>
+
+				<!-- Tôn giáo -->
+				<div class="form-group">
+					<label for="religion" class="col-md-5 control-label">Tôn
+						Giáo</label>
+					<div class="col-md-5">
+						<input type="text" class="form-control" id="religion"
+							placeholder="Tôn giáo" />
+					</div>
+				</div>
+
+				<!-- Ngày vào Đoàn -->
+				<div class="form-group">
+					<label for="dateOfYouthUnion" class="col-md-5 control-label">Ngày
+						vào Đoàn</label>
+					<div class="col-md-5">
+						<input type="text" class="form-control" id="dateOfYouthUnion"
+							placeholder="Ngày vào Đoàn" />
+					</div>
+				</div>
+
+				<!-- Ngày vào Đảng dự bị -->
+				<div class="form-group">
+					<label for="dateOfPartyPreparatory" class="col-md-5 control-label">Ngày
+						vào Đảng (dự bị)</label>
+					<div class="col-md-5">
+						<input type="text" class="form-control"
+							id="dateOfPartyPreparatory" placeholder="Ngày vào Đảng (dự bị)" />
+					</div>
+				</div>
+
+				<!-- Ngày vào Đảng chính thức -->
+				<div class="form-group">
+					<label for="dateOfPartyOfficial" class="col-md-5 control-label">Ngày
+						vào Đảng (chínht thức)</label>
+					<div class="col-md-5">
+						<input type="text" class="form-control" id="dateOfPartyOfficial"
+							placeholder="Ngày vào Đảng (chính thức)" />
+					</div>
+				</div>
+
+			</div>
+			
+			<!-- Achievement -->
+			<div class="col-md-7" id="panel-achievement">
+			</div>
+		</div>
+	
 	</div>
 </body>
 </html>

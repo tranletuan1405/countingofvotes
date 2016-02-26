@@ -10,8 +10,15 @@ $(document).ready(function() {
 		forceParse : 0,
 		showMeridian : 1
 	});
+	
 
 });
+
+function makeRect(target, ratio){
+	var cw = parseInt($(target).width());
+	var ch = parseInt((cw * ratio)) + 'px';
+	$(target).css('height', ch);
+}
 
 function showModal(target) {
 	var modal = $(target).modal({

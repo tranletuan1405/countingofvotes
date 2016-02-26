@@ -14,10 +14,18 @@ $(document).ready(function() {
 function onShowDelegateModal() {
 	
 	$('#modal-delegate').on('shown.bs.modal', function(){
-		var cw = $('#img-avatar').width();
-		var ch = (cw * 4 / 3) + 'px';
-		console.log(ch);
-		$('#img-avatar').css('height', ch);
+
+		makeRect('#panel-avatar', 1 / 1.6);
+		makeRect('#panel-other-info', 1);
+		
+		var height_main_info = parseInt($('#panel-avatar').height());
+		var height_other_info = parseInt($('#panel-other-info').height());
+		
+		$('#panel-avatar').css('height', height_main_info + "px");
+		$('#panel-other-info').css('height', height_other_info + "px");
+		$('#panel-main-info').css('height', height_main_info + "px");
+		$('#panel-achievement').css('height', height_other_info + "px");
+	
 	});
 }
 
