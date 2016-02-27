@@ -76,7 +76,14 @@ function loadUnits(){
 
 			},
 			"targets" : 8
-		}]
+		}],
+		
+		dom : 	"<'row'<'col-sm-4'B><'col-sm-4'l><'col-sm-4'f>>" +
+	 			"<'row'<'col-sm-12'tr>>" +
+	 			"<'row'<'col-sm-5'i><'col-sm-7'p>>",
+	 	buttons: [
+	 	        { text : "Thêm", action : function(){}},
+	 	],
 	});
 }
 
@@ -95,8 +102,7 @@ function loadDelegates(){
 		   { data : "unitName" },
 		   { data : "position" },
 		   { data : "typeName" },
-		   { data : "achievement" },
-		   
+
 		   { data : "codeImage" },
 		   { data : "codeContent", "visible": false },
 		   { data : "id", searchable : false }
@@ -106,14 +112,21 @@ function loadDelegates(){
 		    "render" : function(data, type, row) {
 		       return "<img class='img-thumbnail' src='../img/" + data + "' height='50' width='50'>";
 		     },
-		     "targets" : 9
+		     "targets" : 8
 		 }, {
 			"render" : function(data, type, row) {
 				return "<button type='button' class='btn btn-default' onClick='loadDetailDelegate(" + data + ")'>Chi tiết</button>";
 
 			},
-			"targets" : 11
+			"targets" : 10
 		 }],
+		 dom : 	"<'row'<'col-sm-4'B><'col-sm-4'l><'col-sm-4'f>>" +
+		 		"<'row'<'col-sm-12'tr>>" +
+		 		"<'row'<'col-sm-5'i><'col-sm-7'p>>",
+		 buttons: [
+		    { text : "Thêm", action : function(){}},
+		 
+		 ],
 		 "initComplete": function(settings, json) {
 			 loadEnterEvent();
 		 }

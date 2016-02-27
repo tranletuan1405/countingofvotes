@@ -247,8 +247,8 @@
 							chú</label>
 						<div class="col-md-10">
 							<textarea class="form-control" id="achievement" maxlength="2000"
-								rows="8" placeholder="Ghi chú" th:value="${delegate.achievement}">
-						</textarea>
+								rows="9" placeholder="Ghi chú" th:inline="text">[[${delegate.achievement}]]
+							</textarea>
 						</div>
 					</div>
 				</div>
