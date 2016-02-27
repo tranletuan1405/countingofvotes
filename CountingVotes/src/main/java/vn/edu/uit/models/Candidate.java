@@ -53,6 +53,16 @@ public class Candidate implements Serializable {
 	@Column(name = "is_updatable", nullable = false)
 	private boolean isUpdatable = true;
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public Voting getVoting() {
 		return voting;
 	}

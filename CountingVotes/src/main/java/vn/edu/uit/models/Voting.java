@@ -42,7 +42,7 @@ public class Voting extends AbstractEntity {
 	@Column(name = "end_time", columnDefinition = "DATETIME")
 	private Date endTime;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "congress_id", nullable = false)
 	private Congress congress;
 
@@ -56,6 +56,12 @@ public class Voting extends AbstractEntity {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "voting")
 	private Set<Candidate> candidates = new HashSet<Candidate>(0);
 
+	
+	
+	
+	
+	
+	
 	public Voting() {
 
 	}

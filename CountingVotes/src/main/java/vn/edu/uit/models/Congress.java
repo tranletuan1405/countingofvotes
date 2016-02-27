@@ -70,6 +70,8 @@ public class Congress extends AbstractEntity{
 	
 	
 	
+	
+	
 	public String getName() {
 		return name;
 	}

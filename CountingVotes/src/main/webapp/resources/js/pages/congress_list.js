@@ -91,7 +91,7 @@ $(document).ready(function() {
 		    		   { data : "unitName" },
 		    		   { data : "position" },
 		    		   { data : "typeName" },
-		    		   { data : "note" }
+		    		   { data : "achievement" }
 		    		],
 		    		
 		    		select: 'single',

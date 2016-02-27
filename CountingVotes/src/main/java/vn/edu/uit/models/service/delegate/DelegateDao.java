@@ -276,7 +276,7 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 				delegate.setUnit(unit);
 				break;
 			case Note:
-				delegate.setNote(value);
+				delegate.setAchievement(value);
 			default:
 				break;
 

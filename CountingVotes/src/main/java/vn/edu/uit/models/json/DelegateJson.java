@@ -26,7 +26,8 @@ public class DelegateJson {
 	private String unitName;
 	private String typeName;
 	private String note;
-
+	private String achievement;
+	
 	private String codeImage;
 	private String codeContent;
 
@@ -60,6 +61,7 @@ public class DelegateJson {
 		}
 
 		this.setNote(delegate.getNote());
+		this.setAchievement(delegate.getAchievement());
 	}
 
 	public String getName() {
@@ -197,5 +199,13 @@ public class DelegateJson {
 
 	public void setCodeImage(String codeImage) {
 		this.codeImage = codeImage;
+	}
+
+	public String getAchievement() {
+		return achievement;
+	}
+
+	public void setAchievement(String achievement) {
+		this.achievement = achievement;
 	}
 }

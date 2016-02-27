@@ -17,24 +17,19 @@ import vn.edu.uit.models.common.AbstractEntity;
 @Table(name = "Unit")
 public class Unit extends AbstractEntity {
 
-	
-	@Column(name =  "code")
+	@Column(name = "code")
 	private String code;
-	
+
 	@Column(name = "name")
 	private String name;
-	
+
 	@Column(name = "short_name", columnDefinition = "varchar(50)")
 	private String shortName;
-		
-	@ManyToOne(targetEntity = Congress.class)
+
+	@ManyToOne(targetEntity = Congress.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "congress_id")
 	private Congress congress;
-	
-	
-	
-	
-	
+
 	public String getCode() {
 		return code;
 	}
@@ -67,5 +62,4 @@ public class Unit extends AbstractEntity {
 		this.congress = congress;
 	}
 
-	
 }

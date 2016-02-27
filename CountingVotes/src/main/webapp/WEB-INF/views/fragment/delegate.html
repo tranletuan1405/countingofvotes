@@ -14,7 +14,7 @@
 			<div class="col-md-7" id="panel-main-info">
 				<!-- STT -->
 				<div class="form-group" style="margin-top: 15px;">
-					<label for="ordinal" class="col-md-3  control-label">STT</label>
+					<label for="ordinal" class="col-md-2  control-label">STT</label>
 					<div class="col-md-2">
 						<input type="text" class="form-control" id="ordinal"
 							placeholder="STT" />
@@ -23,7 +23,7 @@
 
 				<!-- Tên Đại biểu -->
 				<div class="form-group">
-					<label for="name" class="col-md-3 control-label">Tên Đại
+					<label for="name" class="col-md-2 control-label">Tên Đại
 						biểu</label>
 					<div class="col-md-6">
 						<input type="text" class="form-control" id="name"
@@ -33,7 +33,7 @@
 
 				<!-- Đơn vị -->
 				<div class="form-group">
-					<label for="unit" class="col-md-3 control-label">Đơn vị</label>
+					<label for="unit" class="col-md-2 control-label">Đơn vị</label>
 					<div class="col-md-6">
 						<select class="form-control" id="unit" th:name="unit"
 							required="true">
@@ -45,7 +45,7 @@
 				
 				<!-- Chức vụ -->
 				<div class="form-group">
-					<label for="position" class="col-md-3 control-label">Chức
+					<label for="position" class="col-md-2 control-label">Chức
 						vụ</label>
 					<div class="col-md-3">
 						<input type="text" class="form-control" id="position"
@@ -55,7 +55,7 @@
 
 				<!-- Cơ cấu -->
 				<div class="form-group">
-					<label for="type" class="col-md-3 control-label">Cơ cấu</label>
+					<label for="type" class="col-md-2 control-label">Cơ cấu</label>
 					<div class="col-md-3">
 						<select class="form-control" id="type" th:name="type"
 							required="true">
@@ -164,6 +164,64 @@
 			
 			<!-- Achievement -->
 			<div class="col-md-7" id="panel-achievement">
+				
+				<!-- Học vấn -->
+				<div class="form-group" style="margin-top: 15px;">
+					<label for="educational" class="col-md-2 control-label">Học vấn</label>
+					<div class="col-md-5">
+						<input type="text" class="form-control" id="educational"
+							placeholder="Trình độ học vấn" />
+					</div>
+				</div>
+				
+				<!-- Chuyên môn -->
+				<div class="form-group">
+					<label for="specialty" class="col-md-2 control-label">Chuyên môn</label>
+					<div class="col-md-5">
+						<input type="text" class="form-control" id="specialty"
+							placeholder="Chuyên môn" />
+					</div>
+				</div>
+				
+				<!-- Lý luận chính trị -->
+				<div class="form-group">
+					<label for="politicalTheory" class="col-md-2 control-label">LLCT</label>
+					<div class="col-md-5">
+						<input type="text" class="form-control" id="educational"
+							placeholder="Lý luận chính trị" />
+					</div>
+				</div>
+				
+				
+				<!-- Ngoại ngữ -->
+				<div class="form-group">
+					<label for="foreignLanguages" class="col-md-2 control-label">Ngoại ngữ</label>
+					<div class="col-md-5">
+						<input type="text" class="form-control" id="foreignLanguages"
+							placeholder="Ngoại ngữ" />
+					</div>
+				</div> 
+				
+				<!-- Ngoại ngữ -->
+				<div class="form-group">
+					<label for="informationTechnology" class="col-md-2 control-label">Tin học</label>
+					<div class="col-md-5">
+						<input type="text" class="form-control" id="informationTechnology"
+							placeholder="Tin học" />
+					</div>
+				</div>
+
+				<!-- Ghi chú / Thành tích -->
+				<div class="form-group">
+					<label for="achievement" class="col-md-2 control-label">Ghi chú</label>
+					<div class="col-md-10">
+						<textarea class="form-control" id="achievement" maxlength="2000" rows="8"
+							placeholder="Ghi chú">
+						</textarea>
+					</div>
+				</div>
+
+
 			</div>
 		</div>
 	

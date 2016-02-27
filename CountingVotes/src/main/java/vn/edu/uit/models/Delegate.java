@@ -72,6 +72,9 @@ public class Delegate extends AbstractEntity {
 	@JoinColumn(name = "extension_id")
 	private DelegateExtension extension;
 	
+	@Column(name = "achievement", columnDefinition = "varchar(2500)")
+	private String achievement;
+	
 	
 	
 	//Manage Field
@@ -258,6 +261,14 @@ public class Delegate extends AbstractEntity {
 
 	public void setCandidateDetails(Set<Candidate> candidateDetails) {
 		this.candidateDetails = candidateDetails;
+	}
+
+	public String getAchievement() {
+		return achievement;
+	}
+
+	public void setAchievement(String achievement) {
+		this.achievement = achievement;
 	}
 	
 }
