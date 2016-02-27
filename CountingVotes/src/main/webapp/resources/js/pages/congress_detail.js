@@ -9,7 +9,23 @@ $(document).ready(function() {
 	loadDelegates();
 	loadUnits();
 	onShowDelegateModal();
+
 });
+
+function loadDetailDelegate(id) {
+	$.ajax({
+		url : 'delegate/' + id,
+		success : function(data){
+			console.log(data);
+			$('#detail-delegate').html(data);
+			$('#modal-delegate').modal('show');
+		},
+		
+		error : function() {
+			console.log("load delegate error");
+		}
+	});
+}
 
 function onShowDelegateModal() {
 	
@@ -21,11 +37,18 @@ function onShowDelegateModal() {
 		var height_main_info = parseInt($('#panel-avatar').height());
 		var height_other_info = parseInt($('#panel-other-info').height());
 		
+		$('#img-avatar').css('width', (height_main_info - 20) + "px");
+		$('#img-avatar').css('height', (height_main_info - 20) + "px");
+		
 		$('#panel-avatar').css('height', height_main_info + "px");
 		$('#panel-other-info').css('height', height_other_info + "px");
 		$('#panel-main-info').css('height', height_main_info + "px");
 		$('#panel-achievement').css('height', height_other_info + "px");
 	
+
+		$('#img-avatar').click(function() {
+			$('#file-avatar').click();
+		});
 	});
 }
 
@@ -72,7 +95,7 @@ function loadDelegates(){
 		   { data : "unitName" },
 		   { data : "position" },
 		   { data : "typeName" },
-		   { data : "note" },
+		   { data : "achievement" },
 		   
 		   { data : "codeImage" },
 		   { data : "codeContent", "visible": false },
@@ -86,7 +109,7 @@ function loadDelegates(){
 		     "targets" : 9
 		 }, {
 			"render" : function(data, type, row) {
-				return "<button type='button' class='btn btn-default' data-toggle='modal' data-target='#modal-delegate'>Chi tiết</button>";
+				return "<button type='button' class='btn btn-default' onClick='loadDetailDelegate(" + data + ")'>Chi tiết</button>";
 
 			},
 			"targets" : 11

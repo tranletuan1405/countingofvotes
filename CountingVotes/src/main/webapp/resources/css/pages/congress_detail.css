@@ -57,26 +57,30 @@ img {
 	width: 95%;
 }
 
-#panel-avatar {
-	border: 2px solid #00aff0;
+.my-panel {
+	border: 1px solid #00aff0;
 	background: white;
+	padding: 10px;
+	/* margin: 5px; */
 }
 
 #panel-main-info {
-	border: 2px solid #00aff0;
-	background: white;
+	border-bottom: 0px;
 }
 
 #panel-other-info {
-	border: 2px solid #00aff0;
-	background: white;
+	border-right: 0px;
 }
 
-#panel-achievement {
-	border: 2px solid #00aff0;
-	background: white;
+#panel-avatar {
+	border: 0px;
 }
 
-.modal-body {
-	background: #00aff0;
+#img-avatar {
+	display: block;
+	margin: auto;
+}
+
+.top-control {
+	 margin-top: 10px;
 }

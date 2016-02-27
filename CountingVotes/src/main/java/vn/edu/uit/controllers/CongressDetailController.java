@@ -127,4 +127,24 @@ public class CongressDetailController {
 
 		return mapper.writeValueAsString(json);
 	}
+
+	@RequestMapping(value = "/delegate/{id}")
+	@ResponseBody
+	public ModelAndView getDelegate(
+			@PathVariable("id") long id,
+			HttpServletRequest request){
+		ModelAndView model = new ModelAndView("fragment/delegate");
+		HttpSession session = request.getSession();
+		long congressId = (Long) session.getAttribute("congress_id");
+		
+		Delegate delegate = delegateService.fetch(id);
+		List<Unit> units = unitService.fetch(congressId);
+		List<DelegateType> types = typeService.fetch();
+		
+		model.addObject("delegate", delegate);
+		model.addObject("units", units);
+		model.addObject("types", types);
+		
+		return model;
+	}
 }

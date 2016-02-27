@@ -11,6 +11,7 @@ import vn.edu.uit.models.Unit;
 
 public class DelegateJson {
 
+	private long id;
 	private String ordinal;
 	private String name;
 	private String placeOfBirth;
@@ -32,6 +33,7 @@ public class DelegateJson {
 	private String codeContent;
 
 	public DelegateJson(Delegate delegate) {
+		this.setId(delegate.getId());
 		this.setOrdinal(delegate.getOrdinal());
 		this.setName(delegate.getName());
 		this.setPlaceOfBirth(delegate.getPlaceOfBirth());
@@ -207,5 +209,13 @@ public class DelegateJson {
 
 	public void setAchievement(String achievement) {
 		this.achievement = achievement;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 }
