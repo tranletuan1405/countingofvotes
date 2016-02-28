@@ -1,12 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title></title>
 </head>
 <body>
 	<div class="container-fluid form-horizontal" th:fragment="unit">
+		<div class="row">
 		
+			<div id="panel-unit" style="padding: 15px;">
+
+				<!-- Mã đơn vị -->
+				<div class="form-group top-control">
+					<label for="code" class="col-md-3  control-label">Mã đơn vị</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" id="code"
+							placeholder="Mã đơn vị" th:value="${unit.code}" />
+					</div>
+				</div>
+
+				<!-- Tên đơn vị -->
+				<div class="form-group top-control">
+					<label for="name" class="col-md-3  control-label">Tên đơn
+						vị</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" id="name"
+							placeholder="Tên đơn vị" th:value="${unit.name}" />
+					</div>
+				</div>
+
+				<!-- Tên khác -->
+				<div class="form-group top-control">
+					<label for="shortName" class="col-md-3  control-label">Tên
+						thay thế</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" id="shortName"
+							placeholder="Tên thay thế" th:value="${unit.shortName}" />
+					</div>
+				</div>
+
+				<!-- Ghi chú -->
+				<div class="form-group top-control">
+					<label for="note" class="col-md-3  control-label">Ghi chú</label>
+					<div class="col-md-9">
+						<textarea class="form-control" id="note" maxlength="300" rows="5"
+							placeholder="Ghi chú" th:inline="text">[[${unit.note}]]
+					</textarea>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
 	</div>
 </body>
 </html>

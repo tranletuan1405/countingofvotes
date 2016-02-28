@@ -15,4 +15,6 @@ public interface IUnitDao {
 	List<Unit> fetch(Long congressId);
 	
 	Unit fetch(String name, long congressId);
+	
+	Unit fetch(long id, long congressId);
 }

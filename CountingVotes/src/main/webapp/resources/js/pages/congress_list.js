@@ -24,7 +24,7 @@ $(document).ready(function() {
 		},
 		{
 			"render" : function(data, type, row) {
-				return "<a class='btn btn-default' href='remove/" + data + "'>Xóa</a>";
+				return "<button  type='button' class='btn btn-danger'>Xóa</button>";
 			},
 			"targets" : 8
 		} ],

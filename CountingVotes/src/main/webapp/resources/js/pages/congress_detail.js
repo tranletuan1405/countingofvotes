@@ -12,20 +12,6 @@ $(document).ready(function() {
 
 });
 
-function loadDetailDelegate(id) {
-	$.ajax({
-		url : 'delegate/' + id,
-		success : function(data){
-			console.log(data);
-			$('#detail-delegate').html(data);
-			$('#modal-delegate').modal('show');
-		},
-		
-		error : function() {
-			console.log("load delegate error");
-		}
-	});
-}
 
 function onShowDelegateModal() {
 	
@@ -52,6 +38,7 @@ function onShowDelegateModal() {
 	});
 }
 
+/*======================UNIT=======================*/
 function loadUnits(){
 	var unit_table = $('#unit-table').DataTable({
 		destroy : true,
@@ -59,33 +46,56 @@ function loadUnits(){
 		"lengthMenu": [[10, 15, 20, -1], [10, 15, 20, "Tất cả"]],
 		rowId : "id",
 		columns: [
+		    { data : "code" },
 			{ data : "name" },
-			{ data : "code" },
 			{ data : "shortName" },
-			
 			{ data : "numOfDBDN" , searchable : false},
 			{ data : "numOfDBCD" , searchable : false},
 			{ data : "numOfDBBC" , searchable : false},
 			{ data : "numOfDBDK" , searchable : false},
 			{ data : "total" , searchable : false},
+			{ data : "id" , searchable : false},
 			{ data : "id" , searchable : false}
 		],
 		"columnDefs" : [{
 			"render" : function(data, type, row) {
-				return "<button type='button' class='btn btn-default'>Chi tiết</button>";
+				return "<button type='button' class='btn btn-default' onClick='loadDetailUnit(" + data +")'>Chi tiết</button>";
 
 			},
-			"targets" : 8
-		}],
+			"targets" : 8, "orderable": false
+		}, {
+			"render" : function(data, type, row) {
+				return "<button type='button' class='btn btn-danger'>Xóa</button>";
+			},
+			"targets" : 9, "orderable": false
+		}
+		
+		],
 		
 		dom : 	"<'row'<'col-sm-4'B><'col-sm-4'l><'col-sm-4'f>>" +
 	 			"<'row'<'col-sm-12'tr>>" +
 	 			"<'row'<'col-sm-5'i><'col-sm-7'p>>",
 	 	buttons: [
-	 	        { text : "Thêm", action : function(){}},
+	 	        { text : "Thêm",  className: 'btn-primary', action : function(){}},
 	 	],
 	});
 }
+
+function loadDetailUnit(id){
+	$.ajax({
+		url : 'unit/' + id,
+		success : function (data) {
+			$('#detail-unit').html(data);
+			$('#modal-unit').modal('show');
+		},
+		
+		error : function() {
+			console.log('load unit error');
+		}
+	});
+}
+
+/*=====================DELEGATE========================*/
 
 function loadDelegates(){
 	var delegate_table = $('#delegate-table').DataTable({
@@ -105,32 +115,52 @@ function loadDelegates(){
 
 		   { data : "codeImage" },
 		   { data : "codeContent", "visible": false },
-		   { data : "id", searchable : false }
+		   { data : "id", searchable : false, "ordering" : false },
+		   { data : "id", searchable : false, "ordering" : false }
 		 ],
 		 
 		 "columnDefs": [{
 		    "render" : function(data, type, row) {
 		       return "<img class='img-thumbnail' src='../img/" + data + "' height='50' width='50'>";
 		     },
-		     "targets" : 8
+		     "targets" : 8, "orderable": false
 		 }, {
 			"render" : function(data, type, row) {
 				return "<button type='button' class='btn btn-default' onClick='loadDetailDelegate(" + data + ")'>Chi tiết</button>";
 
 			},
-			"targets" : 10
-		 }],
+			"targets" : 10, "orderable": false
+		 }, {
+				"render" : function(data, type, row) {
+					return "<button type='button' class='btn btn-danger'>Xóa</button>";
+
+			},
+			"targets" : 11, "orderable": false
+		 }
+		 ],
 		 dom : 	"<'row'<'col-sm-4'B><'col-sm-4'l><'col-sm-4'f>>" +
 		 		"<'row'<'col-sm-12'tr>>" +
 		 		"<'row'<'col-sm-5'i><'col-sm-7'p>>",
 		 buttons: [
-		    { text : "Thêm", action : function(){}},
+		    { text : "Thêm", className: "btn-primary", action : function(){}},
 		 
 		 ],
 		 "initComplete": function(settings, json) {
 			 loadEnterEvent();
-		 }
-		
-		
+		 }	
 	});
 };
+
+function loadDetailDelegate(id) {
+	$.ajax({
+		url : 'delegate/' + id,
+		success : function(data){
+			$('#detail-delegate').html(data);
+			$('#modal-delegate').modal('show');
+		},
+		
+		error : function() {
+			console.log("load delegate error");
+		}
+	});
+}

@@ -72,6 +72,7 @@
 			<!-- Content -->
 			<div class="container-fluid">
 				<div class="tab-content tab-content">
+					
 					<div role="tabpanel" class="tab-pane fade in active" id="congress">
 					
 						<div class="container-fluild tab-container">
@@ -153,6 +154,7 @@
 							
 						</div>
 					</div>
+					
 					<div role="tabpanel" class="tab-pane fade" id="delegates">
 						<div class="panel-body">
 							<div class="table-responsive">
@@ -174,6 +176,7 @@
 											<th class="col-md-1 col-sm-1">Mã</th>
 											<th></th>
 											<th></th>
+											<th></th>
 										</tr>
 									</thead>
 
@@ -191,6 +194,7 @@
 											<th class="col-md-1 col-sm-1">Mã</th>
 											<th></th>
 											<th></th>
+											<th></th>
 										</tr>
 									</tfoot>
 
@@ -198,6 +202,7 @@
 							</div>
 						</div>
 					</div>
+					
 					<div role="tabpanel" class="tab-pane fade" id="units">
 						<div class="panel-body">
 							<div class="table-responsive">
@@ -206,28 +211,30 @@
 									width="100%">
 									<thead>
 										<tr>
-											<th>Tên đơn vị</th>
 											<th>Mã đơn vị</th>
-											<th>Tên viết tắt</th>
+											<th class="col-md-4">Tên đơn vị</th>
+											<th>Tên thay thế</th>
 											<th>Số ĐBĐN</th>
 											<th>Số ĐBCĐ</th>
 											<th>Số ĐBBC</th>
 											<th>Số ĐBDK</th>
 											<th>Tổng số Đại biểu</th>
 											<th></th>
+											<th></th>
 										</tr>
 									</thead>
 
 									<tfoot>
 										<tr>
-											<th>Tên đơn vị</th>
 											<th>Mã đơn vị</th>
-											<th>Tên viết tắt</th>
+											<th class="col-md-4">Tên đơn vị</th>											
+											<th>Tên thay thế</th>
 											<th>Số ĐBĐN</th>
 											<th>Số ĐBCĐ</th>
 											<th>Số ĐBBC</th>
 											<th>Số ĐBDK</th>
 											<th>Tổng số Đại biểu</th>
+											<th></th>
 											<th></th>
 										</tr>
 									</tfoot>
@@ -235,8 +242,9 @@
 							</div>
 						</div>
 					</div>
+				
 				</div>
-			</div>
+z			</div>
 		</div>
 	</div>
 
@@ -261,8 +269,35 @@
 				</div>
 			</div>
 		</div>
-
-		
 	</div>
+
+	<div class="modal fade" id="modal-unit" tabindex="-1" role="dialog" aria-labelledby="unitModalLabel">
+		<div class="modal-dialog" role="document" id="modal-content-unit">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Chi tiết Đơn vị</h4>
+				</div>
+				
+				<div class="modal-body">
+					<form class="form-horizontal" id="form-unit">
+						<div id="detail-unit"></div>
+					</form>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary">Lưu</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
 </body>
 </html>

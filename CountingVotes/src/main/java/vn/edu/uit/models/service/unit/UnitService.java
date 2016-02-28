@@ -42,4 +42,9 @@ public class UnitService implements IUnitDao {
 	public List<Unit> fetch(Long congressId) {
 		return unitDao.fetch(congressId);
 	}
+
+	@Override
+	public Unit fetch(long id, long congressId) {
+		return unitDao.fetch(id, congressId);
+	}
 }

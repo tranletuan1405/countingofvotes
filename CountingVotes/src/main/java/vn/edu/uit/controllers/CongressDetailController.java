@@ -147,4 +147,16 @@ public class CongressDetailController {
 		
 		return model;
 	}
+
+	@RequestMapping(value = "/unit/{id}")
+	@ResponseBody
+	public ModelAndView getUnit(@PathVariable("id") long id,
+			HttpServletRequest request){
+		HttpSession session = request.getSession();
+		long congressId = (Long)session.getAttribute("congress_id");
+		ModelAndView model = new ModelAndView("fragment/unit");
+		Unit unit = unitService.fetch(id, congressId);
+		model.addObject("unit", unit);
+		return model;
+	}
 }
