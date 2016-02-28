@@ -44,6 +44,10 @@
 			<div class="container-fluid">
 				<img th:if="${congress.banner}" th:src="@{congress.banner}" class="img-responsive banner" alt="Responsive image"/>
 				<img th:unless="${congress.banner}" th:src="@{/images/page/default-banner.png}" class="img-responsive banner" alt="Responsive image"/>
+			
+				<div id="banner-delegate" class="hidden">
+					<div th:replace="fragment/delegate_banner :: delegate-banner"></div>
+				</div>
 			</div>
 
 			<!-- Tab Manager -->
@@ -166,14 +170,15 @@
 										<tr>
 											<th>STT</th>
 											<th>Tên Đại biểu</th>
-											<th>Nơi sinh</th>
 											<th>Năm sinh</th>
 											<th>Giới tính</th>
 											<th>Đơn vị</th>
 											<th>Chức vụ</th>
 											<th>Cơ cấu</th>
-							
-											<th class="col-md-1 col-sm-1">Mã</th>
+											<th>Thời gian dự</th>
+											
+											<!-- <th class="col-md-1 col-sm-1">Mã</th> -->
+											<th></th>
 											<th></th>
 											<th></th>
 											<th></th>
@@ -184,14 +189,15 @@
 										<tr>
 											<th>STT</th>
 											<th>Tên Đại biểu</th>
-											<th>Nơi sinh</th>
 											<th>Năm sinh</th>
 											<th>Giới tính</th>
 											<th>Đơn vị</th>
 											<th>Chức vụ</th>
 											<th>Cơ cấu</th>
+											<th>Thời gian dự</th>
 				
-											<th class="col-md-1 col-sm-1">Mã</th>
+											<!-- <th class="col-md-1 col-sm-1">Mã</th> -->
+											<th></th>
 											<th></th>
 											<th></th>
 											<th></th>
@@ -244,7 +250,7 @@
 					</div>
 				
 				</div>
-z			</div>
+			</div>
 		</div>
 	</div>
 

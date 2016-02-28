@@ -5,6 +5,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import vn.edu.uit.extra.DataConfig;
+import vn.edu.uit.extra.SupportMethods;
 import vn.edu.uit.models.Delegate;
 import vn.edu.uit.models.DelegateType;
 import vn.edu.uit.models.Unit;
@@ -29,8 +31,11 @@ public class DelegateJson {
 	private String note;
 	private String achievement;
 	
+	private String imagePath;
 	private String codeImage;
 	private String codeContent;
+	
+	private String arivalTime;
 
 	public DelegateJson(Delegate delegate) {
 		this.setId(delegate.getId());
@@ -62,8 +67,10 @@ public class DelegateJson {
 		} catch (Exception e) {
 		}
 
+		this.setImagePath(delegate.getImagePath());
 		this.setNote(delegate.getNote());
 		this.setAchievement(delegate.getAchievement());
+		this.setArivalTime(SupportMethods.dateToString(delegate.getArivalTime(), DataConfig.DATE_TIME_FORMAT));
 	}
 
 	public String getName() {
@@ -217,5 +224,21 @@ public class DelegateJson {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getArivalTime() {
+		return arivalTime;
+	}
+
+	public void setArivalTime(String arivalTime) {
+		this.arivalTime = arivalTime;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 }

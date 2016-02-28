@@ -76,7 +76,7 @@ img {
 	border: 0px;
 }
 
-#img-avatar {
+#img-avatar, #banner-imagePath {
 	display: block;
 	margin: auto;
 }

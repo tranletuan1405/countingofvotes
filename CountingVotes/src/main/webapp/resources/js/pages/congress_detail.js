@@ -106,36 +106,35 @@ function loadDelegates(){
 		columns: [
 		   { data : "ordinal" },
 		   { data : "name" },
-		   { data : "placeOfBirth" },
 		   { data : "dateOfBirth" },
 		   { data : "gender" },
 		   { data : "unitName" },
 		   { data : "position" },
 		   { data : "typeName" },
-
-		   { data : "codeImage" },
+		   { data : "arivalTime" },
+		   
+		   /*{ data : "codeImage" },*/
 		   { data : "codeContent", "visible": false },
-		   { data : "id", searchable : false, "ordering" : false },
-		   { data : "id", searchable : false, "ordering" : false }
+		   { data : "id", searchable : false, "orderable": false },
+		   { data : "id", searchable : false, "orderable": false},
+		   { data : "imagePath", searchable : false, "orderable": false, "visible": false}
 		 ],
 		 
-		 "columnDefs": [{
-		    "render" : function(data, type, row) {
-		       return "<img class='img-thumbnail' src='../img/" + data + "' height='50' width='50'>";
-		     },
-		     "targets" : 8, "orderable": false
-		 }, {
+		 "columnDefs": [
+		 {
 			"render" : function(data, type, row) {
 				return "<button type='button' class='btn btn-default' onClick='loadDetailDelegate(" + data + ")'>Chi tiết</button>";
 
 			},
-			"targets" : 10, "orderable": false
-		 }, {
-				"render" : function(data, type, row) {
+			"targets" : 9
+		 }, 
+		 
+		 {
+			"render" : function(data, type, row) {
 					return "<button type='button' class='btn btn-danger'>Xóa</button>";
 
 			},
-			"targets" : 11, "orderable": false
+			"targets" : 10
 		 }
 		 ],
 		 dom : 	"<'row'<'col-sm-4'B><'col-sm-4'l><'col-sm-4'f>>" +
@@ -147,8 +146,36 @@ function loadDelegates(){
 		 ],
 		 "initComplete": function(settings, json) {
 			 loadEnterEvent();
-		 }	
+		 },
+		 select: {
+			 items : "row",
+			 style: 'single',
+		 }
 	});
+
+	delegate_table.on('select', function(e, dt, type, indexes) {
+		if (type == 'row') {
+
+			var data = delegate_table.rows(indexes).data();
+			var imagePath = data.pluck('imagePaht')[0];
+			
+			if(imagePath == null) {
+				imagePath = '../images/page/default-avatar.png';
+			}
+			$('#banner-imagePath').attr("src", imagePath);
+			$('#banner-ordinal').html(data.pluck('ordinal')[0]);
+			$('#banner-name').html(data.pluck('name')[0]);
+			$('#banner-gender').html(data.pluck('gender')[0]);
+			$('#banner-dateOfBirth').html(data.pluck('dateOfBirth')[0]);
+			$('#banner-unitName').html(data.pluck('unitName')[0]);
+			$('#banner-position').html(data.pluck('position')[0]);
+			$('#banner-typeName').html(data.pluck('typeName')[0]);
+			$('#banner-arrivalTime').html(data.pluck('arrivalTime')[0]);
+			
+			$('#banner-delegate').removeClass('hidden');
+		}
+	});
+
 };
 
 function loadDetailDelegate(id) {
