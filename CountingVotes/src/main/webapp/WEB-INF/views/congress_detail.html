@@ -42,11 +42,28 @@
 		<div class="col-md-10">
 			<!-- Banner -->
 			<div class="container-fluid">
-				<img th:if="${congress.banner}" th:src="@{congress.banner}" class="img-responsive banner" alt="Responsive image"/>
-				<img th:unless="${congress.banner}" th:src="@{/images/page/default-banner.png}" class="img-responsive banner" alt="Responsive image"/>
-			
-				<div id="banner-delegate" class="hidden">
-					<div th:replace="fragment/delegate_banner :: delegate-banner"></div>
+				<ul class="hidden" role="tablist" id="banner-tabs">
+					<li role="presentation" class="active"><a href="#img-banner"
+						aria-controls="home" role="tab" data-toggle="tab"></a></li>
+					<li role="presentation"><a href="#banner-delegate"
+						aria-controls="profile" role="tab" data-toggle="tab"></a></li>
+				</ul>
+				
+				<div class="tab-content" id="panel-banner-content">
+				
+					<div role="tabpanel" class="tab-pane fade in banner active" id="img-banner">
+						<img th:if="${congress.banner}" th:src="@{congress.banner}"
+							class="img-responsive banner" alt="Responsive image" /> 
+						<img
+							th:unless="${congress.banner}"
+							th:src="@{/images/page/default-banner.png}"
+							class="img-responsive banner" alt="Responsive image" />
+
+					</div>
+					
+					<div role="tabpanel" class="tab-pane fade banner" id="banner-delegate">
+						<div th:replace="fragment/delegate_banner :: delegate-banner"></div>
+					</div>
 				</div>
 			</div>
 
@@ -75,7 +92,7 @@
 			
 			<!-- Content -->
 			<div class="container-fluid">
-				<div class="tab-content tab-content">
+				<div class="tab-content" id="congress-detail-content">
 					
 					<div role="tabpanel" class="tab-pane fade in active" id="congress">
 					

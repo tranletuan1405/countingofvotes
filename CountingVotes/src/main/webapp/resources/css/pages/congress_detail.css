@@ -8,6 +8,19 @@ img {
 	width: 100%;
 	min-height: calc(35vh);
 	max-height: calc(35vh);
+	
+}
+
+#panel-banner-content{
+	border: 1px solid #00aff0;
+}
+
+#banner-imagePath {
+	
+	max-width:90%;
+	max-height:90%;
+	padding: 10px;
+	
 }
 
 .tab-manager>li.active>a, .tab-manager>li.active>a:focus {
@@ -23,7 +36,7 @@ img {
 	border-top-right-radius: 5px;
 }
 
-.tab-content {
+#congress-detail-content {
 	margin-bottom: 10px;
 	border: 1px solid #00aff0;
 	border-top: 0px;
@@ -57,11 +70,9 @@ img {
 	width: 95%;
 }
 
-.my-panel {
+.delegate-modal-panel {
 	border: 1px solid #00aff0;
-	background: white;
 	padding: 10px;
-	/* margin: 5px; */
 }
 
 #panel-main-info {
@@ -74,9 +85,18 @@ img {
 
 #panel-avatar {
 	border: 0px;
+	position: relative;
 }
 
-#img-avatar, #banner-imagePath {
+#img-code {
+	position: absolute;
+	z-index: 1;
+	width: 25%;
+	top: 2px;
+	right: 2px;
+}
+
+#img-avatar {
 	display: block;
 	margin: auto;
 }

@@ -9,15 +9,19 @@
 		<div class="row" id="row-1">
 			<!-- Avatar -->
 			<div class="col-md-5" style="padding: 0;">
-				<div id="panel-avatar" class="my-panel">
-					<img th:unless="${imagePath}" th:src="@{/images/page/default-avatar.png}" class="img-circle" id="img-avatar"/>
+				<div id="panel-avatar" class="delegate-modal-panel">
+					<img th:unless="${delegate.imagePath}" th:src="@{/images/page/default-avatar.png}" class="img-circle" id="img-avatar"/>
+		
 					<input type="file" accept="image/*" id="file-avatar" class="hidden"/>
 				</div>
 			</div>
 
 			<!-- Main Information -->
 			<div class="col-md-7" style="padding: 0;">
-				<div id="panel-main-info" class="my-panel">
+				<div id="panel-main-info" class="delegate-modal-panel">
+				
+					<img th:if="${delegate.hashCode.imagePath}" th:src="'../img/' + ${delegate.hashCode.imagePath}" id="img-code"/>
+				
 					<!-- STT -->
 					<div class="form-group top-control">
 						<label for="ordinal" class="col-md-2  control-label">STT</label>
@@ -74,14 +78,18 @@
 							</select>
 						</div>
 					</div>
+				
+					
 				</div>
+				
+				
 			</div>
 		</div>
 		
 		<div class="row" id="row-2">
 			<!-- Other Information -->
 			<div class="col-md-5" style="padding: 0;">
-				<div id="panel-other-info" class="my-panel">
+				<div id="panel-other-info" class="delegate-modal-panel">
 					<!-- Ngày sinh -->
 					<div class="form-group top-control">
 						<label for="dateOfBirth" class="col-md-4 control-label">Ngày
@@ -174,7 +182,7 @@
 			
 			<!-- Achievement -->
 			<div class="col-md-7" style="padding: 0;">
-				<div id="panel-achievement" class="my-panel">
+				<div id="panel-achievement" class="delegate-modal-panel">
 					<!-- Học vấn -->
 					<div class="form-group top-control">
 						<label for="educational" class="col-md-2 control-label">Học

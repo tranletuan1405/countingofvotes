@@ -147,34 +147,30 @@ function loadDelegates(){
 		 "initComplete": function(settings, json) {
 			 loadEnterEvent();
 		 },
-		 select: {
+		 /*select: {
 			 items : "row",
 			 style: 'single',
-		 }
+		 }*/
+		 
+		 select : false,
 	});
-
-	delegate_table.on('select', function(e, dt, type, indexes) {
-		if (type == 'row') {
-
-			var data = delegate_table.rows(indexes).data();
-			var imagePath = data.pluck('imagePaht')[0];
-			
-			if(imagePath == null) {
-				imagePath = '../images/page/default-avatar.png';
-			}
-			$('#banner-imagePath').attr("src", imagePath);
-			$('#banner-ordinal').html(data.pluck('ordinal')[0]);
-			$('#banner-name').html(data.pluck('name')[0]);
-			$('#banner-gender').html(data.pluck('gender')[0]);
-			$('#banner-dateOfBirth').html(data.pluck('dateOfBirth')[0]);
-			$('#banner-unitName').html(data.pluck('unitName')[0]);
-			$('#banner-position').html(data.pluck('position')[0]);
-			$('#banner-typeName').html(data.pluck('typeName')[0]);
-			$('#banner-arrivalTime').html(data.pluck('arrivalTime')[0]);
-			
-			$('#banner-delegate').removeClass('hidden');
-		}
-	});
+	
+	/*delegate_table.on( 'deselect', function ( e, dt, type, indexes ) {
+		$('#banner-tabs a[href="#img-banner"]').tab('show');
+	});*/
+	
+	delegate_table.on( 'draw.dt', function () {
+		var rows = delegate_table.rows( {page:'current'} ).data();
+		var numOfRow = rows.count();
+	
+	    if(numOfRow == 1){
+	    	fillDelegateBanner(rows);
+	    	$('#banner-tabs a[href="#banner-delegate"]').tab('show');
+	    }
+	    else {
+	    	$('#banner-tabs a[href="#img-banner"]').tab('show');
+	    }
+	} );
 
 };
 
@@ -190,4 +186,21 @@ function loadDetailDelegate(id) {
 			console.log("load delegate error");
 		}
 	});
+}
+
+function fillDelegateBanner(data) {
+	var imagePath = data.pluck('imagePath')[0];
+	
+	if(imagePath == null) {
+		imagePath = '../images/page/default-avatar.png';
+	}
+	$('#banner-imagePath').attr("src", imagePath);
+	$('#banner-ordinal').html(data.pluck('ordinal')[0]);
+	$('#banner-name').html(data.pluck('name')[0]);
+	$('#banner-gender').html(data.pluck('gender')[0]);
+	$('#banner-dateOfBirth').html(data.pluck('dateOfBirth')[0]);
+	$('#banner-unitName').html(data.pluck('unitName')[0]);
+	$('#banner-position').html(data.pluck('position')[0]);
+	$('#banner-typeName').html(data.pluck('typeName')[0]);
+	$('#banner-arrivalTime').html(data.pluck('arrivalTime')[0]);
 }
