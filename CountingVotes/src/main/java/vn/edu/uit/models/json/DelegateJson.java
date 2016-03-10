@@ -36,6 +36,7 @@ public class DelegateJson {
 	private String codeContent;
 	
 	private String arivalTime;
+	private boolean attended;
 
 	public DelegateJson(Delegate delegate) {
 		this.setId(delegate.getId());
@@ -71,6 +72,7 @@ public class DelegateJson {
 		this.setNote(delegate.getNote());
 		this.setAchievement(delegate.getAchievement());
 		this.setArivalTime(SupportMethods.dateToString(delegate.getArivalTime(), DataConfig.DATE_TIME_FORMAT));
+		this.setAttended(delegate.isAttended());
 	}
 
 	public String getName() {
@@ -240,5 +242,13 @@ public class DelegateJson {
 
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
+	}
+
+	public boolean isAttended() {
+		return attended;
+	}
+
+	public void setAttended(boolean attended) {
+		this.attended = attended;
 	}
 }

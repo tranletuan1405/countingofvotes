@@ -114,13 +114,23 @@ function loadDelegates(){
 		   { data : "arivalTime" },
 		   
 		   /*{ data : "codeImage" },*/
-		   { data : "codeContent", "visible": false },
+		 
+		   { data : "attended", searchable : false},
 		   { data : "id", searchable : false, "orderable": false },
 		   { data : "id", searchable : false, "orderable": false},
-		   { data : "imagePath", searchable : false, "orderable": false, "visible": false}
+		   { data : "imagePath", searchable : false, "orderable": false, "visible": false},
+		   { data : "codeContent", "visible": false },
 		 ],
 		 
 		 "columnDefs": [
+		 {
+			 "render" : function(data, type, row){
+				 var checked = Boolean(row['attended']) ? "checked" : "";
+				 console.log(checked);
+				 return "<input type='checkbox' class='form-control delegate-attended' attended-id='"+row['id']+"' style='width : 100%; margin : auto;' "+ checked +"/>";
+			 },
+			 "targets" : 8
+		 },
 		 {
 			"render" : function(data, type, row) {
 				return "<button type='button' class='btn btn-default' onClick='loadDetailDelegate(" + data + ")'>Chi tiết</button>";
@@ -146,18 +156,12 @@ function loadDelegates(){
 		 ],
 		 "initComplete": function(settings, json) {
 			 loadEnterEvent();
+			 updateAttendedDelegate();
 		 },
-		 /*select: {
-			 items : "row",
-			 style: 'single',
-		 }*/
 		 
 		 select : false,
 	});
 	
-	/*delegate_table.on( 'deselect', function ( e, dt, type, indexes ) {
-		$('#banner-tabs a[href="#img-banner"]').tab('show');
-	});*/
 	
 	delegate_table.on( 'draw.dt', function () {
 		var rows = delegate_table.rows( {page:'current'} ).data();
@@ -171,8 +175,31 @@ function loadDelegates(){
 	    	$('#banner-tabs a[href="#img-banner"]').tab('show');
 	    }
 	} );
+	
+	
 
 };
+
+function updateAttendedDelegate(){
+	
+	$('.delegate-attended').change(function(){
+
+		var attended_id = $(this).attr('attended-id');
+		var value = $(this).attr('checked').lenght > 0 ? 'true' : 'false';
+		
+		$.ajax({
+			url : "update_attended/" + attended_id,
+			type : "POST",
+			data : { 'attended' : value }, 
+			success : function(response){
+				console.log(response);
+			},
+			error : function(){
+				console.log('Update attended fail');
+			}
+		});
+	});
+}
 
 function loadDetailDelegate(id) {
 	$.ajax({

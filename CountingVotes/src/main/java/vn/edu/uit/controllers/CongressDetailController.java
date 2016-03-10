@@ -1,6 +1,7 @@
 package vn.edu.uit.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -13,13 +14,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import vn.edu.uit.extra.DataConfig;
 import vn.edu.uit.extra.ListHolder;
+import vn.edu.uit.extra.SupportMethods;
 import vn.edu.uit.models.Congress;
 import vn.edu.uit.models.Delegate;
 import vn.edu.uit.models.DelegateType;
@@ -158,5 +163,25 @@ public class CongressDetailController {
 		Unit unit = unitService.fetch(id, congressId);
 		model.addObject("unit", unit);
 		return model;
+	}
+
+	@RequestMapping(value = "/update_attended/{id}", method = RequestMethod.POST)
+	@ResponseBody
+	public String updateAttended(
+			@RequestParam("attended") boolean attended,
+			@PathVariable("id") long id) throws JsonProcessingException {
+		Delegate delegate = delegateService.fetch(id);
+		delegate.setAttended(attended);
+		
+		Date arivalTime = delegate.getArivalTime();
+		if(arivalTime == null && attended){
+			arivalTime = SupportMethods.toDate(new Date(), DataConfig.DATE_TIME_FORMAT);
+			delegate.setArivalTime(arivalTime);
+		}
+		
+		delegateService.persist(delegate);
+		String json = mapper.writeValueAsString(new DelegateJson(delegate));
+		
+		return json;
 	}
 }

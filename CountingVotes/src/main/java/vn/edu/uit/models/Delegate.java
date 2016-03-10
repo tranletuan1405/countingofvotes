@@ -84,6 +84,9 @@ public class Delegate extends AbstractEntity {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "arivalTime", columnDefinition = "DATETIME")
 	private Date arivalTime;
+	
+	@Column(name = "attended", columnDefinition = "boolean default false", nullable = false)
+	private boolean attended = false;
 
 	@OneToOne(targetEntity = Barcode.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "hash_code_id", nullable = false)
@@ -269,6 +272,14 @@ public class Delegate extends AbstractEntity {
 
 	public void setAchievement(String achievement) {
 		this.achievement = achievement;
+	}
+
+	public boolean isAttended() {
+		return attended;
+	}
+
+	public void setAttended(boolean attended) {
+		this.attended = attended;
 	}
 	
 }
