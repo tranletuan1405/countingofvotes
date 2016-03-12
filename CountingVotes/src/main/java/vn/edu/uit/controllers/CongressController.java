@@ -87,6 +87,7 @@ public class CongressController {
 		return model;
 	}
 
+	//LOAD TABLE
 	@RequestMapping(value = "/congress_table", method = RequestMethod.GET)
 	@ResponseBody
 	public String congressList() throws JsonProcessingException {
@@ -97,6 +98,7 @@ public class CongressController {
 		return mapper.writeValueAsString(json);
 	}
 
+	//GET IMPORT FILE INFOMATION
 	@RequestMapping(value = "/checking_delegates_file", method = RequestMethod.POST)
 	@ResponseBody
 	public String checkingDelegatesFile(@RequestParam(value = "delegatesFile") MultipartFile delegatesFile,
@@ -108,6 +110,7 @@ public class CongressController {
 		return "success";
 	}
 
+	//GET DELEGATES TABLE
 	@RequestMapping(value = "/delegates_table")
 	@ResponseBody
 	public String delegatesTable(HttpServletRequest request) throws IOException {
@@ -174,6 +177,7 @@ public class CongressController {
 
 	}
 	
+	//GET UNITS TABLE
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "units_table")
 	@ResponseBody
@@ -191,6 +195,7 @@ public class CongressController {
 		return mapper.writeValueAsString(json);
 	}
 
+	//CREATE NEW CONGRESS
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/create_congress", method = RequestMethod.POST)
 	public ModelAndView createCongress(@RequestParam(value = "name") String name,
@@ -209,7 +214,7 @@ public class CongressController {
 		}
 
 		Congress congress = new Congress();
-		String congressPath = SupportMethods.dateToString(new Date(), "dd-MM-yyyy") + "_" + SupportMethods.getUID();
+		String congressPath = SupportMethods.dateToString(new Date(), DataConfig.DATE_TIME_FORMAT) + "_" + SupportMethods.getUID();
 		
 		// Create key & Iv
 		String congressKey = SupportMethods.getRandomString(24);
@@ -217,9 +222,9 @@ public class CongressController {
 		TripleDes tDes = new TripleDes(congressKey, congressIv);
 
 		// Check start time format
-		Date startTime = SupportMethods.toDate(startTimeString, DataConfig.DATE_FORMAT);
+		Date startTime = SupportMethods.toDate(startTimeString, DataConfig.DATE_TIME_FORMAT);
 		if (startTime == null)
-			startTime = SupportMethods.toDate(new Date(), DataConfig.DATE_FORMAT);
+			startTime = SupportMethods.toDate(new Date(), DataConfig.DATE_TIME_FORMAT);
 
 		// Save object congress
 		congress.setName(name);

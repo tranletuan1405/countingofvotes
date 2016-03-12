@@ -4,12 +4,7 @@ $(document).ready(function() {
 	var delegate_table;
 	var unit_table;
 	
-	/*$('#congress-table tfoot th').each( function () {
-	  var title = $(this).text();
-	  	$(this).html("<input type='text' class='form-control' placeholder='" + title + "'/>" );
-	});
-	  */
-	
+	$('.form-datetime').val(getDateTimeNow());
 
 	table = $('#congress-table').DataTable( {
         ajax: "congress_table",

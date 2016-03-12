@@ -165,7 +165,7 @@ public class CongressDetailController {
 		return model;
 	}
 
-	@RequestMapping(value = "/update_attended/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/update_attended/{id}", method = RequestMethod.POST, produces={"application/json; charset=UTF-8"})
 	@ResponseBody
 	public String updateAttended(
 			@RequestParam("attended") boolean attended,
@@ -174,9 +174,11 @@ public class CongressDetailController {
 		delegate.setAttended(attended);
 		
 		Date arivalTime = delegate.getArivalTime();
-		if(arivalTime == null && attended){
+		if (arivalTime == null && attended) {
 			arivalTime = SupportMethods.toDate(new Date(), DataConfig.DATE_TIME_FORMAT);
 			delegate.setArivalTime(arivalTime);
+		} else if (arivalTime != null && !attended) {
+			delegate.setArivalTime(null);
 		}
 		
 		delegateService.persist(delegate);

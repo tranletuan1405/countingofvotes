@@ -81,8 +81,8 @@ public class Delegate extends AbstractEntity {
 	@Column(name = "image_path")
 	private String imagePath;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "arivalTime", columnDefinition = "DATETIME")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "arivalTime")
 	private Date arivalTime;
 	
 	@Column(name = "attended", columnDefinition = "boolean default false", nullable = false)

@@ -39,7 +39,7 @@ public class DelegateJson {
 	private boolean attended;
 
 	public DelegateJson(Delegate delegate) {
-		this.setId(delegate.getId());
+		if(delegate.getId() != null) this.setId(delegate.getId());
 		this.setOrdinal(delegate.getOrdinal());
 		this.setName(delegate.getName());
 		this.setPlaceOfBirth(delegate.getPlaceOfBirth());

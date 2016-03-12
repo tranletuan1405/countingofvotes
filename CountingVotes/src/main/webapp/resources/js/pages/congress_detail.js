@@ -6,10 +6,11 @@ $(document).ready(function() {
 
 	var delegate_table;
 	var unit_table;
+	var cur_checked_row_id;
+	
 	loadDelegates();
 	loadUnits();
 	onShowDelegateModal();
-
 });
 
 
@@ -98,7 +99,7 @@ function loadDetailUnit(id){
 /*=====================DELEGATE========================*/
 
 function loadDelegates(){
-	var delegate_table = $('#delegate-table').DataTable({
+	delegate_table = $('#delegate-table').DataTable({
 		destroy : true,
 		ajax : "delegates",
 		"lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Tất cả"]],
@@ -108,9 +109,9 @@ function loadDelegates(){
 		   { data : "name" },
 		   { data : "dateOfBirth" },
 		   { data : "gender" },
-		   { data : "unitName" },
-		   { data : "position" },
-		   { data : "typeName" },
+		   { data : "unitName", visible : false},
+		   { data : "position" , visible : false},
+		   { data : "typeName" , visible : false},
 		   { data : "arivalTime" },
 		   
 		   /*{ data : "codeImage" },*/
@@ -125,9 +126,9 @@ function loadDelegates(){
 		 "columnDefs": [
 		 {
 			 "render" : function(data, type, row){
+				 var id = row['id'];
 				 var checked = Boolean(row['attended']) ? "checked" : "";
-				 console.log(checked);
-				 return "<input type='checkbox' class='form-control delegate-attended' attended-id='"+row['id']+"' style='width : 100%; margin : auto;' "+ checked +"/>";
+				 return "<input type='checkbox' class='form-control' id='attended-"+ id +"' onchange='updateAttendedDelegate("+id+")' style='width : 100%; margin : auto;' "+ checked +"/>";
 			 },
 			 "targets" : 8
 		 },
@@ -154,12 +155,8 @@ function loadDelegates(){
 		    { text : "Thêm", className: "btn-primary", action : function(){}},
 		 
 		 ],
-		 "initComplete": function(settings, json) {
-			 loadEnterEvent();
-			 updateAttendedDelegate();
-		 },
 		 
-		 select : false,
+		 select : 'single',
 	});
 	
 	
@@ -176,29 +173,41 @@ function loadDelegates(){
 	    }
 	} );
 	
+	delegate_table.on('init.dt', function(){
+		 loadEnterEvent();
+	});
 	
-
+	delegate_table.on('select', function(e, dt, type, indexes){
+		if (indexes.length > 0) {
+			cur_checked_row_id = indexes[0];
+		}
+	});
+	
+	delegate_table.on('deselect', function(e, dt, type, indexes){
+		if(indexes.length > 0){
+			cur_checked_row_id = indexes[0];	
+		}
+	});
 };
 
-function updateAttendedDelegate(){
-	
-	$('.delegate-attended').change(function(){
-
-		var attended_id = $(this).attr('attended-id');
-		var value = $(this).attr('checked').lenght > 0 ? 'true' : 'false';
-		
-		$.ajax({
-			url : "update_attended/" + attended_id,
-			type : "POST",
-			data : { 'attended' : value }, 
-			success : function(response){
-				console.log(response);
-			},
-			error : function(){
-				console.log('Update attended fail');
-			}
-		});
+function updateAttendedDelegate(id){
+	var value = $('#attended-' + id).is(':checked');
+	$.ajax({
+		url : "update_attended/" + id,
+		type : "POST",
+		data : {
+			'attended' : value
+		},
+		success : function(response) {
+			var arivalTime = response["arivalTime"];
+			var cell = delegate_table.cell(cur_checked_row_id, 7).data(arivalTime);
+		},
+		error : function() {
+			console.log('Update attended fail');
+		}
 	});
+	
+	focusSearchInput();
 }
 
 function loadDetailDelegate(id) {

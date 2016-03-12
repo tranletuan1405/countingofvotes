@@ -31,11 +31,11 @@ public class Congress extends AbstractEntity{
 	private String name;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "start_time", columnDefinition = "DATETIME")
+	@Column(name = "start_time")
 	private Date startTime;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "end_time", columnDefinition = "DATETIME")
+	@Column(name = "end_time")
 	private Date endTime;
 	
 	@Column(name = "logo")

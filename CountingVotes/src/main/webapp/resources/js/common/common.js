@@ -8,11 +8,23 @@ $(document).ready(function() {
 		todayHighlight : 1,
 		startView : 2,
 		forceParse : 0,
-		showMeridian : 1
+		showMeridian : 1,
+		
 	});
 	
-
+	
 });
+
+function getDateTimeNow() {
+	var now = new Date();
+
+	var day = ("0" + now.getDate()).slice(-2);
+	var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+	var today = (day) + "/" + (month) + "/" + now.getFullYear() + " - " + now.getHours() + ":" + now.getMinutes();
+
+	return today;
+}
 
 function makeRect(target, ratio){
 	var cw = parseInt($(target).width());
@@ -43,4 +55,8 @@ function loadEnterEvent() {
 	$('.dataTables_filter>label>input').focus(function(){
 		$(this).select();
 	});
+}
+
+function focusSearchInput(){
+	$('.dataTables_filter>label>input').focus();
 }
