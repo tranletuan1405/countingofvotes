@@ -1,5 +1,6 @@
 package vn.edu.uit.controllers;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,6 +59,7 @@ public class CongressDetailController {
 	@Autowired
 	private ObjectMapper mapper;
 
+	// Load Detail Page
 	@RequestMapping(value = "/{id}")
 	public ModelAndView congressDetail(@PathVariable("id") long id, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView("congress_detail");
@@ -66,13 +68,14 @@ public class CongressDetailController {
 		Congress congress = congressService.fetch(id);
 
 		long attendees = delegateService.getNumOfAttendees(id);
-		
+
 		model.addObject("attendees", attendees);
 		model.addObject("congress", congress);
 
 		return model;
 	}
 
+	// Load delegates table
 	@RequestMapping(value = "/delegates")
 	@ResponseBody
 	public String delegates(HttpServletRequest request) throws JsonProcessingException {
@@ -88,6 +91,7 @@ public class CongressDetailController {
 		return mapper.writeValueAsString(json);
 	}
 
+	// Load units table
 	@RequestMapping(value = "/units")
 	@ResponseBody
 	public String units(HttpServletRequest request) throws JsonProcessingException {
@@ -136,46 +140,46 @@ public class CongressDetailController {
 		return mapper.writeValueAsString(json);
 	}
 
+	// Load delegate full information
 	@RequestMapping(value = "/delegate/{id}")
 	@ResponseBody
-	public ModelAndView getDelegate(
-			@PathVariable("id") long id,
-			HttpServletRequest request){
+	public ModelAndView getDelegate(@PathVariable("id") long id, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView("fragment/delegate");
 		HttpSession session = request.getSession();
 		long congressId = (Long) session.getAttribute("congress_id");
-		
+
 		Delegate delegate = delegateService.fetch(id);
 		List<Unit> units = unitService.fetch(congressId);
 		List<DelegateType> types = typeService.fetch();
-		
+
 		model.addObject("delegate", delegate);
 		model.addObject("units", units);
 		model.addObject("types", types);
-		
+
 		return model;
 	}
 
+	// Load unit full information
 	@RequestMapping(value = "/unit/{id}")
 	@ResponseBody
-	public ModelAndView getUnit(@PathVariable("id") long id,
-			HttpServletRequest request){
+	public ModelAndView getUnit(@PathVariable("id") long id, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		long congressId = (Long)session.getAttribute("congress_id");
+		long congressId = (Long) session.getAttribute("congress_id");
 		ModelAndView model = new ModelAndView("fragment/unit");
 		Unit unit = unitService.fetch(id, congressId);
 		model.addObject("unit", unit);
 		return model;
 	}
 
-	@RequestMapping(value = "/update_attended/{id}", method = RequestMethod.POST, produces={"application/json; charset=UTF-8"})
+	// Update attended delegate's field
+	@RequestMapping(value = "/update_attended/{id}", method = RequestMethod.POST, produces = {
+			"application/json; charset=UTF-8" })
 	@ResponseBody
-	public String updateAttended(
-			@RequestParam("attended") boolean attended,
-			@PathVariable("id") long id) throws JsonProcessingException {
+	public String updateAttended(@RequestParam("attended") boolean attended, @PathVariable("id") long id)
+			throws JsonProcessingException {
 		Delegate delegate = delegateService.fetch(id);
 		delegate.setAttended(attended);
-		
+
 		Date arivalTime = delegate.getArivalTime();
 		if (arivalTime == null && attended) {
 			arivalTime = SupportMethods.toDate(new Date(), DataConfig.DATE_TIME_FORMAT);
@@ -183,10 +187,47 @@ public class CongressDetailController {
 		} else if (arivalTime != null && !attended) {
 			delegate.setArivalTime(null);
 		}
-		
+
 		delegateService.persist(delegate);
 		String json = mapper.writeValueAsString(new DelegateJson(delegate));
-		
+
 		return json;
+	}
+
+	// Update congress information
+	@RequestMapping(value = "update_congress/{field}", method = RequestMethod.POST)
+	@ResponseBody
+	public String updateCongressInfo(@PathVariable("field") String field, @RequestParam(value = "value") String value,
+			HttpServletRequest request) throws ParseException {
+		HttpSession session = request.getSession();
+		long id = (Long) session.getAttribute("congress_id");
+		if (value == null || value.isEmpty())
+			return "";
+
+		Congress congress = congressService.fetch(id);
+
+		if (field.equals("name")) {
+			congress.setName(value);
+			congressService.persist(congress);
+			return value;
+		} else if (field.equals("startTime")) {
+			Date date = SupportMethods.toDate(value, DataConfig.DATE_TIME_FORMAT);
+			logger.info("START TIME =================================");
+			logger.info(value);
+			if (date != null) {
+				congress.setStartTime(date);
+				congressService.persist(congress);
+				return value;
+			}
+		} else if (field.equals("endTime")) {
+			Date date = SupportMethods.toDate(value, DataConfig.DATE_TIME_FORMAT);
+			if (date != null) {
+				congress.setEndTime(date);
+				congressService.persist(congress);
+				return value;
+			}
+		}
+
+		return "";
 	}
 }

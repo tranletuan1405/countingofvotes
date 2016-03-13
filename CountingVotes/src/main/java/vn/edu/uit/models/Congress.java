@@ -19,6 +19,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import vn.edu.uit.extra.DataConfig;
+import vn.edu.uit.extra.SupportMethods;
 import vn.edu.uit.models.common.AbstractEntity;
 
 
@@ -160,5 +162,11 @@ public class Congress extends AbstractEntity{
 		this.banner = banner;
 	}
 
+	public String getStartTimeString() {
+		return SupportMethods.dateToString(startTime, DataConfig.DATE_TIME_FORMAT);
+	}
 	
+	public String getEndTimeString() {
+		return SupportMethods.dateToString(endTime, DataConfig.DATE_TIME_FORMAT);
+	}
 }

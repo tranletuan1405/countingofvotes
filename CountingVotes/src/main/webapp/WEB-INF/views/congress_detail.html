@@ -72,19 +72,19 @@
 				<ul class="nav nav-pills nav-justified tab-manager">
 					<li role="presentation" class="active menu">
 						<a th:href="${congress.id}" role="tab">
-						 	Thông tin chung
+						 	<span class="glyphicon glyphicon-info-sign"></span> Thông tin chung
 						</a>
 					</li>
 					
 					<li role="presentation" class="menu">
 						<a href="#delegates" aria-controls="delegates" role="tab" data-toggle="tab">
-							Danh sách Đại biểu
+							<span class="glyphicon glyphicon-list-alt"></span> Danh sách Đại biểu
 						</a>
 					</li>
 					
 					<li role="presentation" class="menu">
 						<a href="#units" aria-controls="units" role="tab" data-toggle="tab">
-							Danh sách Đơn vị
+							<span class="glyphicon glyphicon-list"></span> Danh sách Đơn vị
 						</a>
 					</li>
 				</ul>
@@ -102,11 +102,11 @@
 							<div class="form-group">
 								<label for="congress-name" class="col-md-2 control-label"></label>
 								<div class="input-group col-md-8">
-									<div class="input-group-addon"><span class="glyphicon glyphicon-pencil"/></div>
-									<input th:value="${congress.name}" th:name="name" type="text" required="true" class="form-control" id="congress-name" placeholder="Tên Đại hội" />
+									<div class="input-group-addon"><span class="glyphicon glyphicon-folder-open"/></div>
+									<input th:value="${congress.name}" th:name="name" type="text" required="true" class="form-control  congress-input" id="congress-name" placeholder="Tên Đại hội" />
 								
 									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-refresh"></span>
+										<span class="glyphicon glyphicon-pencil"></span>
 									</div>
 								</div>
 							</div>
@@ -116,11 +116,11 @@
 								<label for="start-time" class="col-md-2 control-label"></label>
 								<div class="input-group col-md-8">
 									<div class="input-group-addon"><span class="glyphicon glyphicon-time"/></div>
-									<input th:value="${congress.startTime}" th:name="startTime" type="text" required="true" class="form-control form-datetime date" id="start-time"
+									<input th:value="${congress.getStartTimeString()}" th:name="startTime" type="text" required="true" class="form-control form-datetime date congress-input" id="start-time"
 										placeholder="Thời gian bắt đầu"/>
 
 									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-refresh"></span>
+										<span class="glyphicon glyphicon-pencil"></span>
 									</div>
 								</div>
 							</div>
@@ -131,11 +131,11 @@
 								<div class="input-group col-md-8">
 									<div class="input-group-addon"><span class="glyphicon glyphicon-time"/></div>
 
-									<input th:value="${congress.endTime}" th:name="endTime" type="text" required="true" class="form-control form-datetime date" id="end-time"
+									<input th:value="${congress.getEndTimeString()}" th:name="endTime" type="text" required="true" class="form-control form-datetime date congress-input" id="end-time"
 										placeholder="Thời gian kết thúc"/>
 
 									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-refresh"></span>
+										<span class="glyphicon glyphicon-pencil"></span>
 									</div>
 								</div>
 							</div>
