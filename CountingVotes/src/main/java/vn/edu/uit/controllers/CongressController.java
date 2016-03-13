@@ -56,7 +56,6 @@ public class CongressController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CongressController.class);
 
-
 	public CongressController() {
 		logger.info("CongressController");
 	}
@@ -75,19 +74,18 @@ public class CongressController {
 
 	@Autowired
 	private UnitService unitService;
-	
+
 	@Autowired
 	private DelegateTypeService typeService;
-	
-	
-	@RequestMapping(value = "/")
+
+	@RequestMapping(value = { "/", "/home/**" })
 	public ModelAndView congress() {
 		ModelAndView model = new ModelAndView("congress");
 
 		return model;
 	}
 
-	//LOAD TABLE
+	// LOAD TABLE
 	@RequestMapping(value = "/congress_table", method = RequestMethod.GET)
 	@ResponseBody
 	public String congressList() throws JsonProcessingException {
@@ -98,7 +96,7 @@ public class CongressController {
 		return mapper.writeValueAsString(json);
 	}
 
-	//GET IMPORT FILE INFOMATION
+	// GET IMPORT FILE INFOMATION
 	@RequestMapping(value = "/checking_delegates_file", method = RequestMethod.POST)
 	@ResponseBody
 	public String checkingDelegatesFile(@RequestParam(value = "delegatesFile") MultipartFile delegatesFile,
@@ -110,41 +108,41 @@ public class CongressController {
 		return "success";
 	}
 
-	//GET DELEGATES TABLE
+	// GET DELEGATES TABLE
 	@RequestMapping(value = "/delegates_table")
 	@ResponseBody
 	public String delegatesTable(HttpServletRequest request) throws IOException {
 
 		HttpSession session = request.getSession();
 		InputStream is = (InputStream) session.getAttribute("delegatesIS");
-		if (is == null) return "";
+		if (is == null)
+			return "";
 
 		List<Delegate> delegates = delegateService.getByDocument(is);
 
-
 		ListHolder<DelegateJson> json = new ListHolder<DelegateJson>();
 		Map<String, UnitJson> units = new HashMap<String, UnitJson>();
-		
+
 		for (int i = 0; i < delegates.size(); i++) {
 			Delegate delegate = delegates.get(i);
 			Unit unit = delegate.getUnit();
 			DelegateType type = delegate.getType();
-			
+
 			json.getData().add(new DelegateJson(delegates.get(i)));
-			
-			if(unit  != null && unit.getName() != null && !unit.getName().isEmpty()){
-	
+
+			if (unit != null && unit.getName() != null && !unit.getName().isEmpty()) {
+
 				UnitJson unitJson = units.get(unit.getName());
-				if(unitJson == null) {
+				if (unitJson == null) {
 					unitJson = new UnitJson();
 					unitJson.setName(unit.getName());
 					units.put(unit.getName(), unitJson);
 				}
-				
+
 				try {
 					String typeName = type.getShortName();
 					EnumDelegateType enumType = EnumDelegateType.getEnumByDescription(typeName);
-				
+
 					switch (enumType) {
 					case DBBC:
 						unitJson.numOfDBBC++;
@@ -162,40 +160,41 @@ public class CongressController {
 						unitJson.numOfDBDN++;
 						unitJson.total++;
 						break;
-					}	
+					}
 				}
-				
-				catch (Exception e){	
-				}	
+
+				catch (Exception e) {
+				}
 			}
 		}
 
 		session.setAttribute("delegates", delegates);
 		session.setAttribute("units", units);
-		
+
 		return mapper.writeValueAsString(json);
 
 	}
-	
-	//GET UNITS TABLE
+
+	// GET UNITS TABLE
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "units_table")
 	@ResponseBody
 	public String unitsTable(HttpServletRequest request) throws JsonProcessingException {
 		HttpSession session = request.getSession();
 		Map<String, UnitJson> unitsJson = (Map<String, UnitJson>) session.getAttribute("units");
-		
-		if(unitsJson == null) return "";
-		
+
+		if (unitsJson == null)
+			return "";
+
 		ListHolder<UnitJson> json = new ListHolder<UnitJson>();
-		for(Entry<String, UnitJson> entry : unitsJson.entrySet()){
+		for (Entry<String, UnitJson> entry : unitsJson.entrySet()) {
 			json.getData().add(entry.getValue());
 		}
-		
+
 		return mapper.writeValueAsString(json);
 	}
 
-	//CREATE NEW CONGRESS
+	// CREATE NEW CONGRESS
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/create_congress", method = RequestMethod.POST)
 	public ModelAndView createCongress(@RequestParam(value = "name") String name,
@@ -214,8 +213,9 @@ public class CongressController {
 		}
 
 		Congress congress = new Congress();
-		String congressPath = SupportMethods.dateToString(new Date(), DataConfig.DATE_TIME_FORMAT) + "_" + SupportMethods.getUID();
-		
+		String congressPath = SupportMethods.dateToString(new Date(), DataConfig.DATE_TIME_FORMAT) + "_"
+				+ SupportMethods.getUID();
+
 		// Create key & Iv
 		String congressKey = SupportMethods.getRandomString(24);
 		String congressIv = SupportMethods.getRandomString(8);
@@ -236,54 +236,49 @@ public class CongressController {
 
 		// Create delegate for each detected delegate
 		for (int i = 0; i < delegates.size(); i++) {
-			
-				Delegate delegate = delegates.get(i);
-				Barcode barcode = new Barcode();
-				Unit unitTemp = delegate.getUnit();
-				DelegateType typeTemp = delegate.getType();
-				String content = tDes.encryptText(SupportMethods.getUID());
-				
-				
-				//Barcode
-				barcode.setContent(content);
-				String directory = barcodeGenerator.generateQR(DataConfig.BARCODE_DIRECTORY + congressPath, SupportMethods.getUID(), content, 320);
-				barcode.setImagePath(directory);
-				
-				// Unit
-				if (unitTemp != null && unitTemp.getName() != null && !unitTemp.getName().isEmpty()) {
-					Unit unit = unitService.fetch(unitTemp.getName(), congress.getId());
 
-					if (unit == null) {
-						unitTemp.setCongress(congress);
-						unitService.persist(unitTemp);
-					} else {
-						delegate.setUnit(unit);
-					}
+			Delegate delegate = delegates.get(i);
+			Barcode barcode = new Barcode();
+			Unit unitTemp = delegate.getUnit();
+			DelegateType typeTemp = delegate.getType();
+			String content = tDes.encryptText(SupportMethods.getUID());
+
+			// Barcode
+			barcode.setContent(content);
+			String directory = barcodeGenerator.generateQR(DataConfig.BARCODE_DIRECTORY + congressPath,
+					SupportMethods.getUID(), content, 320);
+			barcode.setImagePath(directory);
+
+			// Unit
+			if (unitTemp != null && unitTemp.getName() != null && !unitTemp.getName().isEmpty()) {
+				Unit unit = unitService.fetch(unitTemp.getName(), congress.getId());
+
+				if (unit == null) {
+					unitTemp.setCongress(congress);
+					unitService.persist(unitTemp);
+				} else {
+					delegate.setUnit(unit);
 				}
+			}
 
-				// Type
-				if (typeTemp != null && typeTemp.getShortName() != null && !typeTemp.getShortName().isEmpty()) {
-					DelegateType type = typeService.fetch(typeTemp.getShortName());
-					
-					if (type == null) {
-						typeService.persist(typeTemp);
-					} else {
-						delegate.setType(type);
-					}
+			// Type
+			if (typeTemp != null && typeTemp.getShortName() != null && !typeTemp.getShortName().isEmpty()) {
+				DelegateType type = typeService.fetch(typeTemp.getShortName());
+
+				if (type == null) {
+					typeService.persist(typeTemp);
+				} else {
+					delegate.setType(type);
 				}
+			}
 
-				delegate.setHashCode(barcode);
-				delegate.setCongress(congress);
-				delegateService.persist(delegate);
+			delegate.setHashCode(barcode);
+			delegate.setCongress(congress);
+			delegateService.persist(delegate);
 
-			
 		}
 
-	
 		return model;
 	}
 
-	
-	
-	
 }

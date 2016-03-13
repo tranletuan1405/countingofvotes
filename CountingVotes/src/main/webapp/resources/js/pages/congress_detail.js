@@ -191,6 +191,7 @@ function loadDelegates(){
 };
 
 function updateAttendedDelegate(id){
+	var cur_checked = cur_checked_row_id;
 	var value = $('#attended-' + id).is(':checked');
 	$.ajax({
 		url : "update_attended/" + id,
@@ -200,7 +201,7 @@ function updateAttendedDelegate(id){
 		},
 		success : function(response) {
 			var arivalTime = response["arivalTime"];
-			var cell = delegate_table.cell(cur_checked_row_id, 7).data(arivalTime);
+			var cell = delegate_table.cell(cur_checked, 7).data(arivalTime);
 		},
 		error : function() {
 			console.log('Update attended fail');

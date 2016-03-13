@@ -287,6 +287,14 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 
 	}
 
-	
+	@Override
+	public long getNumOfAttendees(long congressId) {
+		String hql = "SELECT count(*) FROM Delegate WHERE congress.id = :congressId AND isEnabled = :isEnabled AND attended = :attended";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("congressId", congressId);
+		query.setParameter("isEnabled", true);
+		query.setParameter("attended", true);
+		return (Long) query.uniqueResult();
+	}
 
 }

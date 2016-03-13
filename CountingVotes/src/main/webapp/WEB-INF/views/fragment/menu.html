@@ -5,8 +5,20 @@
 </head>
 <body>
 	<div th:fragment="menu">
-		<img th:if="${congress.logo}" th:src="@{congress.logo}" class="img-circle"/>
-		<img th:unless="${congress.logo}" th:src="@{/images/page/default-logo.png}" class="img-circle"/>
+		<div class="banner">
+			<img th:if="${congress.logo}" th:src="@{congress.logo}"
+				class="img-circle" /> <img th:unless="${congress.logo}"
+				th:src="@{/images/page/default-logo.png}" class="img-circle" />
+		</div>
+
+
+		<ul class="nav nav-pills nav-stacked tab-menu">
+			<li role="presentation"><a th:href="@{../home}">Trang chủ</a></li>
+			<li role="presentation" class="active"><a href="#">Thông tin</a></li>
+			<li role="presentation"><a href="#">Bầu cử</a></li>
+			<li role="presentation"><a href="#">Thống kê</a></li>
+		</ul>
+
 	</div>
 </body>
 </html>

@@ -50,4 +50,9 @@ public class DelegateService implements IDelegateDao{
 		return delegateDao.getNumOfDelegate(congressId, unitId, typeId);
 	}
 
+	@Override
+	public long getNumOfAttendees(long congressId) {
+		return delegateDao.getNumOfAttendees(congressId);
+	}
+
 }

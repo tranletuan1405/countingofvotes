@@ -65,6 +65,9 @@ public class CongressDetailController {
 		session.setAttribute("congress_id", id);
 		Congress congress = congressService.fetch(id);
 
+		long attendees = delegateService.getNumOfAttendees(id);
+		
+		model.addObject("attendees", attendees);
 		model.addObject("congress", congress);
 
 		return model;

@@ -19,4 +19,6 @@ public interface IDelegateDao {
 	List<Delegate> getByDocument(InputStream is);
 
 	long getNumOfDelegate(long congressId, long unitId, long typeId);
+	
+	long getNumOfAttendees(long congressId);
 }
