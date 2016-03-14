@@ -98,6 +98,13 @@
 					
 						<div class="container-fluild tab-container panel-body">
 							
+							<div class="form-group">
+								<label class="col-md-2 control-label"></label>
+								<div class="input-group col-md-8">
+									<div class="alert hidden" role="alert" id="congress-msg"></div>
+								</div>
+							</div>
+							
 							<!-- Tên đại hội -->
 							<div class="form-group">
 								<label for="congress-name" class="col-md-2 control-label"></label>
@@ -105,9 +112,11 @@
 									<div class="input-group-addon"><span class="glyphicon glyphicon-folder-open"/></div>
 									<input th:value="${congress.name}" th:name="name" type="text" required="true" class="form-control  congress-input" id="congress-name" placeholder="Tên Đại hội" />
 								
-									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-pencil"></span>
-									</div>
+									<span class="input-group-btn">
+										<button class="btn btn-default edit-congress" type="button" data-target="#congress-name">
+											<span class="glyphicon glyphicon-pencil"></span>
+										</button>
+									</span>
 								</div>
 							</div>
 							
@@ -119,9 +128,11 @@
 									<input th:value="${congress.getStartTimeString()}" th:name="startTime" type="text" required="true" class="form-control form-datetime date congress-input" id="start-time"
 										placeholder="Thời gian bắt đầu"/>
 
-									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-pencil"></span>
-									</div>
+									<span class="input-group-btn">
+										<button class="btn btn-default edit-congress" type="button" data-target="#start-time">
+											<span class="glyphicon glyphicon-pencil"></span>
+										</button>
+									</span>
 								</div>
 							</div>
 							
@@ -132,11 +143,14 @@
 									<div class="input-group-addon"><span class="glyphicon glyphicon-time"/></div>
 
 									<input th:value="${congress.getEndTimeString()}" th:name="endTime" type="text" required="true" class="form-control form-datetime date congress-input" id="end-time"
-										placeholder="Thời gian kết thúc"/>
-
-									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-pencil"></span>
-									</div>
+										placeholder="Thời gian kết thúc"/> 
+									
+									<span class="input-group-btn">
+										<button class="btn btn-default edit-congress" type="button" data-target="#end-time">
+											<span class="glyphicon glyphicon-pencil"></span>
+										</button>
+									</span>
+									
 								</div>
 							</div>
 							

@@ -195,7 +195,8 @@ public class CongressDetailController {
 	}
 
 	// Update congress information
-	@RequestMapping(value = "update_congress/{field}", method = RequestMethod.POST)
+	@RequestMapping(value = "update_congress/{field}", method = RequestMethod.POST, produces = {
+			"application/text; charset=UTF-8" })
 	@ResponseBody
 	public String updateCongressInfo(@PathVariable("field") String field, @RequestParam(value = "value") String value,
 			HttpServletRequest request) throws ParseException {
@@ -207,14 +208,17 @@ public class CongressDetailController {
 		Congress congress = congressService.fetch(id);
 
 		if (field.equals("name")) {
+			if (value.equals(congress.getName()))
+				return "";
+			
 			congress.setName(value);
 			congressService.persist(congress);
 			return value;
 		} else if (field.equals("startTime")) {
 			Date date = SupportMethods.toDate(value, DataConfig.DATE_TIME_FORMAT);
-			logger.info("START TIME =================================");
-			logger.info(value);
 			if (date != null) {
+				if (congress.getEndTime() != null && date.after(congress.getEndTime()))
+					return "";
 				congress.setStartTime(date);
 				congressService.persist(congress);
 				return value;
@@ -222,6 +226,8 @@ public class CongressDetailController {
 		} else if (field.equals("endTime")) {
 			Date date = SupportMethods.toDate(value, DataConfig.DATE_TIME_FORMAT);
 			if (date != null) {
+				if (congress.getStartTime() != null && date.before(congress.getStartTime()))
+					return "";
 				congress.setEndTime(date);
 				congressService.persist(congress);
 				return value;

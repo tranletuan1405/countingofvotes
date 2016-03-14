@@ -43,6 +43,16 @@ function removeInput(input) {
 	var inp = $(input).val('');
 }
 
+function showMessage(target, level, msg, id){
+	var msgId = id;
+	$('#' + target).removeClass('hidden');
+	$('#' + target).addClass('alert-' + level);
+	$('#' + target).html(msg);
+
+	return id;
+}
+
+
 function loadEnterEvent() {
 	$('.dataTables_filter>label>input').keypress(function(event) {
 		var code = event.keyCode || event.which;

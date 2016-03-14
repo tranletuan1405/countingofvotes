@@ -7,11 +7,13 @@ $(document).ready(function() {
 	var delegate_table;
 	var unit_table;
 	var cur_checked_row_id;
+	
 
 	loadDelegates();
 	loadUnits();
 	onShowDelegateModal();
 	updateCongressInfo();
+	
 });
 
 function onShowDelegateModal() {
@@ -40,24 +42,26 @@ function onShowDelegateModal() {
 
 /* ======================CONGRESS======================= */
 function updateCongressInfo() {
-	$('.congress-input').keypress(function(event) {
-		var code = event.keyCode || event.which;
-		if (code == 13) {
-			event.preventDefault();
-			$(this).focusout();
-		}
-	});
-	
+
 	var pre_congress_value;
-	$('.congress-input').focus(function(){
+	var congress_msg_id = 0;
+	$('.congress-input').focus(function() {
 		pre_congress_value = $(this).val();
 	});
+	
+	$('.congress-input').focusout(function(){
+		var cur_val = $(this).val();
+		if(pre_congress_value != null && (cur_val == "" || cur_val == null)){
+			$(this).val(pre_congress_value);
+		}
+	});
 
-	$('.congress-input').focusout(function() {
-		var input = $(this);
-		var field = $(this).attr('name');
-		var value = $(this).val();
-		console.log(value);
+	$('.edit-congress').click(function() {
+		var target = $(this).attr('data-target');
+		var input = $(target);
+		var field = input.attr('name');
+		var value = input.val();
+
 		$.ajax({
 			url : "update_congress/" + field,
 			type : "POST",
@@ -67,18 +71,31 @@ function updateCongressInfo() {
 			success : function(response) {
 				if (response != null && response != "") {
 					input.val(response);
-					console.log("new time : " + response);
-				} else {
+					pre_congress_value = null;
+					
+					var msg_id = showMessage('congress-msg', 'success', 'Cập nhật thành công', ++congress_msg_id);
+					setTimeout(function(){
+						if(msg_id == congress_msg_id){
+							$('#congress-msg').addClass('hidden');
+						}
+					}, 3000);
+				} else if (pre_congress_value != null && pre_congress_value != ""){
 					input.val(pre_congress_value);
-					console.log("pre time : " + pre_congress_value);
+					
 				}
 			},
 			error : function() {
-				console.log('Update congress info error');
+				var msg_id = showMessage('congress-msg', 'danger', 'Cập nhật thất bại', ++congress_msg_id);
+				setTimeout(function(){
+					if(msg_id == congress_msg_id){
+						$('#congress-msg').addClass('hidden');
+					}
+				}, 3000);
 			}
 		});
 
 	});
+
 }
 
 /* ======================UNIT======================= */
