@@ -281,9 +281,17 @@ function loadDelegates() {
 						],
 
 						select : 'single',
+						
 					});
 
-	delegate_table.on('draw.dt', function() {
+	
+
+	delegate_table.on('init.dt', function() {
+		loadEnterEvent();
+		
+	});
+	
+	delegate_table.on('draw.dt', function(){
 		var rows = delegate_table.rows({
 			page : 'current'
 		}).data();
@@ -292,13 +300,15 @@ function loadDelegates() {
 		if (numOfRow == 1) {
 			fillDelegateBanner(rows);
 			$('#banner-tabs a[href="#banner-delegate"]').tab('show');
-		} else {
+			$('#img-banner').addClass('hidden');
+			$('#banner-delegate').removeClass('hidden');
+		} 
+		
+		if (numOfRow != 1){
 			$('#banner-tabs a[href="#img-banner"]').tab('show');
+			$('#img-banner').removeClass('hidden');
+			$('#banner-delegate').addClass('hidden');
 		}
-	});
-
-	delegate_table.on('init.dt', function() {
-		loadEnterEvent();
 	});
 
 	delegate_table.on('select', function(e, dt, type, indexes) {

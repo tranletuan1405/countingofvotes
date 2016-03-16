@@ -49,7 +49,7 @@
 						aria-controls="profile" role="tab" data-toggle="tab"></a></li>
 				</ul>
 				
-				<div class="tab-content" id="panel-banner-content">
+				<div class="tab-content banner" id="panel-banner-content">
 				
 					<div role="tabpanel" class="tab-pane fade in banner active" id="img-banner">
 						<img th:if="${congress.banner}" th:src="@{congress.banner}"
@@ -283,6 +283,9 @@
 				</div>
 			</div>
 		</div>
+	
+		<!-- Footer -->
+		<div th:replace="fragment/footer :: footer"></div>
 	</div>
 
 	<div class="modal fade" id="modal-delegate" tabindex="-1"
