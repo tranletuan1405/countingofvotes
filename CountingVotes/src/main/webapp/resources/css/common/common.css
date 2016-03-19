@@ -1,5 +1,18 @@
 .my-container {
 	padding-top: calc(5vh);
+	min-height: calc(80vh);
+	padding-bottom: calc(3vh);
+}
+
+.my-footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    color: white;
+}
+
+img {
+	width: 100%;
 }
 
 .standard-color {
@@ -10,3 +23,15 @@
     max-height: calc(70vh);
     overflow-y: auto;
 }
+
+.banner {
+	width: 100%;
+	min-height: calc(35vh);
+	max-height: calc(35vh);
+	
+}
+
+.no-radius {
+	border-radius : 0px;
+}
+

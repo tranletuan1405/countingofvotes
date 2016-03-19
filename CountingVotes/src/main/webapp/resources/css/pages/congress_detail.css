@@ -1,16 +1,5 @@
 @CHARSET "UTF-8";
 
-img {
-	width: 100%;
-}
-
-.banner {
-	width: 100%;
-	min-height: calc(35vh);
-	max-height: calc(35vh);
-	
-}
-
 #panel-banner-content{
 	border: 1px solid #00aff0;
 }

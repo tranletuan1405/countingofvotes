@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Bầu cử</title>
+
+<!-- JQuery -->
+<script type="text/javascript" th:src="@{/js/common/jquery-2.1.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}" />
+<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/common/common.css}" />
+
+<!-- Datatables -->
+<script type="text/javascript" th:src="@{/js/datatables/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/dataTables.bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/dataTables.select.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/dataTables.buttons.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/buttons.bootstrap.min.js}"></script>
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/datatables/dataTables.bootstrap.min.css}" />
+<!-- <link rel="stylesheet" type="text/css" th:href="@{/css/datatables/select.bootstrap.min.css}" /> -->
+<link rel="stylesheet" type="text/css" th:href="@{/css/datatables/buttons.bootstrap.min.css}" />
+
+<!-- Date Time Picker -->
+<script type="text/javascript" th:src="@{/js/bootstrap/bootstrap-datetimepicker.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap-datetimepicker.min.css}" />
+
+<script type="text/javascript" th:src="@{/js/common/timer.jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/pages/voting.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/pages/voting.css}" />
+
+</head>
+<body>
+	<div class="container">
+		<div class="container my-container">
+			<!-- Logo & Menu -->
+			<div class="col-md-2">
+				<!-- Logo -->
+				<div th:replace="fragment/menu :: menu"></div>
+			</div>
+			
+			<!-- Content -->
+			<div class="col-md-10">
+			</div>
+			
+		</div>
+		
+		<!-- Footer -->
+		<div th:replace="fragment/footer :: footer"></div>
+	</div>
+</body>
+</html>

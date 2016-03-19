@@ -1,11 +1,8 @@
 @CHARSET "UTF-8";
 
-#congress_list {
+#congress_list, #create_congress {
 	background-color: #00aff0;
-}
-
-#create_congress {
-	background-color: #00aff0;
+	border-radius : 0px;
 }
 
 #title-list-congress {
@@ -22,3 +19,6 @@
 	width: 97%
 }
 
+#panel-congress-list, #panel-create-congress {
+	border-radius : 0px;
+}

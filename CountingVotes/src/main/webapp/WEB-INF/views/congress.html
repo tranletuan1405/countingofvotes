@@ -27,164 +27,171 @@
 
 </head>
 <body>
-	<div class="container my-container">
-		<div class="panel-group" id="congress" role="tablist"
-			aria-multiselectable="true">
-
-			<!-- Panel Table -->
-			<div class="panel panel-info">
-				<div class="panel-heading" role="tab" id="congress_list">
-					<h2 class="panel-title">
-						<a class="collapsed" id="title-list-congress" role="button"
-							data-toggle="collapse" data-parent="#congress"
-							href="#congress_list_content" aria-expanded="true"
-							aria-controls="congress_list_content">Danh sách Đại hội</a>
-					</h2>
-				</div>
-
-				<div id="congress_list_content" class="panel-collapse collapsed in"
-					role="tabpanel" aria-labelledby="congress_list">
-					<div class="panel-body">
-						<table id="congress-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th>STT</th>
-									<th>Tên Đại hội</th>
-									<th>Số đơn vị</th>
-									<th>Số đại biểu</th>
-									<th>Số lần bầu cử</th>
-									<th>Bắt đầu</th>
-									<th>Kết thúc</th>
-									<th></th>
-									<th></th>
-								</tr>
-							</thead>
-							
-							<tfoot>
-								<tr>
-									<th>STT</th>
-									<th>Tên Đại hội</th>
-									<th>Số đơn vị</th>
-									<th>Số đại biểu</th>
-									<th>Số lần bầu cử</th>
-									<th>Bắt đầu</th>
-									<th>Kết thúc</th>
-									<th></th>
-									<th></th>
-								</tr>
-							</tfoot>
-							
-						</table>
+	<div class="container">
+	
+		<div class="container my-container">
+			<div class="panel-group" id="congress" role="tablist"
+				aria-multiselectable="true">
+	
+				<!-- Panel Table -->
+				<div class="panel panel-info" id="panel-congress-list">
+					<div class="panel-heading" role="tab" id="congress_list">
+						<h2 class="panel-title">
+							<a class="collapsed" id="title-list-congress" role="button"
+								data-toggle="collapse" data-parent="#congress"
+								href="#congress_list_content" aria-expanded="true"
+								aria-controls="congress_list_content">Danh sách Đại hội</a>
+						</h2>
+					</div>
+	
+					<div id="congress_list_content" class="panel-collapse collapsed in"
+						role="tabpanel" aria-labelledby="congress_list">
+						<div class="panel-body">
+							<table id="congress-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th>STT</th>
+										<th>Tên Đại hội</th>
+										<th>Số đơn vị</th>
+										<th>Số đại biểu</th>
+										<th>Số lần bầu cử</th>
+										<th>Bắt đầu</th>
+										<th>Kết thúc</th>
+										<th></th>
+										<th></th>
+									</tr>
+								</thead>
+								
+								<tfoot>
+									<tr>
+										<th>STT</th>
+										<th>Tên Đại hội</th>
+										<th>Số đơn vị</th>
+										<th>Số đại biểu</th>
+										<th>Số lần bầu cử</th>
+										<th>Bắt đầu</th>
+										<th>Kết thúc</th>
+										<th></th>
+										<th></th>
+									</tr>
+								</tfoot>
+								
+							</table>
+						</div>
 					</div>
 				</div>
-			</div>
-
-			<!-- Panel Create -->
-			<div class="panel panel-info">
-				<div class="panel-heading" role="tab" id="create_congress">
-					<h2 class="panel-title" style="font-size: 25;">
-						<a id="title-create-congress" role="button" data-toggle="collapse"
-							data-parent="#congress" href="#create_congress_content"
-							aria-expanded="false" aria-controls="create_congress_content">Tạo
-							thông tin Đại hội</a>
-					</h2>
-				</div>
-
-				<div id="create_congress_content" class="panel-collapse collapse"
-					role="tabpanel" aria-labelledby="create_congress">
-					<div class="panel-body">
-						<form class="form-horizontal" th:action="@{/create_congress}" id="form-create-congress" method="POST" autocomplete="off" enctype="multipart/form-data">
-							
-							<!-- Delegates File  -->
-							<div class="form-group">
-								<label for="delegates-file" class="col-sm-2 control-label">Danh sách Đại biểu</label>
-								<div class="col-sm-8 input-group">
-									<div class="input-group-addon"><span class="glyphicon glyphicon-list-alt"/></div>
-									<input th:name="delegatesFile" type="file" required="true" class="form-control" id="delegates-file" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
+	
+				<!-- Panel Create -->
+				<div class="panel panel-info" id="panel-create-congress">
+					<div class="panel-heading" role="tab" id="create_congress">
+						<h2 class="panel-title" style="font-size: 25;">
+							<a id="title-create-congress" role="button" data-toggle="collapse"
+								data-parent="#congress" href="#create_congress_content"
+								aria-expanded="false" aria-controls="create_congress_content">Tạo
+								thông tin Đại hội</a>
+						</h2>
+					</div>
+	
+					<div id="create_congress_content" class="panel-collapse collapse"
+						role="tabpanel" aria-labelledby="create_congress">
+						<div class="panel-body">
+							<form class="form-horizontal" th:action="@{/create_congress}" id="form-create-congress" method="POST" autocomplete="off" enctype="multipart/form-data">
 								
-									<div class="input-group-addon">
-										<span class="glyphicon glyphicon-search"></span>
-										<a id="button-delegate-table" data-toggle="modal" data-target="#modal-delegate-table">Kiểm tra thông tin</a>
+								<!-- Delegates File  -->
+								<div class="form-group">
+									<label for="delegates-file" class="col-sm-2 control-label">Danh sách Đại biểu</label>
+									<div class="col-sm-8 input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-list-alt"/></div>
+										<input th:name="delegatesFile" type="file" required="true" class="form-control" id="delegates-file" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
+									
+										<div class="input-group-addon">
+											<span class="glyphicon glyphicon-search"></span>
+											<a id="button-delegate-table" data-toggle="modal" data-target="#modal-delegate-table">Kiểm tra thông tin</a>
+										</div>
+										
+										<div class="input-group-addon" onclick="removeInput('#delegates-file')">
+											<span class="glyphicon glyphicon-remove"></span>
+										</div>
+									
 									</div>
 									
-									<div class="input-group-addon" onclick="removeInput('#delegates-file')">
-										<span class="glyphicon glyphicon-remove"></span>
+								</div>
+								
+								<!-- Congress Name -->
+								<div class="form-group">
+									<label for="congress-name" class="col-sm-2 control-label">Tên Đại hội</label>
+									<div class="col-sm-8 input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-pencil"/></div>
+										<input th:name="name" type="text" required="true" class="form-control" id="congress-name" placeholder="Tên Đại hội" />
+	
+										<div class="input-group-addon" onclick="removeInput('#congress-name')">
+											<span class="glyphicon glyphicon-remove"></span>
+										</div>
 									</div>
 								
 								</div>
 								
-							</div>
-							
-							<!-- Congress Name -->
-							<div class="form-group">
-								<label for="congress-name" class="col-sm-2 control-label">Tên Đại hội</label>
-								<div class="col-sm-8 input-group">
-									<div class="input-group-addon"><span class="glyphicon glyphicon-pencil"/></div>
-									<input th:name="name" type="text" required="true" class="form-control" id="congress-name" placeholder="Tên Đại hội" />
-
-									<div class="input-group-addon" onclick="removeInput('#congress-name')">
-										<span class="glyphicon glyphicon-remove"></span>
+								<!-- Start Time -->
+								<div class="form-group">
+									<label for="start-time" class="col-sm-2 control-label">Thời gian bắt đầu</label>
+									<div class="col-sm-8 input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-time"/></div>
+										<input th:name="startTime" type="text" required="true" class="form-control form-datetime date" id="start-time"
+											placeholder="Thời gian bắt đầu"/>
+									
+										<div class="input-group-addon" onclick="removeInput('#start-time')">
+											<span class="glyphicon glyphicon-remove"></span>
+										</div>
+									</div>
+									
+								</div>
+								
+								<!-- Avatar -->
+								<div class="form-group">
+									<label for="avatar-file" class="col-sm-2 control-label">Ảnh biểu trưng</label>
+									<div class="col-sm-8 input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-picture"/></div>
+										<input th:name="avatarFile" type="file" class="form-control" id="avatar-file" accept="images/*"/>
+									
+										<div class="input-group-addon" onclick="removeInput('#avatar-file')">
+											<span class="glyphicon glyphicon-remove"></span>
+										</div>
+									</div>
+									
+								</div>
+								
+								<!-- Banner -->
+								<div class="form-group">
+									<label for="banner-file" class="col-sm-2 control-label">Ảnh bìa</label>
+									<div class="col-sm-8 input-group">
+										<div class="input-group-addon"><span class="glyphicon glyphicon-picture"/></div>
+										<input th:name="bannerFile" type="file" class="form-control" id="banner-file" accept="images/*"/>
+									
+										<div class="input-group-addon" onclick="removeInput('#banner-file')">
+											<span class="glyphicon glyphicon-remove"></span>
+										</div>
+									</div>
+									
+								</div>
+								
+								<!-- Submit Button -->
+								<div class="form-group">
+									<label for="submit-button" class="col-sm-2 control-label"></label>
+									<div class="col-sm-8 input-group">
+										<button type="submit" class="btn btn-success" id="submit-button">Tạo</button>
 									</div>
 								</div>
-							
-							</div>
-							
-							<!-- Start Time -->
-							<div class="form-group">
-								<label for="start-time" class="col-sm-2 control-label">Thời gian bắt đầu</label>
-								<div class="col-sm-8 input-group">
-									<div class="input-group-addon"><span class="glyphicon glyphicon-time"/></div>
-									<input th:name="startTime" type="text" required="true" class="form-control form-datetime date" id="start-time"
-										placeholder="Thời gian bắt đầu"/>
-								
-									<div class="input-group-addon" onclick="removeInput('#start-time')">
-										<span class="glyphicon glyphicon-remove"></span>
-									</div>
-								</div>
-								
-							</div>
-							
-							<!-- Avatar -->
-							<div class="form-group">
-								<label for="avatar-file" class="col-sm-2 control-label">Ảnh biểu trưng</label>
-								<div class="col-sm-8 input-group">
-									<div class="input-group-addon"><span class="glyphicon glyphicon-picture"/></div>
-									<input th:name="avatarFile" type="file" class="form-control" id="avatar-file" accept="images/*"/>
-								
-									<div class="input-group-addon" onclick="removeInput('#avatar-file')">
-										<span class="glyphicon glyphicon-remove"></span>
-									</div>
-								</div>
-								
-							</div>
-							
-							<!-- Banner -->
-							<div class="form-group">
-								<label for="banner-file" class="col-sm-2 control-label">Ảnh bìa</label>
-								<div class="col-sm-8 input-group">
-									<div class="input-group-addon"><span class="glyphicon glyphicon-picture"/></div>
-									<input th:name="bannerFile" type="file" class="form-control" id="banner-file" accept="images/*"/>
-								
-									<div class="input-group-addon" onclick="removeInput('#banner-file')">
-										<span class="glyphicon glyphicon-remove"></span>
-									</div>
-								</div>
-								
-							</div>
-							
-							<!-- Submit Button -->
-							<div class="form-group">
-								<label for="submit-button" class="col-sm-2 control-label"></label>
-								<div class="col-sm-8 input-group">
-									<button type="submit" class="btn btn-success" id="submit-button">Tạo</button>
-								</div>
-							</div>
-						</form>
+							</form>
+						</div>
 					</div>
 				</div>
+	
 			</div>
-
+		
+			
 		</div>
+	
+		<footer th:replace="fragment/footer :: footer"></footer>
 	</div>
 	
 	<!-- Modal Delegates Table -->

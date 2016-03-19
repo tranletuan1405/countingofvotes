@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import vn.edu.uit.extra.DataConfig;
+import vn.edu.uit.extra.SupportMethods;
 import vn.edu.uit.models.common.AbstractEntity;
 
 @Entity
@@ -25,21 +27,15 @@ public class Voting extends AbstractEntity {
 	@Column(name = "name", nullable = false)
 	private String name;
 
-	@Column(name = "num_of_valid")
-	private int numOfValid;
-
-	@Column(name = "num_of_invalid")
-	private int numOfInvalid;
-
 	@Column(name = "version", nullable = false)
 	private int version;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "start_time", columnDefinition = "DATETIME")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "start_time")
 	private Date startTime;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "end_time", columnDefinition = "DATETIME")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "end_time")
 	private Date endTime;
 
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -80,22 +76,6 @@ public class Voting extends AbstractEntity {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public int getNumOfValid() {
-		return numOfValid;
-	}
-
-	public void setNumOfValid(int numOfValid) {
-		this.numOfValid = numOfValid;
-	}
-
-	public int getNumOfInvalid() {
-		return numOfInvalid;
-	}
-
-	public void setNumOfInvalid(int numOfInvalid) {
-		this.numOfInvalid = numOfInvalid;
 	}
 
 	public int getVersion() {
@@ -152,5 +132,13 @@ public class Voting extends AbstractEntity {
 
 	public void setCandidates(Set<Candidate> candidates) {
 		this.candidates = candidates;
+	}
+	
+	public String getStartTimeString() {
+		return SupportMethods.dateToString(this.startTime, DataConfig.DATE_TIME_FORMAT);
+	}
+	
+	public String getEndTimeString() {
+		return SupportMethods.dateToString(this.endTime, DataConfig.DATE_TIME_FORMAT);
 	}
 }

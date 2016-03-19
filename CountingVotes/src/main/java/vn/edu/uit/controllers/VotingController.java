@@ -1,41 +1,74 @@
 package vn.edu.uit.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.support.GenericWebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import vn.edu.uit.extra.DataConfig;
+import vn.edu.uit.extra.ListHolder;
+import vn.edu.uit.models.Congress;
+import vn.edu.uit.models.Voting;
+import vn.edu.uit.models.json.VotingJson;
+import vn.edu.uit.models.service.congress.CongressService;
 
 @Controller
-@RequestMapping(value = "voting/**")
+@RequestMapping(value = "votings/**")
 public class VotingController {
 
 	private static final Logger logger = LoggerFactory.getLogger(VotingController.class);
-	
+
+	@Autowired
+	private CongressService congressService;
+
+	@Autowired
+	private ObjectMapper mapper;
+
 	@RequestMapping(value = "/")
-	public ModelAndView loadVotingPage(
-			HttpServletRequest request) {
+	public ModelAndView loadVotingPage(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		ModelAndView model = new ModelAndView("voting");
-		
+
+		Congress congress = congressService.fetch(id);
+		model.addObject("congress", congress);
+
 		model.addObject(DataConfig.VOTING_ACTIVE, DataConfig.VOTING_ACTIVE);
 		return model;
 	}
-	
-	@RequestMapping(value = "/votings")
+
+	// ======================request body==========================
+	@RequestMapping(value = "/list")
 	@ResponseBody
-	public String loadVotingList(HttpServletRequest request){
+	public String loadVotingList(HttpServletRequest request) throws JsonProcessingException {
 		HttpSession session = request.getSession();
 		long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
-		
-		
+
+		if (id > 0) {
+			Congress congress = congressService.fetch(id);
+			List<Voting> votings = new ArrayList<Voting>(congress.getVotings());
+			List<VotingJson> votingJson = new ArrayList<VotingJson>();
+			for (int i = 0; i < votings.size(); i++) {
+				votingJson.add(new VotingJson(votings.get(i)));
+			}
+			ListHolder<VotingJson> json = new ListHolder<VotingJson>();
+			json.setData(votingJson);
+			return mapper.writeValueAsString(json);
+		}
+
 		return "";
 	}
 }
