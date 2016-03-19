@@ -297,4 +297,9 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 		return (Long) query.uniqueResult();
 	}
 
+	@Override
+	public boolean update(Delegate delegate) {
+		return this.merge(delegate);
+	}
+
 }

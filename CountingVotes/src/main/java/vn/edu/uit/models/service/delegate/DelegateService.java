@@ -55,4 +55,9 @@ public class DelegateService implements IDelegateDao{
 		return delegateDao.getNumOfAttendees(congressId);
 	}
 
+	@Override
+	public boolean update(Delegate delegate) {
+		return delegateDao.update(delegate);
+	}
+
 }

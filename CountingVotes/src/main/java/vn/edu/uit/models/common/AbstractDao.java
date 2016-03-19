@@ -20,11 +20,22 @@ public abstract class AbstractDao {
 	
 	protected boolean saveOrUpdate(Object obj){
 		try {
-			getSession().saveOrUpdate(obj);
+			getSession().persist(obj);
 			return true;
 		}
 		catch (HibernateException e){
 			logger.error("ERROR : Can't persist object : " + obj.getClass() + " cause of :" + e.getMessage());
+			return false;
+		}
+	}
+	
+	protected boolean merge(Object obj) {
+		try {
+			getSession().merge(obj);
+			return true;
+		}
+		catch (HibernateException e){
+			logger.error("ERROR : Can't merge object : " + obj.getClass() + " cause of :" + e.getMessage());
 			return false;
 		}
 	}

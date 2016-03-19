@@ -213,7 +213,7 @@ public class CongressController {
 		}
 
 		Congress congress = new Congress();
-		String congressPath = SupportMethods.dateToString(new Date(), DataConfig.DATE_TIME_FORMAT) + "_"
+		String congressPath = SupportMethods.dateToString(new Date(), DataConfig.DATE_FORMAT_PATH) + "_"
 				+ SupportMethods.getUID();
 
 		// Create key & Iv

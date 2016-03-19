@@ -8,8 +8,10 @@ public interface ICongressDao {
 
 	boolean persist(Congress congress);
 	
+	boolean update(Congress congress);
+	
 	Congress fetch(long id);
 	
 	List<Congress> fetch(int min, int max);
-	
+
 }

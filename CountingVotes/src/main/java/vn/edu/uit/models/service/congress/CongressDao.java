@@ -53,4 +53,10 @@ public class CongressDao extends AbstractDao implements ICongressDao {
 
 	}
 
+	@Override
+	public boolean update(Congress congress) {
+	
+		return this.merge(congress);
+	}
+
 }

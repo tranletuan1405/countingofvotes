@@ -49,5 +49,10 @@ public class CongressService implements ICongressDao {
 
 		return result;
 	}
+
+	@Override
+	public boolean update(Congress congress) {
+		return congressDao.update(congress);
+	}
 	
 }

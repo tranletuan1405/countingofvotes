@@ -13,12 +13,11 @@
 
 
 		<ul class="nav nav-pills nav-stacked tab-menu">
-			<li role="presentation"><a th:href="@{../home}"><span class="glyphicon glyphicon-home"></span> Trang chủ</a></li>
-			<li role="presentation" class="active"><a href="#"><span class="glyphicon glyphicon-info-sign"></span> Thông tin</a></li>
-			<li role="presentation"><a href="#"><span class="glyphicon glyphicon-check"></span> Bầu cử</a></li>
-			<li role="presentation"><a href="#"><span class="glyphicon glyphicon-blackboard"></span>Thống kê</a></li>
+			<li role="presentation" th:class="${detail_active} ? 'active' : 'inactive'" class="active"><a href="#"><span class="glyphicon glyphicon-info-sign"></span> Thông tin</a></li>
+			<li role="presentation" th:class="${voting_active} ? 'active' : 'inactive'"><a th:href="@{../voting}"><span class="glyphicon glyphicon-check"></span> Bầu cử</a></li>
+			<li role="presentation" th:class="${statistics_active} ? 'active' : 'inactive'"><a href="#"><span class="glyphicon glyphicon-blackboard"></span>Thống kê</a></li>
 		</ul>
-
+		
 	</div>
 </body>
 </html>

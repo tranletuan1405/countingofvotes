@@ -64,14 +64,16 @@ public class CongressDetailController {
 	public ModelAndView congressDetail(@PathVariable("id") long id, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView("congress_detail");
 		HttpSession session = request.getSession();
-		session.setAttribute("congress_id", id);
+		session.setAttribute(DataConfig.SESSION_NAME, id);
 		Congress congress = congressService.fetch(id);
 
 		long attendees = delegateService.getNumOfAttendees(id);
 
 		model.addObject("attendees", attendees);
 		model.addObject("congress", congress);
-
+		
+		model.addObject(DataConfig.DETAIL_ACTIVE, DataConfig.DETAIL_ACTIVE);
+		
 		return model;
 	}
 
@@ -80,7 +82,7 @@ public class CongressDetailController {
 	@ResponseBody
 	public String delegates(HttpServletRequest request) throws JsonProcessingException {
 		HttpSession session = request.getSession();
-		long id = (Long) session.getAttribute("congress_id");
+		long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		ListHolder<DelegateJson> json = new ListHolder<DelegateJson>();
 		List<Delegate> delegates = new ArrayList<Delegate>(congressService.fetch(id).getDelegates());
 
@@ -96,7 +98,7 @@ public class CongressDetailController {
 	@ResponseBody
 	public String units(HttpServletRequest request) throws JsonProcessingException {
 		HttpSession session = request.getSession();
-		Long id = (Long) session.getAttribute("congress_id");
+		Long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		ListHolder<UnitJson> json = new ListHolder<UnitJson>();
 		List<Unit> units = unitService.fetch(id);
 		List<DelegateType> types = typeService.fetch();
@@ -146,7 +148,7 @@ public class CongressDetailController {
 	public ModelAndView getDelegate(@PathVariable("id") long id, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView("fragment/delegate");
 		HttpSession session = request.getSession();
-		long congressId = (Long) session.getAttribute("congress_id");
+		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 
 		Delegate delegate = delegateService.fetch(id);
 		List<Unit> units = unitService.fetch(congressId);
@@ -164,7 +166,7 @@ public class CongressDetailController {
 	@ResponseBody
 	public ModelAndView getUnit(@PathVariable("id") long id, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		long congressId = (Long) session.getAttribute("congress_id");
+		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		ModelAndView model = new ModelAndView("fragment/unit");
 		Unit unit = unitService.fetch(id, congressId);
 		model.addObject("unit", unit);
@@ -188,7 +190,7 @@ public class CongressDetailController {
 			delegate.setArivalTime(null);
 		}
 
-		delegateService.persist(delegate);
+		delegateService.update(delegate);
 		String json = mapper.writeValueAsString(new DelegateJson(delegate));
 
 		return json;
@@ -201,7 +203,7 @@ public class CongressDetailController {
 	public String updateCongressInfo(@PathVariable("field") String field, @RequestParam(value = "value") String value,
 			HttpServletRequest request) throws ParseException {
 		HttpSession session = request.getSession();
-		long id = (Long) session.getAttribute("congress_id");
+		long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		if (value == null || value.isEmpty())
 			return "";
 
@@ -212,7 +214,7 @@ public class CongressDetailController {
 				return "";
 			
 			congress.setName(value);
-			congressService.persist(congress);
+			congressService.update(congress);
 			return value;
 		} else if (field.equals("startTime")) {
 			Date date = SupportMethods.toDate(value, DataConfig.DATE_TIME_FORMAT);
@@ -220,7 +222,7 @@ public class CongressDetailController {
 				if (congress.getEndTime() != null && date.after(congress.getEndTime()))
 					return "";
 				congress.setStartTime(date);
-				congressService.persist(congress);
+				congressService.update(congress);
 				return value;
 			}
 		} else if (field.equals("endTime")) {
@@ -229,7 +231,7 @@ public class CongressDetailController {
 				if (congress.getStartTime() != null && date.before(congress.getStartTime()))
 					return "";
 				congress.setEndTime(date);
-				congressService.persist(congress);
+				congressService.update(congress);
 				return value;
 			}
 		}
