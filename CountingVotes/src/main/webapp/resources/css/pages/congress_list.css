@@ -22,3 +22,7 @@
 #panel-congress-list, #panel-create-congress {
 	border-radius : 0px;
 }
+
+#panel-create-congress {
+	margin-top: 10px;
+}

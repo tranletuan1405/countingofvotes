@@ -59,12 +59,30 @@ public class CongressDetailController {
 	@Autowired
 	private ObjectMapper mapper;
 
-	// Load Detail Page
+	// Load Detail Page With New Session
 	@RequestMapping(value = "/{id}")
 	public ModelAndView congressDetail(@PathVariable("id") long id, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView("congress_detail");
 		HttpSession session = request.getSession();
 		session.setAttribute(DataConfig.SESSION_NAME, id);
+		Congress congress = congressService.fetch(id);
+
+		long attendees = delegateService.getNumOfAttendees(id);
+
+		model.addObject("attendees", attendees);
+		model.addObject("congress", congress);
+		
+		model.addObject(DataConfig.DETAIL_ACTIVE, DataConfig.DETAIL_ACTIVE);
+		
+		return model;
+	}
+	
+	//Load Detail Page With Old Session
+	@RequestMapping(value = "/this")
+	public ModelAndView congressDetailOld(HttpServletRequest request) {
+		ModelAndView model = new ModelAndView("congress_detail");
+		HttpSession session = request.getSession();
+		long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		Congress congress = congressService.fetch(id);
 
 		long attendees = delegateService.getNumOfAttendees(id);

@@ -26,7 +26,7 @@ import vn.edu.uit.models.json.VotingJson;
 import vn.edu.uit.models.service.congress.CongressService;
 
 @Controller
-@RequestMapping(value = "votings/**")
+@RequestMapping(value = "voting/**")
 public class VotingController {
 
 	private static final Logger logger = LoggerFactory.getLogger(VotingController.class);
@@ -37,21 +37,23 @@ public class VotingController {
 	@Autowired
 	private ObjectMapper mapper;
 
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "/list")
 	public ModelAndView loadVotingPage(HttpServletRequest request) {
+		ModelAndView model = new ModelAndView("voting");
 		HttpSession session = request.getSession();
 		long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
-		ModelAndView model = new ModelAndView("voting");
-
 		Congress congress = congressService.fetch(id);
-		model.addObject("congress", congress);
 
+	
+
+		model.addObject("congress", congress);
 		model.addObject(DataConfig.VOTING_ACTIVE, DataConfig.VOTING_ACTIVE);
+		
 		return model;
 	}
 
 	// ======================request body==========================
-	@RequestMapping(value = "/list")
+	@RequestMapping(value = "/table")
 	@ResponseBody
 	public String loadVotingList(HttpServletRequest request) throws JsonProcessingException {
 		HttpSession session = request.getSession();

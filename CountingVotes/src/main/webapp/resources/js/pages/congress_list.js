@@ -133,4 +133,25 @@ $(document).ready(function() {
     		restart: true
     	});
     });
+    
+    panelEvents();
 });
+
+function panelEvents() {
+	/*$('#congress_list_content').on('hidden.bs.collapse', function(){
+		$('#create_congress_content').collapse('show');
+	});
+	
+	$('#create_congress_content').on('hidden.bs.collapse', function(){
+		$('#congress_list_content').collapse('show');
+	});*/
+	
+
+	/*$('#congress_list_content').collapse({
+		parent : true
+	});
+	
+	$('#create_congress_content').collapse({
+		parent : true
+	});*/
+}
