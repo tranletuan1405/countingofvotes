@@ -19,34 +19,43 @@ img {
 	background-color: #00aff0;
 }
 
+.standard-text-color {
+	color : #00aff0;
+}
+
 .modal-body-show-table {
     max-height: calc(70vh);
     overflow-y: auto;
-}
-
-.banner {
-	width: 100%;
-	min-height: calc(35vh);
-	max-height: calc(35vh);
-	
 }
 
 .no-radius {
 	border-radius : 0px;
 }
 
-/* MENU */
-.tab-menu {
-	margin-top : 13px;
+/* BANNER */
+.banner {
+	width: 100%;
+	min-height: calc(39vh);
+	max-height: calc(39vh);	
 }
 
-.tab-menu>li.active>a, .tab-manager>li.active>a:focus{
+
+/* MENU */
+#panel-menu {
+	margin-right: 20px;
+}
+
+#tab-menu {
+	margin-top : 11px;
+}
+
+#tab-menu>li.active>a, .tab-manager>li.active>a:focus{
 	background-color: #00aff0;
 	border-radius : 0px;
 	font-weight: bold;
 }
 
-.tab-menu>li>a:hover{
+#tab-menu>li>a:hover{
 	border-radius : 0px;
 }
 

@@ -42,6 +42,50 @@
 			
 			<!-- Content -->
 			<div class="col-md-10">
+			
+				<!-- Header -->
+				<div class="page-header">
+					<h2 th:text="${congress.name}" class="standard-text-color"></h2>
+					<h4>Đại biểu : <span class="standard-text-color" th:text="${attendees} + ' / ' + ${congress.delegates.size()}"></span></h4>
+					<h4>Đơn vị : <span class="standard-text-color" th:text="${congress.units.size()}"></span></h4>
+				</div>
+				
+				<!-- Table & Creation Field -->
+				<div class="panel-group" id="panel-group-voting" role="tablist" aria-multiselectable="true">
+					<!-- Panel Voting List -->
+					<div class="panel panel-info" id="panel-voting-list">
+						<div class="panel-heading" role="tab" id="heading-voting-list">
+							<h2 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#panel-group-voting" href="#voting-list-content" aria-expanded="true" aria-controls="heading-voting-list">
+									Danh sách bầu cử
+								</a>
+							</h2>
+						</div>
+						
+						 <div id="voting-list-content" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading-voting-list">
+						 	<div class="panel-body">
+						 		1231231
+						 	</div>
+						 </div>
+					</div>
+					
+					<!-- Panel Create Voting -->
+					<div class="panel panel-info" id="panel-create-voting">
+						<div class="panel-heading" role="tab" id="heading-create-voting">
+							<h2 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#panel-group-voting" href="#create-voting-content" aria-expanded="false" aria-controls="panel-create-voting">
+									Tạo thông tin bầu cử
+								</a>	
+							</h2>
+						</div>
+						
+						 <div id="create-voting-content" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-create-voting">
+						 	<div class="panel-body">
+						 		1231231
+						 	</div>
+						 </div>
+					</div>
+				</div>
 			</div>
 			
 		</div>

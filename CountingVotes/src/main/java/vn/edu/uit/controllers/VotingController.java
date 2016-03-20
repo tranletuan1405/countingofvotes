@@ -24,6 +24,7 @@ import vn.edu.uit.models.Congress;
 import vn.edu.uit.models.Voting;
 import vn.edu.uit.models.json.VotingJson;
 import vn.edu.uit.models.service.congress.CongressService;
+import vn.edu.uit.models.service.delegate.DelegateService;
 
 @Controller
 @RequestMapping(value = "voting/**")
@@ -33,6 +34,9 @@ public class VotingController {
 
 	@Autowired
 	private CongressService congressService;
+	
+	@Autowired
+	private DelegateService delegateService;
 
 	@Autowired
 	private ObjectMapper mapper;
@@ -43,9 +47,9 @@ public class VotingController {
 		HttpSession session = request.getSession();
 		long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		Congress congress = congressService.fetch(id);
-
-	
-
+		long attendees = delegateService.getNumOfAttendees(id);
+		
+		model.addObject("attendees", attendees);
 		model.addObject("congress", congress);
 		model.addObject(DataConfig.VOTING_ACTIVE, DataConfig.VOTING_ACTIVE);
 		

@@ -1,1 +1,20 @@
 @CHARSET "UTF-8";
+
+#panel-voting-list, #panel-create-voting {
+	border-radius : 0px;
+	border-color: #00aff0;
+}
+#panel-create-voting {
+	margin-top: 10px;
+}
+
+#heading-voting-list, #heading-create-voting {
+	background-color: #00aff0;
+	border-radius : 0px;
+}
+
+#heading-voting-list>h2>a, #heading-create-voting>h2>a {
+	font-weight: bold;
+	color: white;
+	font-size: 16px;
+}
