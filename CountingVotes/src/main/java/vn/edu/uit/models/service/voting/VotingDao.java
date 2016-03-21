@@ -3,6 +3,7 @@ package vn.edu.uit.models.service.voting;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -60,4 +61,21 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 		crit.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		return crit.list();
 	}
+
+	@Override
+	public boolean update(Voting voting) {
+		return this.merge(voting);
+	}
+
+	@Override
+	public int getCurrentVersion(long congressId, String name) {
+		String hql = "SELECT count(*) FROM Voting WHERE congress.id = :congressId AND name = :name";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("congressId", congressId);
+		query.setParameter("name", name);
+		
+		int result = (Integer) query.uniqueResult();
+		return result;
+	}
+
 }

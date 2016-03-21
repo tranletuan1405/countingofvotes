@@ -33,4 +33,14 @@ public class VotingService implements IVotingDao {
 		return votingDao.fetch(min, max);
 	}
 
+	@Override
+	public boolean update(Voting voting) {
+		return votingDao.update(voting);
+	}
+
+	@Override
+	public int getCurrentVersion(long congressId, String name) {
+		return votingDao.getCurrentVersion(congressId, name);
+	}
+
 }

@@ -27,8 +27,8 @@ public class Voting extends AbstractEntity {
 	@Column(name = "name", nullable = false)
 	private String name;
 
-	@Column(name = "version", nullable = false)
-	private int version;
+	@Column(name = "version")
+	private String version;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "start_time")
@@ -39,7 +39,7 @@ public class Voting extends AbstractEntity {
 	private Date endTime;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "congress_id", nullable = false)
+	@JoinColumn(name = "congress_id", nullable = false, updatable = false)
 	private Congress congress;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -78,11 +78,11 @@ public class Voting extends AbstractEntity {
 		this.name = name;
 	}
 
-	public int getVersion() {
+	public String getVersion() {
 		return version;
 	}
 
-	public void setVersion(int version) {
+	public void setVersion(String version) {
 		this.version = version;
 	}
 

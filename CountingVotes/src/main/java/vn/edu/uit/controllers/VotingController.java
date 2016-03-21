@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.GenericWebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,6 +27,7 @@ import vn.edu.uit.models.Voting;
 import vn.edu.uit.models.json.VotingJson;
 import vn.edu.uit.models.service.congress.CongressService;
 import vn.edu.uit.models.service.delegate.DelegateService;
+import vn.edu.uit.models.service.voting.VotingService;
 
 @Controller
 @RequestMapping(value = "voting/**")
@@ -32,6 +35,9 @@ public class VotingController {
 
 	private static final Logger logger = LoggerFactory.getLogger(VotingController.class);
 
+	@Autowired
+	private VotingService votingService;
+	
 	@Autowired
 	private CongressService congressService;
 	
@@ -77,4 +83,26 @@ public class VotingController {
 
 		return "";
 	}
+	
+	@RequestMapping(value = "create_voting", method = RequestMethod.POST)
+	@ResponseBody
+	public String createVoting(@RequestParam("name") String name, HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
+		Congress congress = congressService.fetch(id);
+		
+		Voting voting = new Voting();
+		voting.setName(name);
+		voting.setCongress(congress);
+		
+		congress.getVotings().add(voting);
+		boolean result = congressService.update(congress);
+
+		if (result)
+			return "success";
+		else
+			return "error";
+	}
+
 }
