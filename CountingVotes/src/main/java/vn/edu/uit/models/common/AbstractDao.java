@@ -18,7 +18,7 @@ public abstract class AbstractDao {
 		return sessionFactory.getCurrentSession();
 	}
 	
-	protected boolean persist(Object obj){
+	protected boolean persistObject(Object obj){
 		try {
 			getSession().persist(obj);
 			return true;
@@ -29,7 +29,7 @@ public abstract class AbstractDao {
 		}
 	}
 	
-	protected boolean saveOrUpdate(Object obj){
+	protected boolean saveOrUpdateObject(Object obj){
 		try {
 			getSession().saveOrUpdate(obj);
 			return true;
@@ -40,7 +40,7 @@ public abstract class AbstractDao {
 		}
 	}
 	
-	protected boolean merge(Object obj) {
+	protected boolean mergeObject(Object obj) {
 		try {
 			getSession().merge(obj);
 			return true;

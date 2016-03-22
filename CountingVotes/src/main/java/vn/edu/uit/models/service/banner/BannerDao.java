@@ -19,7 +19,7 @@ public class BannerDao extends AbstractDao implements IBannerDao {
 
 	@Override
 	public boolean persist(Banner banner) {
-		return this.saveOrUpdate(banner);
+		return this.persistObject(banner);
 	}
 
 	@Override

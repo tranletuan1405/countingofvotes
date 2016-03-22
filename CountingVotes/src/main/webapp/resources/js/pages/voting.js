@@ -6,6 +6,7 @@ $(document).ready(function(){
 	
 	var voting_table;
 	loadVotings();
+	initTableEvents();
 	initCreateModal();
 });
 
@@ -31,7 +32,21 @@ function loadVotings() {
 			visible : false,
 			searchable : false,
 			orderable : false,
+		}, {
+			data : "id",
+			orderable : false,
+			searchable : false,
+		}, {
+			data : "id",
+			visible : false,
 		},],
+		"columnDefs" : [ {
+			"render" : function(data, type, row) {
+				return "<a class='btn btn-default' href='detail/" + data + "'>Chi tiết</a>";
+			},				
+			"targets" : 6,		
+			},],
+		"order": [[ 7, "desc" ]],
 		
 		dom : "<'row'<'col-sm-4'B><'col-sm-4'l><'col-sm-4'f>>"
 			+ "<'row'<'col-sm-12'tr>>"
@@ -59,7 +74,9 @@ function loadVotings() {
 		"lengthMenu" : [ [ 5, 10, 15, -1 ], [ 5, 10, 15, "Tất cả" ] ],
 		select : "single",
 	});	
-	
+}
+
+function initTableEvents() {
 	voting_table.on( 'select', function ( e, dt, type, indexes ) {
 	    if ( type == 'row' ) {
 	       $('.btn-edit').removeClass('disabled');
@@ -78,28 +95,10 @@ function initCreateModal() {
 	$('#modal-create-voting').on('shown.bs.modal', function() {
 		$(this).find('[autofocus]').focus();
 	});
-
 		
 	$('#btn-submit-voting').click(function() {
-		var form = $('#form-create-voting');
+		$('#btn-submit-real').click();
 
-		$.ajax({
-			url : "create_voting",
-			type : "POST",
-			data : form.serialize(),
-			success : function(msg) {
-				if (msg == 'success') {
-					$('#modal-create-voting').modal('hide');
-					console.log('oke');
-				} else {
-					$('#modal-create-voting').modal('hide');
-				}
-			},
-			error : function(msg) {
-
-			}
-
-		});
 	});
 }
 

@@ -23,7 +23,7 @@ public class UnitDao extends AbstractDao implements IUnitDao {
 
 	@Override
 	public boolean persist(Unit unit) {
-		return this.saveOrUpdate(unit);
+		return persistObject(unit);
 	}
 
 	@Override

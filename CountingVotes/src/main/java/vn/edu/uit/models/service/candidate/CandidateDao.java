@@ -24,7 +24,7 @@ public class CandidateDao extends AbstractDao implements ICandidateDao {
 			Delegate d = (Delegate) getSession().get(Delegate.class, delegateId);
 			candidate.setVoting(v);
 			candidate.setDelegate(d);
-			return this.saveOrUpdate(candidate);
+			return this.persistObject(candidate);
 			
 		} catch (Exception e) {
 			logger.error(e.getMessage());

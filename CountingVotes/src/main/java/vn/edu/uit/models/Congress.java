@@ -52,7 +52,7 @@ public class Congress extends AbstractEntity{
 	@OneToMany(targetEntity = Voting.class, fetch = FetchType.EAGER , mappedBy = "congress")
 	private Set<Voting> votings = new HashSet<Voting>(0);
 	
-	@OneToMany(targetEntity = Delegate.class, fetch = FetchType.EAGER, mappedBy = "congress", cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Delegate.class, fetch = FetchType.EAGER, mappedBy = "congress")
 	private Set<Delegate> delegates = new HashSet<Delegate>(0);
 	
 	

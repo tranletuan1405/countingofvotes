@@ -23,7 +23,7 @@ public class CongressDao extends AbstractDao implements ICongressDao {
 
 	@Override
 	public boolean persist(Congress congress) {
-		return this.saveOrUpdate(congress);
+		return persistObject(congress);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class CongressDao extends AbstractDao implements ICongressDao {
 	@Override
 	public boolean update(Congress congress) {
 	
-		return this.merge(congress);
+		return mergeObject(congress);
 	}
 
 }

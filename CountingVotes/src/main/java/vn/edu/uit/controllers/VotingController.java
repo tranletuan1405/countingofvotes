@@ -61,7 +61,27 @@ public class VotingController {
 		
 		return model;
 	}
+	
+	@RequestMapping(value = "create_voting", method = RequestMethod.POST)
+	public ModelAndView createVoting(@RequestParam("name") String name, HttpServletRequest request) {
 
+		ModelAndView model = new ModelAndView("redirect:list");
+		if(name == null || name.isEmpty()) return model;
+		
+		HttpSession session = request.getSession();
+		long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
+		Congress congress = congressService.fetch(id);
+		
+		Voting voting = new Voting();
+		voting.setName(name);
+		voting.setVersion("1");
+		voting.setCongress(congress);
+		votingService.persist(voting);
+		
+		return model;
+
+	}
+	
 	// ======================request body==========================
 	@RequestMapping(value = "/table")
 	@ResponseBody
@@ -83,26 +103,6 @@ public class VotingController {
 
 		return "";
 	}
-	
-	@RequestMapping(value = "create_voting", method = RequestMethod.POST)
-	@ResponseBody
-	public String createVoting(@RequestParam("name") String name, HttpServletRequest request) {
 
-		HttpSession session = request.getSession();
-		long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
-		Congress congress = congressService.fetch(id);
-		
-		Voting voting = new Voting();
-		voting.setName(name);
-		voting.setCongress(congress);
-		
-		congress.getVotings().add(voting);
-		boolean result = congressService.update(congress);
-
-		if (result)
-			return "success";
-		else
-			return "error";
-	}
 
 }

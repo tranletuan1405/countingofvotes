@@ -20,7 +20,7 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 
 	@Override
 	public boolean persist(Voting voting) {
-		return this.saveOrUpdate(voting);
+		return persistObject(voting);
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 
 	@Override
 	public boolean update(Voting voting) {
-		return this.merge(voting);
+		return mergeObject(voting);
 	}
 
 	@Override

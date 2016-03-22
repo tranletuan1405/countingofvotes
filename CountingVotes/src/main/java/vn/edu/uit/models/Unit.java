@@ -27,7 +27,7 @@ public class Unit extends AbstractEntity {
 	private String shortName;
 
 	@ManyToOne(targetEntity = Congress.class, fetch = FetchType.LAZY)
-	@JoinColumn(name = "congress_id")
+	@JoinColumn(name = "congress_id", updatable = false)
 	private Congress congress;
 
 	public String getCode() {

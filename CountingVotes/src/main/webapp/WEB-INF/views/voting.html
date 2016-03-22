@@ -71,11 +71,13 @@
 								width="100%">
 								<thead>
 									<tr>
-										<th>Tên bầu cử</th>
+										<th class="col-md-5">Tên bầu cử</th>
 										<th>Phiên bản</th>
 										<th>Bắt đầu</th>
 										<th>Kết thúc</th>
 										<th>Số ứng viên</th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 
@@ -86,6 +88,8 @@
 										<th>Bắt đầu</th>
 										<th>Kết thúc</th>
 										<th>Số ứng viên</th>
+										<th></th>
+										<th></th>
 									</tr>
 								</tfoot>
 
@@ -105,11 +109,11 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Tạo thông tin bầu cử</h4>
+					<h4 class="modal-title">Tạo bầu cử</h4>
 				</div>
 				<div class="modal-body">
 					<div class="panel-body">
-						<form class="form-horizontal" id="form-create-voting"
+						<form class="form-horizontal" id="form-create-voting" th:action="@{create_voting}" method="POST"
 							autocomplete="off">
 
 							<div class="form-group">
@@ -122,12 +126,14 @@
 										placeholder="Tên bầu cử" />
 								</div>
 							</div>
+							
+							<button type="submit" class="hidden" id="btn-submit-real"></button>
 						</form>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-					<button type="button" class="btn btn-primary" id="btn-submit-voting">Lưu</button>
+					<button type="submit" class="btn btn-primary" id="btn-submit-voting">Lưu</button>
 				</div>
 			</div>
 		</div>

@@ -56,7 +56,7 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 
 	@Override
 	public boolean persist(Delegate delegate) {
-		return this.saveOrUpdate(delegate);
+		return persistObject(delegate);
 	}
 
 	@Override
@@ -299,7 +299,7 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 
 	@Override
 	public boolean update(Delegate delegate) {
-		return this.merge(delegate);
+		return mergeObject(delegate);
 	}
 
 }
