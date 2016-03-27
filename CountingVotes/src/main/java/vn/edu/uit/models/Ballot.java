@@ -24,24 +24,33 @@ import vn.edu.uit.models.common.AbstractEntity;
 @Table(name = "Ballot")
 public class Ballot extends AbstractEntity {
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "start_time", columnDefinition = "DATETIME")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "start_time")
 	private Date startTime;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "end_time", columnDefinition = "DATETIME")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "end_time")
 	private Date endTime;
 
 	@Column(name = "is_valid")
 	private Boolean isValid;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(targetEntity = Voting.class)
 	@JoinColumn(name = "voting_id", nullable = false)
 	private Voting voting;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "ballot")
+	@OneToMany(targetEntity = BallotDetail.class, mappedBy = "ballot")
 	private Set<BallotDetail> details = new HashSet<BallotDetail>(0);
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public Ballot() {
 
 	}

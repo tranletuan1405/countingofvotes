@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title></title>
+
+<!-- JQuery -->
+<script type="text/javascript" th:src="@{/js/common/jquery-2.1.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}" />
+<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/common/common.css}" />
+
+<!-- Datatables -->
+<script type="text/javascript" th:src="@{/js/datatables/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/dataTables.bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/dataTables.select.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/dataTables.buttons.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/buttons.bootstrap.min.js}"></script>
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/datatables/dataTables.bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/datatables/select.bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/datatables/buttons.bootstrap.min.css}" />
+
+<!-- Date Time Picker -->
+<script type="text/javascript" th:src="@{/js/bootstrap/bootstrap-datetimepicker.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap-datetimepicker.min.css}" />
+
+<script type="text/javascript" th:src="@{/js/common/timer.jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/pages/voting_detail.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/pages/voting_detail.css}" />
+</head>
+<body>
+	<div class="container">
+		<div class="my-container row">
+			<!-- Logo & Menu -->
+			<div class="col-md-2">
+				<!-- Logo -->
+				<div th:replace="fragment/menu :: menu"></div>
+			</div>
+
+			<!-- Content -->
+			<div class="col-md-10">
+				<!-- Header -->
+				<div class="page-header">
+					<h2 th:text="${congress.name}" class="standard-text-color"></h2>
+	
+					<h5>
+						Đại biểu : <span class="standard-text-color"
+							th:text="${attendees} + ' / ' + ${congress.delegates.size()}"></span>
+					</h5>
+					<h5>
+						Đơn vị : <span class="standard-text-color"
+							th:text="${congress.units.size()}"></span>
+					</h5>
+				</div>
+				
+				<!-- Breadcrumbs -->
+				<ol class="breadcrumb no-radius">
+					<li><a th:href="@{../voting/list}"><span class="glyphicon glyphicon-list-alt"></span> Danh sách bầu cử</a></li>
+					<!-- <li class="active" th:text="${voting.name}"></li> -->
+				</ol>
+				
+				<!-- Content -->
+				<div class="panel-group" id="panel-group-voting-detail" role="tablist"
+				aria-multiselectable="true">
+				
+					<!-- Candidate Table -->
+					<div class="panel panel-info" id="panel-candidate-table">
+						<div class="panel-heading" role="tab" id="heading-candidate-table">
+							<h2 class="panel-title">
+								<a class="collapsed" role="button" data-toggle="collapse"
+									href="#candidate-table-content" aria-expanded="true"
+									aria-controls="candidate-table-content">Danh sách ứng viên</a>
+							</h2>
+
+						</div>
+
+						<div id="candidate-table-content"
+							class="panel-collapse collapsed in" role="tabpanel"
+							aria-labelledby="heading-candidate-table">
+							<div class="panel-body">
+								<table id="candidate-table"
+									class="table table-striped table-bordered" cellspacing="0"
+									width="100%">
+									<thead>
+										<tr>
+											<th>STT</th>
+											<th class="col-md-3">Họ tên</th>
+											<th>Năm sinh</th>
+											<th>Giới tính</th>
+											<th>Tên đơn vị</th>
+											<th>Chức vụ</th>
+											<th>Cơ cấu</th>
+										</tr>
+									</thead>
+
+									<tfoot>
+										<tr>
+											<th>STT</th>
+											<th>Họ tên</th>
+											<th>Năm sinh</th>
+											<th>Giới tính</th>
+											<th>Tên đơn vị</th>
+											<th>Chức vụ</th>
+											<th>Cơ cấu</th>
+										</tr>
+									</tfoot>
+
+
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<!-- Counting Rule -->
+					<div class="panel panel-info" id="panel-counting-rules">
+						<div class="panel-heading" role="tab" id="heading-counting-rules">
+							<h2 class="panel-title">
+								<a class="collapsed" role="button" data-toggle="collapse"
+									href="#counting-rules-content" aria-expanded="true"
+									aria-controls="counting-rules-content">Danh sách ứng viên</a>
+							</h2>
+
+						</div>
+
+						<div id="counting-rules-content"
+							class="panel-collapse collapsed in" role="tabpanel"
+							aria-labelledby="heading-counting-rules">
+							<div class="panel-body">1231231</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+		
+		<!-- Footer -->
+		<div th:replace="fragment/footer :: footer"></div>
+	</div>
+</body>
+</html>

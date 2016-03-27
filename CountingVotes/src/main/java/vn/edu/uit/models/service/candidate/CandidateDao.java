@@ -1,6 +1,9 @@
 package vn.edu.uit.models.service.candidate;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +50,16 @@ public class CandidateDao extends AbstractDao implements ICandidateDao {
 			return false;
 		}
 
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Candidate> fetch(long votingId) {
+		Criteria crit = getSession().createCriteria(Candidate.class);
+		crit.add(Restrictions.eq("isEnabled", true));
+		crit.add(Restrictions.and(Restrictions.eq("voting.id", votingId)));
+		crit.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		return crit.list();
 	}
 
 }

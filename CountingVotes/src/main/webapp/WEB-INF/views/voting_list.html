@@ -27,8 +27,8 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap-datetimepicker.min.css}" />
 
 <script type="text/javascript" th:src="@{/js/common/timer.jquery.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/pages/voting.js}"></script>
-<link rel="stylesheet" type="text/css" th:href="@{/css/pages/voting.css}" />
+<script type="text/javascript" th:src="@{/js/pages/voting_list.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/pages/voting_list.css}" />
 
 </head>
 <body>
@@ -46,59 +46,56 @@
 				<!-- Header -->
 				<div class="page-header">
 					<h2 th:text="${congress.name}" class="standard-text-color"></h2>
-					<h4>
+					<h5>
 						Đại biểu : <span class="standard-text-color"
 							th:text="${attendees} + ' / ' + ${congress.delegates.size()}"></span>
-					</h4>
-					<h4>
+					</h5>
+					<h5>
 						Đơn vị : <span class="standard-text-color"
 							th:text="${congress.units.size()}"></span>
-					</h4>
+					</h5>
 				</div>
+
+				<!-- Breadcrumbs -->
+				<ol class="breadcrumb no-radius">
+					<li class="active"><span class="glyphicon glyphicon-list-alt"></span>
+						Danh sách bầu cử</li>
+				</ol>
 
 				<!-- Panel Voting List -->
-				<div class="panel panel-info" id="panel-voting-list">
-					<div class="panel-heading" role="tab" id="heading-voting-list">
-						<h2 class="panel-title">
-							<a role="button"> Danh sách bầu cử </a>
-						</h2>
-					</div>
+				<div id="voting-list-content">
+					<table id="voting-table" class="table table-striped table-bordered"
+						cellspacing="0" width="100%">
+						<thead>
+							<tr>
+								<th class="col-md-5">Tên bầu cử</th>
+								<th>Phiên bản</th>
+								<th>Bắt đầu</th>
+								<th>Kết thúc</th>
+								<th>Số ứng viên</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
 
-					<div id="voting-list-content">
-						<div class="panel-body">
-							<table id="voting-table"
-								class="table table-striped table-bordered" cellspacing="0"
-								width="100%">
-								<thead>
-									<tr>
-										<th class="col-md-5">Tên bầu cử</th>
-										<th>Phiên bản</th>
-										<th>Bắt đầu</th>
-										<th>Kết thúc</th>
-										<th>Số ứng viên</th>
-										<th></th>
-										<th></th>
-									</tr>
-								</thead>
-
-								<tfoot>
-									<tr>
-										<th>Tên bầu cử</th>
-										<th>Phiên bản</th>
-										<th>Bắt đầu</th>
-										<th>Kết thúc</th>
-										<th>Số ứng viên</th>
-										<th></th>
-										<th></th>
-									</tr>
-								</tfoot>
+						<tfoot>
+							<tr>
+								<th>Tên bầu cử</th>
+								<th>Phiên bản</th>
+								<th>Bắt đầu</th>
+								<th>Kết thúc</th>
+								<th>Số ứng viên</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</tfoot>
 
 
-							</table>
-						</div>
-					</div>
+					</table>
+
 				</div>
 			</div>
+
 		</div>
 
 		<!-- Footer -->

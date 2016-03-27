@@ -5,17 +5,6 @@
 	border-color: #00aff0;
 }
 
-#heading-voting-list {
-	background-color: #00aff0;
-	border-radius : 0px;
-}
-
-#heading-voting-list>h2>a{
-	font-weight: bold;
-	color: white;
-	font-size: 16px;
-}
-
 /* DATATABLE */
 .btn-voting-table {
 	margin-left: 5px;

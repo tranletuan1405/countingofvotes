@@ -49,7 +49,7 @@ public class VotingController {
 
 	@RequestMapping(value = "/list")
 	public ModelAndView loadVotingPage(HttpServletRequest request) {
-		ModelAndView model = new ModelAndView("voting");
+		ModelAndView model = new ModelAndView("voting_list");
 		HttpSession session = request.getSession();
 		long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		Congress congress = congressService.fetch(id);

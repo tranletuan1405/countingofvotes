@@ -78,9 +78,9 @@ public class CongressController {
 	@Autowired
 	private DelegateTypeService typeService;
 
-	@RequestMapping(value = { "/", "/home/**" })
+	@RequestMapping(value = { "/", "/home/**", "/list" })
 	public ModelAndView congress() {
-		ModelAndView model = new ModelAndView("congress");
+		ModelAndView model = new ModelAndView("congress_list");
 
 		return model;
 	}

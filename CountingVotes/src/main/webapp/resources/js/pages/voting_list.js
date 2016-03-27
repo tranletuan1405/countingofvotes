@@ -42,7 +42,7 @@ function loadVotings() {
 		},],
 		"columnDefs" : [ {
 			"render" : function(data, type, row) {
-				return "<a class='btn btn-default' href='detail/" + data + "'>Chi tiết</a>";
+				return "<a class='btn btn-default' href='../voting_detail/" + data + "'>Chi tiết</a>";
 			},				
 			"targets" : 6,		
 			},],
@@ -54,19 +54,19 @@ function loadVotings() {
 
 		buttons : [ {
 			text : "Thêm",
-			className : "btn-primary btn-voting-table",
+			className : "btn-primary btn-voting-table no-radius",
 			action : function(){
 				showModal('#modal-create-voting');
 			},
 		}, {
 			text : "Sửa",
-			className : "btn-warning btn-voting-table btn-edit disabled",
+			className : "btn-warning btn-voting-table btn-edit disabled no-radius",
 			action : function(){
 				showModal('#modal-create-voting');
 			}
 		}, {
 			text : "Xóa",
-			className : "btn-danger btn-voting-table btn-edit disabled",
+			className : "btn-danger btn-voting-table btn-edit disabled no-radius",
 			action : function (){
 				
 			}

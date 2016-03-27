@@ -23,6 +23,7 @@
 	<bean id="congressDao" class="vn.edu.uit.models.service.congress.CongressDao"></bean>
 	<bean id="delegateDao" class="vn.edu.uit.models.service.delegate.DelegateDao"></bean>
 	<bean id="votingDao" class="vn.edu.uit.models.service.voting.VotingDao"></bean>
+	<bean id="candidateDao" class="vn.edu.uit.models.service.candidate.CandidateDao"></bean>
 
 	<!-- Data service -->
 	<bean id="congressService" class="vn.edu.uit.models.service.congress.CongressService"></bean>
@@ -31,5 +32,5 @@
 	<bean id="delegateTypeService"
 		class="vn.edu.uit.models.service.delegate_type.DelegateTypeService"></bean>
 	<bean id="votingService" class="vn.edu.uit.models.service.voting.VotingService"></bean>
-	
+	<bean id="candidateService" class="vn.edu.uit.models.service.candidate.CandidateService"></bean>
 </beans>

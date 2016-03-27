@@ -38,7 +38,7 @@ public class Voting extends AbstractEntity {
 	@Column(name = "end_time")
 	private Date endTime;
 
-	@ManyToOne(targetEntity = Congress.class)
+	@ManyToOne(targetEntity = Congress.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "congress_id", nullable = false, updatable = false)
 	private Congress congress;
 
@@ -46,10 +46,10 @@ public class Voting extends AbstractEntity {
 	@JoinColumn(name = "counting_rule_id")
 	private CountingRule countingRule;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "voting")
+	@OneToMany(targetEntity = Ballot.class, mappedBy = "voting", fetch = FetchType.EAGER)
 	private Set<Ballot> ballots = new HashSet<Ballot>(0);
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "voting")
+	@OneToMany(targetEntity = Candidate.class, mappedBy = "voting", fetch = FetchType.EAGER)
 	private Set<Candidate> candidates = new HashSet<Candidate>(0);
 
 	

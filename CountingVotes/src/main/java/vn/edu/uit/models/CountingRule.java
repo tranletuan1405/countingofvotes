@@ -21,12 +21,17 @@ public class CountingRule extends AbstractEntity {
 	@Column(name = "min_percent", nullable = false)
 	private int minPercent;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(targetEntity = Barcode.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "submit_code", nullable = false)
 	private Barcode submitCode;
 	
 
 
+	
+	
+	
+	
+	
 	public int getMaxSelected() {
 		return maxSelected;
 	}
