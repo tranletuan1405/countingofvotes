@@ -4,20 +4,42 @@
 <meta charset="UTF-8"></meta>
 </head>
 <body>
-	<div th:fragment="menu" id="panel-menu">
-		<div class="banner">
-			<img th:if="${congress.logo}" th:src="@{congress.logo}"
-				class="img-circle" /> <img th:unless="${congress.logo}"
-				th:src="@{/images/page/default-logo.png}" class="img-circle" />
+	<div th:fragment="menu" class="row" id="panel-menu">
+ 		<div class="col-md-3" id="panel-logo">
+			<img th:if="${congress.logo}" th:src="@{congress.logo}" class="img-circle congress-logo" /> 
+			<img th:unless="${congress.logo}" th:src="@{/images/page/default-logo.png}" class="img-circle congress-logo" />
 		</div>
 
-		<ul class="nav nav-pills nav-stacked" id="tab-menu">
-			<li role="presentation"><a th:href="@{../home}"><span class="glyphicon glyphicon-home"></span>  Trang chủ</a></li>
-			<li role="presentation" th:class="${detail_active} ? 'active' : 'inactive'" class="active"><a th:href="${detail_active} ? '#' : '../detail/this'"><span class="glyphicon glyphicon-info-sign"></span>  Thông tin</a></li>
-			<li role="presentation" th:class="${voting_active} ? 'active' : 'inactive'"><a th:href="${voting_active} ? '#' : '../voting/list'"><span class="glyphicon glyphicon-check"></span>  Bầu cử</a></li>
-			<li role="presentation" th:class="${statistics_active} ? 'active' : 'inactive'"><a th:href="${statistics_active} ? '#' : '../statistics'"><span class="glyphicon glyphicon-blackboard"></span>  Thống kê</a></li>
-		</ul>
-		
+		<div class="col-md-9" id="panel-menu-content">
+			<nav class="navbar navbar-default no-radius" id="nav-menu">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed"
+							data-toggle="collapse" data-target="#congress-menu"
+							aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span> <span
+								class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+
+						<a class="navbar-brand" href="#">Brand</a>
+					</div>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="congress-menu">
+						<ul class="nav navbar-nav">
+							<li class="active"><a href="#">Link <span
+									class="sr-only">(current)</span></a></li>
+							<li class="active"><a href="#">Link <span
+									class="sr-only">(current)</span></a></li>
+						</ul>
+					</div>
+					<!-- /.navbar-collapse -->
+				</div>
+				<!-- /.container-fluid -->
+			</nav>
+		</div>
 	</div>
 </body>
 </html>

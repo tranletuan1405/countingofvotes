@@ -23,3 +23,9 @@
 #panel-create-congress {
 	margin-top: 10px;
 }
+
+#congress-content {
+	border: 1px solid #00aff0;
+	border-top: 0px;
+}
+

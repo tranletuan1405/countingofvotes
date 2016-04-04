@@ -35,18 +35,36 @@ img {
 /* BANNER */
 .banner {
 	width: 100%;
-	min-height: calc(39vh);
-	max-height: calc(39vh);	
+	min-height: calc(30vh);
+	max-height: calc(30vh)	
 }
 
 
 /* MENU */
+
 #panel-menu {
-	margin-right: 20px;
+	position: relative;
 }
 
-#tab-menu {
-	margin-top : 11px;
+#panel-menu-content {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;	
+}
+
+.congress-logo {
+	width:100%;
+	height:100%;
+	max-width:100%;
+	max-height:100%;
+}
+
+#panel-logo{
+	padding: 20px;
+}
+
+#nav-menu {
+	
 }
 
 #tab-menu>li.active>a, .tab-manager>li.active>a:focus{
@@ -57,6 +75,25 @@ img {
 
 #tab-menu>li>a:hover{
 	border-radius : 0px;
+}
+
+
+/* TAB MANAGER */
+.tab-manager>li.active>a, .tab-manager>li.active>a:focus {
+	background-color: #00aff0;
+	border-radius : 0px;
+}
+
+.tab-manager>li>a:hover{
+	border-radius : 0px;
+}
+
+.tab-manager {
+	margin-top: 10px;
+	border: 1px solid #00aff0;
+	border-radius : 0px;
+	font-size: 16px;
+	font-weight: bold;
 }
 
 

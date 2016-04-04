@@ -129,26 +129,30 @@ public class CongressDetailController {
 				DelegateType delegateType = types.get(j);
 				long result = 0;
 
+				logger.info(unit.getName());
+				logger.info(delegateType.getShortName());
 				EnumDelegateType type = EnumDelegateType.getEnumByDescription(delegateType.getShortName());
-				switch (type) {
-				case DBBC:
-					result = delegateService.getNumOfDelegate(id, unit.getId(), delegateType.getId());
-					unitJson.setNumOfDBBC(result);
-					break;
-				case DBCD:
-					result = delegateService.getNumOfDelegate(id, unit.getId(), delegateType.getId());
-					unitJson.setNumOfDBCD(result);
-					break;
-				case DBDK:
-					result = delegateService.getNumOfDelegate(id, unit.getId(), delegateType.getId());
-					unitJson.setNumOfDBDK(result);
-					break;
-				case DBDN:
-					result = delegateService.getNumOfDelegate(id, unit.getId(), delegateType.getId());
-					unitJson.setNumOfDBDN(result);
-					break;
+			
+				if (type != null) {
+					switch (type) {
+					case DBBC:
+						result = delegateService.getNumOfDelegate(id, unit.getId(), delegateType.getId());
+						unitJson.setNumOfDBBC(result);
+						break;
+					case DBCD:
+						result = delegateService.getNumOfDelegate(id, unit.getId(), delegateType.getId());
+						unitJson.setNumOfDBCD(result);
+						break;
+					case DBDK:
+						result = delegateService.getNumOfDelegate(id, unit.getId(), delegateType.getId());
+						unitJson.setNumOfDBDK(result);
+						break;
+					case DBDN:
+						result = delegateService.getNumOfDelegate(id, unit.getId(), delegateType.getId());
+						unitJson.setNumOfDBDN(result);
+						break;
+					}
 				}
-
 			}
 
 			long total = unitJson.getNumOfDBBC() + unitJson.getNumOfDBCD() + unitJson.getNumOfDBDK()

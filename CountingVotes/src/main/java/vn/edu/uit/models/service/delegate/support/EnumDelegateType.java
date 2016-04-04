@@ -1,12 +1,18 @@
 package vn.edu.uit.models.service.delegate.support;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import vn.edu.uit.controllers.CongressDetailController;
+
 public enum EnumDelegateType {
-	DBDN ("ĞBĞN"),
-	DBCD ("ĞBCĞ"),
-	DBBC ("ĞBBC"),
-	DBDK ("ĞBDK");
+	DBDN ("ÄBÄN"),
+	DBCD ("ÄBCÄ"),
+	DBBC ("ÄBBC"),
+	DBDK ("ÄBDK");
 	
 	private final String description;
+	private static final Logger logger = LoggerFactory.getLogger(EnumDelegateType.class);
 	
 	private EnumDelegateType(String value) {
 		this.description = value;
@@ -18,7 +24,8 @@ public enum EnumDelegateType {
 	
 	public static EnumDelegateType getEnumByDescription(String description) {
 		for (EnumDelegateType e : values()) {
-			if (e.getDescription().compareTo(description) == 0) {
+		
+			if (e.getDescription().compareTo(description) == 0) {		
 				return e;
 			}
 		}
