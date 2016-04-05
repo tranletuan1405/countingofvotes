@@ -5,14 +5,10 @@
 }
 
 .my-footer {
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    color: white;
-}
-
-img {
+	position: relative;
+	bottom: 0;
 	width: 100%;
+	color: white;
 }
 
 .standard-color {
@@ -20,80 +16,59 @@ img {
 }
 
 .standard-text-color {
-	color : #00aff0;
+	color: #00aff0;
 }
 
 .modal-body-show-table {
-    max-height: calc(70vh);
-    overflow-y: auto;
+	max-height: calc(70vh);
+	overflow-y: auto;
 }
 
 .no-radius {
-	border-radius : 0px;
+	border-radius: 0px;
 }
 
 /* BANNER */
-.banner {
-	width: 100%;
-	min-height: calc(30vh);
-	max-height: calc(30vh)	
-}
-
 
 /* MENU */
-
-#panel-menu {
-	position: relative;
+#congress-logo {
+	width: calc(100%);
+	height: calc(100%);
+	border: 1px solid #00aff0;
+	margin-bottom: 40px;
 }
 
-#panel-menu-content {
-	position: absolute;
-	bottom: 0px;
-	right: 0px;	
+#nav-congress-menu {
+	font-size : 16px;
+	color : #00aff0;
 }
 
-.congress-logo {
-	width:100%;
-	height:100%;
-	max-width:100%;
-	max-height:100%;
-}
+/**/
 
-#panel-logo{
-	padding: 20px;
-}
-
-#nav-menu {
-	
-}
-
-#tab-menu>li.active>a, .tab-manager>li.active>a:focus{
+#tab-menu>li.active>a, .tab-manager>li.active>a:focus {
 	background-color: #00aff0;
-	border-radius : 0px;
+	border-radius: 0px;
 	font-weight: bold;
 }
 
-#tab-menu>li>a:hover{
-	border-radius : 0px;
+#tab-menu>li>a:hover {
+	border-radius: 0px;
 }
-
 
 /* TAB MANAGER */
 .tab-manager>li.active>a, .tab-manager>li.active>a:focus {
 	background-color: #00aff0;
-	border-radius : 0px;
+	border-radius: 0px;
 }
 
-.tab-manager>li>a:hover{
-	border-radius : 0px;
+.tab-manager>li>a:hover {
+	border-radius: 0px;
 }
 
 .tab-manager {
 	margin-top: 10px;
 	border: 1px solid #00aff0;
-	border-radius : 0px;
+	border-radius: 0px;
 	font-size: 16px;
 	font-weight: bold;
 }
-
-
