@@ -139,7 +139,7 @@ function loadUnits() {
 						"columnDefs" : [
 								{
 									"render" : function(data, type, row) {
-										return "<button type='button' class='btn btn-default' onClick='loadDetailUnit("
+										return "<button type='button' class='btn btn-default no-radius' onClick='loadDetailUnit("
 												+ data + ")'>Chi tiết</button>";
 
 									},
@@ -148,7 +148,7 @@ function loadUnits() {
 								},
 								{
 									"render" : function(data, type, row) {
-										return "<button type='button' class='btn btn-danger'>Xóa</button>";
+										return "<button type='button' class='btn btn-danger no-radius'>Xóa</button>";
 									},
 									"targets" : 9,
 									"orderable" : false
@@ -161,7 +161,7 @@ function loadUnits() {
 								+ "<'row'<'col-sm-5'i><'col-sm-7'p>>",
 						buttons : [ {
 							text : "Thêm",
-							className : 'btn-primary',
+							className : 'btn-primary no-radius standard-color',
 							action : function() {
 							}
 						}, ],
@@ -254,7 +254,7 @@ function loadDelegates() {
 								},
 								{
 									"render" : function(data, type, row) {
-										return "<button type='button' class='btn btn-default' onClick='loadDetailDelegate("
+										return "<button type='button' class='btn btn-default no-radius' onClick='loadDetailDelegate("
 												+ data + ")'>Chi tiết</button>";
 
 									},
@@ -263,7 +263,7 @@ function loadDelegates() {
 
 								{
 									"render" : function(data, type, row) {
-										return "<button type='button' class='btn btn-danger'>Xóa</button>";
+										return "<button type='button' class='btn btn-danger no-radius'>Xóa</button>";
 
 									},
 									"targets" : 10
@@ -273,7 +273,7 @@ function loadDelegates() {
 								+ "<'row'<'col-sm-5'i><'col-sm-7'p>>",
 						buttons : [ {
 							text : "Thêm",
-							className : "btn-primary",
+							className : "btn-primary no-radius standard-color",
 							action : function() {
 							}
 						},
@@ -299,15 +299,15 @@ function loadDelegates() {
 
 		if (numOfRow == 1) {
 			fillDelegateBanner(rows);
-			$('#banner-tabs a[href="#banner-delegate"]').tab('show');
-			$('#img-banner').addClass('hidden');
-			$('#banner-delegate').removeClass('hidden');
+			$('#tabs-banner a[href="#tab-delegate-banner"]').tab('show');
+			$('#tab-image-banner').addClass('hidden');
+			$('#tab-delegate-banner').removeClass('hidden');
 		} 
 		
 		if (numOfRow != 1){
-			$('#banner-tabs a[href="#img-banner"]').tab('show');
-			$('#img-banner').removeClass('hidden');
-			$('#banner-delegate').addClass('hidden');
+			$('#tabs-banner a[href="#tab-image-banner"]').tab('show');
+			$('#tab-image-banner').removeClass('hidden');
+			$('#tab-delegate-banner').addClass('hidden');
 		}
 	});
 

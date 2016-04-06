@@ -24,29 +24,53 @@
 }
 
 /* BANNER */
-#img-congress-banner {
+#img-congress-banner, #delegate-banner {
 	width: calc(100%);
 	height: calc(100%);
 }
 
-#tab-congress-banner, #tab-delegate-banner {
+#tab-congress-banner {
 	position: relative;
 	width: 100%;
+	border: 1px solid #00aff0;
 }
 
-#tab-congress-banner:before, #tab-delegate-banner:before {
+#tab-congress-banner:before {
 	content: "";
 	display: block;
 	padding-top: 37%; /* initial ratio of 3.15:8.51*/
 }
 
-#image-banner {
+#tab-image-banner, #tab-delegate-banner {
 	position: absolute;
 	top: 0;
 	left: 0;
 	bottom: 0;
 	right: 0;
 }
+
+/* DELEGATE BANNER */
+
+#banner-imagePath, #banner-info {
+    width: calc(100%);
+    height: calc(100%);
+   	vertical-align: middle;
+}
+
+.helper {
+    display: inline-block;
+    height: calc(100%);
+}
+
+#panel-avatar-banner {
+	text-align: center;
+	margin: 1em 0;
+}
+
+#panel-info-banner {
+	margin: 1em 0;
+}
+
 
 /* CONGRESS DETAIL */
 #congress-detail-content {
