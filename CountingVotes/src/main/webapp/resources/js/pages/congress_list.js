@@ -13,13 +13,13 @@ $(document).ready(function() {
         "columnDefs": [
         {
 			"render" : function(data, type, row) {
-				return "<a class='btn btn-default' href='detail/" + data + "'>Chi tiết</a>";
+				return "<a class='btn btn-default no-radius' href='detail/" + data + "'>Chi tiết</a>";
 			},
 			"targets" : 7
 		},
 		{
 			"render" : function(data, type, row) {
-				return "<button  type='button' class='btn btn-danger'>Xóa</button>";
+				return "<button  type='button' class='btn btn-danger no-radius'>Xóa</button>";
 			},
 			"targets" : 8
 		} ],

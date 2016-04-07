@@ -6,8 +6,35 @@ $(document).ready(function () {
 
 	var candidate_table;
 	loadCandidateTable();
+	initSlider();
+	
 });
 
+/* Init Layout*/
+function initSlider(){
+	$('#slider-min-percent').slider({
+	    orientation: "horizontal",
+	    range: "min",
+	    min: 0,
+	    max: 100,
+	    value: 60,
+	    slide: function (event, ui) {
+	        $("#min-percent").val(ui.value);
+	    }
+	});
+	
+	$('#slider-max-selected').slider({
+	    orientation: "horizontal",
+	    range: "min",
+	    min: 0,
+	    max: 100,
+	    value: 60,
+	    slide: function (event, ui) {
+	        $("#max-selected").val(ui.value);
+	    }
+	});
+
+}
 
 /* Candidate Table */
 function loadCandidateTable(){

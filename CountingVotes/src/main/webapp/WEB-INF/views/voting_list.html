@@ -33,71 +33,73 @@
 </head>
 <body>
 	<div class="container">
-		<div class="my-container row">
-			<!-- Logo & Menu -->
-			<div class="col-md-2">
-				<!-- Logo -->
-				<div th:replace="fragment/menu :: menu"></div>
-			</div>
-
-			<!-- Content -->
-			<div class="col-md-10">
-
-				<!-- Header -->
-				<div class="page-header">
-					<h2 th:text="${congress.name}" class="standard-text-color"></h2>
-					<h5>
-						Đại biểu : <span class="standard-text-color"
-							th:text="${attendees} + ' / ' + ${congress.delegates.size()}"></span>
-					</h5>
-					<h5>
-						Đơn vị : <span class="standard-text-color"
-							th:text="${congress.units.size()}"></span>
-					</h5>
+		<div class="my-container">
+			<div class="row">
+				<!-- Logo & Menu -->
+				<div class="col-md-2">
+					<!-- Logo -->
+					<div th:replace="fragment/menu :: menu"></div>
 				</div>
 
-				<!-- Breadcrumbs -->
-				<ol class="breadcrumb no-radius">
-					<li class="active"><span class="glyphicon glyphicon-list-alt"></span>
-						Danh sách bầu cử</li>
-				</ol>
+				<!-- Content -->
+				<div class="col-md-10">
 
-				<!-- Panel Voting List -->
-				<div id="voting-list-content">
-					<table id="voting-table" class="table table-striped table-bordered"
-						cellspacing="0" width="100%">
-						<thead>
-							<tr>
-								<th class="col-md-5">Tên bầu cử</th>
-								<th>Phiên bản</th>
-								<th>Bắt đầu</th>
-								<th>Kết thúc</th>
-								<th>Số ứng viên</th>
-								<th></th>
-								<th></th>
-							</tr>
-						</thead>
+					<!-- Header -->
+					<div class="page-header">
+						<h2 th:text="${congress.name}" class="standard-text-color"></h2>
+						<h5>
+							Đại biểu : <span class="standard-text-color"
+								th:text="${attendees} + ' / ' + ${congress.delegates.size()}"></span>
+						</h5>
+						<h5>
+							Đơn vị : <span class="standard-text-color"
+								th:text="${congress.units.size()}"></span>
+						</h5>
+					</div>
 
-						<tfoot>
-							<tr>
-								<th>Tên bầu cử</th>
-								<th>Phiên bản</th>
-								<th>Bắt đầu</th>
-								<th>Kết thúc</th>
-								<th>Số ứng viên</th>
-								<th></th>
-								<th></th>
-							</tr>
-						</tfoot>
+					<!-- Breadcrumbs -->
+					<ol class="breadcrumb no-radius">
+						<li class="active"><span class="glyphicon glyphicon-list-alt"></span>
+							Danh sách bầu cử</li>
+					</ol>
+
+					<!-- Panel Voting List -->
+					<div id="voting-list-content">
+						<table id="voting-table"
+							class="table table-striped table-bordered" cellspacing="0"
+							width="100%">
+							<thead>
+								<tr>
+									<th class="col-md-5">Tên bầu cử</th>
+									<th>Phiên bản</th>
+									<th>Bắt đầu</th>
+									<th>Kết thúc</th>
+									<th>Số ứng viên</th>
+									<th></th>
+									<th></th>
+								</tr>
+							</thead>
+
+							<tfoot>
+								<tr>
+									<th>Tên bầu cử</th>
+									<th>Phiên bản</th>
+									<th>Bắt đầu</th>
+									<th>Kết thúc</th>
+									<th>Số ứng viên</th>
+									<th></th>
+									<th></th>
+								</tr>
+							</tfoot>
 
 
-					</table>
+						</table>
 
+					</div>
 				</div>
-			</div>
 
+			</div>
 		</div>
-
 		<!-- Footer -->
 		<div th:replace="fragment/footer :: footer"></div>
 	</div>

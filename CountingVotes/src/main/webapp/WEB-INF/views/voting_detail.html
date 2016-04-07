@@ -27,8 +27,12 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap-datetimepicker.min.css}" />
 
 <script type="text/javascript" th:src="@{/js/common/timer.jquery.min.js}"></script>
+<!-- <script type="text/javascript" th:src="@{/js/common/bootstrap-slider.js}"></script> -->
+<script type="text/javascript" th:src="@{/js/common/jquery-ui-1.9.2.custom.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/pages/voting_detail.js}"></script>
 <link rel="stylesheet" type="text/css" th:href="@{/css/pages/voting_detail.css}" />
+<!-- <link rel="stylesheet" type="text/css" th:href="@{/css/common/slider.css}" /> -->
+<link rel="stylesheet" type="text/css" th:href="@{/css/common/jquery-ui-1.9.2.custom.css}" />
 </head>
 <body>
 	<div class="container">
@@ -57,14 +61,16 @@
 				
 				<!-- Breadcrumbs -->
 				<ol class="breadcrumb no-radius">
-					<li><a th:href="@{../voting/list}"><span class="glyphicon glyphicon-list-alt"></span> Danh sách bầu cử</a></li>
-					<!-- <li class="active" th:text="${voting.name}"></li> -->
+					<li><a th:href="@{../voting/list}" class="standard-text-color"><span class="glyphicon glyphicon-list-alt"></span> Danh sách bầu cử</a></li>
+					<li class="active" th:text="${voting.name}"></li>
 				</ol>
+				
+				<div th:if="${errorMsg}" class="alert alert-danger no-radius" role="alert"><p th:text="${errorMsg}"></p></div>
 				
 				<!-- Content -->
 				<div class="panel-group" id="panel-group-voting-detail" role="tablist"
 				aria-multiselectable="true">
-				
+					
 					<!-- Candidate Table -->
 					<div class="panel panel-info" id="panel-candidate-table">
 						<div class="panel-heading" role="tab" id="heading-candidate-table">
@@ -114,12 +120,12 @@
 					</div>
 
 					<!-- Counting Rule -->
-					<div class="panel panel-info" id="panel-counting-rules">
+					<div th:if="${voting.candidates.size() > 0}" class="panel panel-info" id="panel-counting-rules">
 						<div class="panel-heading" role="tab" id="heading-counting-rules">
 							<h2 class="panel-title">
 								<a class="collapsed" role="button" data-toggle="collapse"
 									href="#counting-rules-content" aria-expanded="true"
-									aria-controls="counting-rules-content">Danh sách ứng viên</a>
+									aria-controls="counting-rules-content">Quy định bầu cử</a>
 							</h2>
 
 						</div>
@@ -127,7 +133,44 @@
 						<div id="counting-rules-content"
 							class="panel-collapse collapsed in" role="tabpanel"
 							aria-labelledby="heading-counting-rules">
-							<div class="panel-body">1231231</div>
+							<div class="panel-body">
+								<form class="form-horizontal">
+								
+									<!-- Tổng bầu chọn tối thiểu -->
+									<div class="form-group">
+									
+										<label for="slider-min-percent" class="col-sm-4 control-label">
+											Tổng bầu chọn tối thiểu (%) : 
+										</label>
+											
+										<div class="col-sm-4 slider" id="slider-min-percent" style="top: 12px;">
+										</div>
+										
+										<label for="slider-min-percent" class="col-sm-1 control-label"></label>
+										<input type="text" th:name="minPercent" class="col-sm-1 control-label value-slider" id="min-percent"/>
+									</div>
+
+									<!-- Số lượng Đại biểu trúng cử tối đa -->
+									<div class="form-group">
+										<label for="max-selected" class="col-sm-4 control-label">Số Đại biểu trúng cử tối đa : </label>
+										
+										<div class="col-sm-4 slider" id="slider-max-selected" style="top: 12px;">
+										</div>
+										
+										<label for="slider-min-percent" class="col-sm-1 control-label"></label>
+										<input type="text" th:name="maxPercent" class="col-sm-1 control-label value-slider" id="max-selected"/>
+									</div>
+
+									<div class="form-group">
+										<label for="submit-button" class="col-sm-4 control-label"></label>
+										<div class="col-sm-8 input-group">
+											<button type="submit" class="btn btn-success no-radius"
+												id="submit-button">Lưu</button>
+										</div>
+									</div>
+
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>

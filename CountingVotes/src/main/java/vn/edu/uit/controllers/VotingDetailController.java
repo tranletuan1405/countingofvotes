@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -50,6 +51,7 @@ public class VotingDetailController {
 	@Autowired
 	private ObjectMapper mapper;
 
+	//Load Voting Detail
 	@RequestMapping(value = "/{id}")
 	public ModelAndView loadVotingDetail(@PathVariable("id") long id, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView("voting_detail");
@@ -70,6 +72,18 @@ public class VotingDetailController {
 		model.addObject("voting", voting);
 		
 		model.addObject(DataConfig.VOTING_ACTIVE, DataConfig.VOTING_ACTIVE);
+		return model;
+	}
+	
+	
+	public ModelAndView submitCountingRules(
+			@RequestParam
+			HttpServletRequest request){
+		HttpSession session = request.getSession();
+		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
+		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
+		ModelAndView model = new ModelAndView("redirect:voting_detail/" + votingId);
+		
 		return model;
 	}
 

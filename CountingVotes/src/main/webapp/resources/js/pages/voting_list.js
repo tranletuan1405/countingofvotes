@@ -42,7 +42,7 @@ function loadVotings() {
 		},],
 		"columnDefs" : [ {
 			"render" : function(data, type, row) {
-				return "<a class='btn btn-default' href='../voting_detail/" + data + "'>Chi tiết</a>";
+				return "<a class='btn btn-default no-radius' href='../voting_detail/" + data + "'>Chi tiết</a>";
 			},				
 			"targets" : 6,		
 			},],

@@ -1,5 +1,3 @@
-
-
 /* COMMON */
 .my-container {
 	padding-top: calc(3vh);
@@ -42,12 +40,24 @@
 }
 
 #nav-congress-menu>li>a {
-	font-size : 17px;
-	color : #00aff0;
+	font-size: 17px;
+	color: #00aff0;
 }
 
-#nav-congress-menu>li>a:hover{
-	border-radius : 0px;
+#nav-congress-menu>li {
+	float: none;
+}
+
+#nav-congress-menu>li>a:hover {
+	border-radius: 0px;
+}
+
+#nav-congress-menu>li.active>a {
+	color: white;
+}
+
+#nav-congress-menu>li+li {
+	margin : 0px;
 }
 
 /* TAB MANAGER */
@@ -56,7 +66,8 @@
 	border-radius: 0px;
 }
 
-.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover{
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover
+	{
 	background-color: #00aff0;
 	border-radius: 0px;
 }
@@ -71,4 +82,9 @@
 	border-radius: 0px;
 	font-size: 16px;
 	font-weight: bold;
+}
+
+/* VOTING */
+.breadcrumb {
+	font-size: 17px;
 }
