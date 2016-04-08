@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,6 +24,7 @@ import vn.edu.uit.extra.DataConfig;
 import vn.edu.uit.extra.ListHolder;
 import vn.edu.uit.models.Candidate;
 import vn.edu.uit.models.Congress;
+import vn.edu.uit.models.Delegate;
 import vn.edu.uit.models.Voting;
 import vn.edu.uit.models.json.DelegateJson;
 import vn.edu.uit.models.service.candidate.CandidateService;
@@ -44,14 +46,14 @@ public class VotingDetailController {
 
 	@Autowired
 	private DelegateService delegateService;
-	
+
 	@Autowired
 	private CandidateService candidateService;
-	
+
 	@Autowired
 	private ObjectMapper mapper;
 
-	//Load Voting Detail
+	// Load Voting Detail
 	@RequestMapping(value = "/{id}")
 	public ModelAndView loadVotingDetail(@PathVariable("id") long id, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView("voting_detail");
@@ -70,39 +72,85 @@ public class VotingDetailController {
 		model.addObject("congress", congress);
 		model.addObject("attendees", attendees);
 		model.addObject("voting", voting);
-		
+
 		model.addObject(DataConfig.VOTING_ACTIVE, DataConfig.VOTING_ACTIVE);
 		return model;
 	}
-	
-	
-	public ModelAndView submitCountingRules(
-			@RequestParam
-			HttpServletRequest request){
+
+	public ModelAndView submitCountingRules(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
 		ModelAndView model = new ModelAndView("redirect:voting_detail/" + votingId);
-		
+
 		return model;
 	}
 
-	//=========RESPONSE BODY===========
+	@RequestMapping(value = "/select_candidates", method = RequestMethod.POST)
+	public ModelAndView submitSelectedCandidates(
+			@RequestParam(value = "candidates", required = true) Long[] candidates,
+			HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
+		ModelAndView model = new ModelAndView("redirect:voting_detail/" + votingId);
+		
+		for(int i = 0; i < candidates.length; i ++){
+			logger.info(String.valueOf(candidates[i]));
+		}
+		return model;
+
+	}
+
+	// =========RESPONSE BODY===========
 	@RequestMapping(value = "/candidates")
 	@ResponseBody
 	public String loadCandidateTable(HttpServletRequest request) throws JsonProcessingException {
 		HttpSession session = request.getSession();
 		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
-		if(congressId <= 0 || votingId <= 0) return "";
-		
+		if (congressId <= 0 || votingId <= 0)
+			return "";
 
 		List<Candidate> candidates = new ArrayList<Candidate>(candidateService.fetch(votingId));
 		List<DelegateJson> candidatesJson = new ArrayList<DelegateJson>();
-		for(int i = 0; i < candidates.size(); i++){
+		for (int i = 0; i < candidates.size(); i++) {
 			candidatesJson.add(new DelegateJson(candidates.get(i).getDelegate()));
 		}
-		
+
+		ListHolder<DelegateJson> json = new ListHolder<DelegateJson>();
+		json.setData(candidatesJson);
+		return mapper.writeValueAsString(json);
+	}
+
+	@RequestMapping(value = "/get_not_candidate", produces = { "application/json; charset=UTF-8" })
+	@ResponseBody
+	public String getDelegatesNotCandidate(HttpServletRequest request) throws JsonProcessingException {
+		HttpSession session = request.getSession();
+		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
+
+		List<Delegate> delegates = candidateService.getNotCandidate(votingId);
+		List<DelegateJson> delegatesJson = new ArrayList<DelegateJson>();
+		for (int i = 0; i < delegates.size(); i++) {
+			delegatesJson.add(new DelegateJson(delegates.get(i)));
+		}
+
+		ListHolder<DelegateJson> json = new ListHolder<DelegateJson>();
+		json.setData(delegatesJson);
+		return mapper.writeValueAsString(json);
+	}
+
+	@RequestMapping(value = "/get_is_candidate", produces = { "application/json; charset=UTF-8" })
+	@ResponseBody
+	public String getDelegatesIsCandidate(HttpServletRequest request) throws JsonProcessingException {
+		HttpSession session = request.getSession();
+		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
+
+		List<Delegate> candidates = candidateService.getIsCandidate(votingId);
+		List<DelegateJson> candidatesJson = new ArrayList<DelegateJson>();
+		for (int i = 0; i < candidates.size(); i++) {
+			candidatesJson.add(new DelegateJson(candidates.get(i)));
+		}
+
 		ListHolder<DelegateJson> json = new ListHolder<DelegateJson>();
 		json.setData(candidatesJson);
 		return mapper.writeValueAsString(json);

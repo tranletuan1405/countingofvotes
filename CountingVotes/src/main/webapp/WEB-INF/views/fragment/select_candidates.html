@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:fragment="select_candidates">
+		<div class="modal fade" id="select-candidates-modal" tabindex="-1" role="dialog"
+			aria-labelledby="select-candidates-modal-label">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="select-candidates-modal-label">Chọn danh sách ứng viên</h4>
+					</div>
+					<div class="modal-body">
+
+						<div class="row" style="font-size: 16px;">
+							<form th:action="@{select_candidates}" id="form-select-candidates" method="POST">
+								<div class="col-xs-5">
+									<select name="delegates" id="select-search" class="form-control"
+										multiple="multiple"
+										style="margin-top: 10px; height: calc(60vh);">
+										<option value="1">Item 1</option>
+										<option value="5">Item 5</option>
+										<option value="2">Item 2</option>
+										<option value="4">Item 4</option>
+										<option value="3">Item 3</option>
+									</select>
+								</div>
+
+								<div class="col-xs-2" style="margin-top: calc(25vh);">
+									<!-- <button type="button" id="select_rightAll" class="btn btn-block">
+									<i class="glyphicon glyphicon-forward"></i>
+								</button> -->
+									<button type="button" id="select_rightSelected"
+										class="btn btn-block">
+										<i class="glyphicon glyphicon-chevron-right"></i>
+									</button>
+									<button type="button" id="select_leftSelected"
+										class="btn btn-block">
+										<i class="glyphicon glyphicon-chevron-left"></i>
+									</button>
+									<!-- <button type="button" id="select_leftAll" class="btn btn-block">
+									<i class="glyphicon glyphicon-backward"></i>
+								</button> -->
+								</div>
+
+								<div class="col-xs-5">
+									<select name="candidates" id="select-search_to" class="form-control"
+										multiple="multiple"
+										style="margin-top: 10px; height: calc(60vh);">
+									</select>
+								</div>
+
+								<button type="submit" class="hidden"
+									id="btn-select-candidates-real"></button>
+							</form>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-primary" id="btn-select-candidates">Lưu</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

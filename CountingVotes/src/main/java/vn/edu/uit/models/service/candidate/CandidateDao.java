@@ -3,8 +3,13 @@ package vn.edu.uit.models.service.candidate;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -55,11 +60,30 @@ public class CandidateDao extends AbstractDao implements ICandidateDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Candidate> fetch(long votingId) {
-		Criteria crit = getSession().createCriteria(Candidate.class);
-		crit.add(Restrictions.eq("isEnabled", true));
-		crit.add(Restrictions.and(Restrictions.eq("voting.id", votingId)));
-		crit.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-		return crit.list();
+		String hql = "FROM Candidate WHERE voting.id = :votingId";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("votingId", votingId);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Delegate> getNotCandidate(long votingId) {
+		String hql = "FROM Delegate WHERE id NOT IN ("
+				+ "SELECT delegate.id FROM Candidate WHERE voting.id = :votingId)";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("votingId", votingId);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Delegate> getIsCandidate(long votingId) {
+		String hql = "FROM Delegate WHERE id IN ("
+				+ "SELECT delegate.id FROM Candidate WHERE voting.id = :votingId)";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("votingId", votingId);
+		return query.list();
 	}
 
 }

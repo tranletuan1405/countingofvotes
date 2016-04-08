@@ -129,8 +129,6 @@ public class CongressDetailController {
 				DelegateType delegateType = types.get(j);
 				long result = 0;
 
-				logger.info(unit.getName());
-				logger.info(delegateType.getShortName());
 				EnumDelegateType type = EnumDelegateType.getEnumByDescription(delegateType.getShortName());
 			
 				if (type != null) {

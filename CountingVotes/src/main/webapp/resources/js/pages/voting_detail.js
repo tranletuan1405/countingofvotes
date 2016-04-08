@@ -7,7 +7,7 @@ $(document).ready(function () {
 	var candidate_table;
 	loadCandidateTable();
 	initSlider();
-	
+	initSelectCandidateModal();
 });
 
 /* Init Layout*/
@@ -50,7 +50,7 @@ function loadCandidateTable(){
 			text : "Chỉnh sửa",
 			className : "btn-warning no-radius",
 			action : function(){
-				
+				showModal('#select-candidates-modal');
 			},
 		},],
 		columns : [ {
@@ -72,5 +72,26 @@ function loadCandidateTable(){
 		"lengthMenu" : [ [-1, 5, 10, 15 ], ["Tất cả", 5, 10, 15] ],
 		select : false,
 		
+	});
+}
+
+/* Select Candidates */
+function initSelectCandidateModal(){
+	$('#select-search').multiselect({
+        search: {
+            left: '<input type="text" name="q" class="form-control" placeholder="Tìm..." />',
+            right: '<input type="text" name="q" class="form-control" placeholder="Tìm..." />',
+        },
+        
+        submitAllLeft : false,
+        
+        /*rightAll: '#select_rightAll',*/
+        rightSelected: '#select_rightSelected',
+        leftSelected: '#select_leftSelected',
+        /*leftAll: '#select_leftAll'*/
+    });
+	
+	$('#btn-select-candidates').on('click', function(){
+		$('#btn-select-candidates-real').click();
 	});
 }

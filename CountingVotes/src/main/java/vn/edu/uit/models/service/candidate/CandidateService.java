@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import vn.edu.uit.models.Candidate;
+import vn.edu.uit.models.Delegate;
 
 @Service("candidateService")
 @Transactional
@@ -26,6 +27,16 @@ public class CandidateService implements ICandidateDao {
 	@Override
 	public List<Candidate> fetch(long votingId) {
 		return candidateDao.fetch(votingId);
+	}
+
+	@Override
+	public List<Delegate> getNotCandidate(long votingId) {
+		return candidateDao.getNotCandidate(votingId);
+	}
+
+	@Override
+	public List<Delegate> getIsCandidate(long votingId) {
+		return candidateDao.getIsCandidate(votingId);
 	}
 
 }
