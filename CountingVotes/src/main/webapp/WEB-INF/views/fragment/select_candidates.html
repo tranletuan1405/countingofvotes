@@ -14,14 +14,27 @@
 						<h4 class="modal-title" id="select-candidates-modal-label">Chọn danh sách ứng viên</h4>
 					</div>
 					<div class="modal-body">
-
+						<div class="row" style="font-size: 16px;">
+							<div class="col-xs-5">
+								<div class="checkbox">
+									<label style=" font-weight: bold;"> <input type="checkbox" id="checkbox-delegate-search"/>Sử dụng mã vạch để tìm kiếm</label>
+								</div>
+							</div>
+							<div class="col-xs-2" ></div>
+							<div class="col-xs-5">
+								<div class="checkbox">
+									<label style=" font-weight: bold;"> <input type="checkbox" id="checkbox-candidate-search"/>Sử dụng mã vạch để tìm kiếm</label>
+								</div>
+							</div>
+						</div>
+						
 						<div class="row" style="font-size: 16px;">
 							<form th:action="@{select_candidates}" id="form-select-candidates" method="POST">
 								<div class="col-xs-5">
-									<select name="delegates" id="select-search" class="form-control"
+									<select name="delegates" id="select-delegates" class="form-control"
 										multiple="multiple"
 										style="margin-top: 10px; height: calc(60vh);">
-										<option value="1">Item 1</option>
+									
 										<option value="5">Item 5</option>
 										<option value="2">Item 2</option>
 										<option value="4">Item 4</option>
@@ -47,7 +60,7 @@
 								</div>
 
 								<div class="col-xs-5">
-									<select name="candidates" id="select-search_to" class="form-control"
+									<select name="candidates" id="select-candidates" class="form-control"
 										multiple="multiple"
 										style="margin-top: 10px; height: calc(60vh);">
 									</select>

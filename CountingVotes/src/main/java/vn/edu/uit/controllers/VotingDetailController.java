@@ -26,6 +26,7 @@ import vn.edu.uit.models.Candidate;
 import vn.edu.uit.models.Congress;
 import vn.edu.uit.models.Delegate;
 import vn.edu.uit.models.Voting;
+import vn.edu.uit.models.json.CandidateSelectionJson;
 import vn.edu.uit.models.json.DelegateJson;
 import vn.edu.uit.models.service.candidate.CandidateService;
 import vn.edu.uit.models.service.congress.CongressService;
@@ -122,37 +123,30 @@ public class VotingDetailController {
 		return mapper.writeValueAsString(json);
 	}
 
-	@RequestMapping(value = "/get_not_candidate", produces = { "application/json; charset=UTF-8" })
+	@RequestMapping(value = "/get_candidate_selection_list", produces = { "application/json; charset=UTF-8" })
 	@ResponseBody
 	public String getDelegatesNotCandidate(HttpServletRequest request) throws JsonProcessingException {
 		HttpSession session = request.getSession();
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
 
+		//Get Delegates
 		List<Delegate> delegates = candidateService.getNotCandidate(votingId);
 		List<DelegateJson> delegatesJson = new ArrayList<DelegateJson>();
 		for (int i = 0; i < delegates.size(); i++) {
 			delegatesJson.add(new DelegateJson(delegates.get(i)));
 		}
 
-		ListHolder<DelegateJson> json = new ListHolder<DelegateJson>();
-		json.setData(delegatesJson);
-		return mapper.writeValueAsString(json);
-	}
-
-	@RequestMapping(value = "/get_is_candidate", produces = { "application/json; charset=UTF-8" })
-	@ResponseBody
-	public String getDelegatesIsCandidate(HttpServletRequest request) throws JsonProcessingException {
-		HttpSession session = request.getSession();
-		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
-
+		//Get Candidates
 		List<Delegate> candidates = candidateService.getIsCandidate(votingId);
 		List<DelegateJson> candidatesJson = new ArrayList<DelegateJson>();
 		for (int i = 0; i < candidates.size(); i++) {
 			candidatesJson.add(new DelegateJson(candidates.get(i)));
 		}
-
-		ListHolder<DelegateJson> json = new ListHolder<DelegateJson>();
-		json.setData(candidatesJson);
+		
+		CandidateSelectionJson json = new CandidateSelectionJson();
+		json.setCandidates(candidatesJson);
+		json.setDelegates(delegatesJson);
+		
 		return mapper.writeValueAsString(json);
 	}
 }

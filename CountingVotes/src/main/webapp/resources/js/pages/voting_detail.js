@@ -50,7 +50,7 @@ function loadCandidateTable(){
 			text : "Chỉnh sửa",
 			className : "btn-warning no-radius",
 			action : function(){
-				showModal('#select-candidates-modal');
+				loadSelectListCandidates();
 			},
 		},],
 		columns : [ {
@@ -77,12 +77,13 @@ function loadCandidateTable(){
 
 /* Select Candidates */
 function initSelectCandidateModal(){
-	$('#select-search').multiselect({
+	
+	$('#select-delegates').multiselect({
         search: {
             left: '<input type="text" name="q" class="form-control" placeholder="Tìm..." />',
             right: '<input type="text" name="q" class="form-control" placeholder="Tìm..." />',
         },
-        
+        right : "#select-candidates",
         submitAllLeft : false,
         
         /*rightAll: '#select_rightAll',*/
@@ -93,5 +94,43 @@ function initSelectCandidateModal(){
 	
 	$('#btn-select-candidates').on('click', function(){
 		$('#btn-select-candidates-real').click();
+	});
+}
+
+function loadSelectListCandidates(){
+	$.ajax({
+		url : "get_candidate_selection_list",
+		type : "GET",
+		success : function(data){
+			var delegates = data.delegates;
+			var candidates = data.candidates;
+			
+			$('#select-delegates').empty();
+			$('#select-candidates').empty();
+			
+			$.each(delegates, function (i, item) {
+				var option = "<option value='" + item.id
+						+ "' style='margin-top : 5px; font-weight : bold;' class='" + item.codeContent + "'>"
+						+ item.name + " - " + item.dateOfBirth + ' - '
+						+ item.gender + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(' 
+						+ item.codeContent + ")</option>";
+			    $('#select-delegates').append(option);
+			});
+			
+			$.each(candidates, function (i, item) {
+				var option = "<option value='" + item.id
+						+ "' style='margin-top : 5px; font-weight : bold;' class='" + item.codeContent + "'>"
+						+ item.name + " - " + item.dateOfBirth + ' - '
+						+ item.gender + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(' 
+						+ item.codeContent + ")</option>";
+			    $('#select-candidates').append(option);
+			});
+			
+			showModal('#select-candidates-modal');
+		},
+		
+		error : function(){
+			console.log('selection list failed!');
+		}
 	});
 }
