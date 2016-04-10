@@ -27,13 +27,11 @@ public class CandidateDao extends AbstractDao implements ICandidateDao {
 	@Override
 	public boolean delete(long id) {
 		try {
-			Candidate candidate = (Candidate) getSession().get(Candidate.class, id);
-
-			if (candidate.isEnabled() && candidate.isUpdatable()) {
-				return this.delete(candidate);
-			}
-
-			return false;
+			String hql = "DELETE FROM Candidate WHERE delegate.id = :delegateId";
+			Query query = getSession().createQuery(hql);
+			query.setParameter("delegateId", id);
+			int result = query.executeUpdate();
+			return result > 0 ? true : false;
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			return false;

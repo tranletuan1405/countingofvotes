@@ -35,8 +35,8 @@ public class Ballot extends AbstractEntity {
 	@Column(name = "is_valid")
 	private Boolean isValid;
 
-	@ManyToOne(targetEntity = Voting.class)
-	@JoinColumn(name = "voting_id", nullable = false)
+	@ManyToOne(targetEntity = Voting.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "voting_id", nullable = false, updatable = false)
 	private Voting voting;
 
 	@OneToMany(targetEntity = BallotDetail.class, mappedBy = "ballot")

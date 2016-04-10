@@ -93,24 +93,33 @@ public class VotingDetailController {
 		ModelAndView model = new ModelAndView("redirect:voting_detail/" + votingId);
 		Voting voting = votingService.fetch(votingId);
 		
-		List<Delegate> oldCandidates = candidateService.getIsCandidate(votingId);
+		List<Delegate> candidates = candidateService.getIsCandidate(votingId);
+		List<Long> newCandidateIds = new ArrayList<Long>();
 		
 		for (int i = 0; i < delegateIds.length; i++) {
 			long delegateId = delegateIds[i];
-
-			if (!candidateService.isExists(oldCandidates, delegateId)) {
+			newCandidateIds.add(delegateId);
+			
+			//insert new candidate
+			if (!candidateService.isExists(candidates, delegateId)) {
 				Delegate delegate = delegateService.fetch(delegateId);
-
+				candidates.add(delegate);
+				
 				Candidate candidate = new Candidate();
 				candidate.setDelegate(delegate);
 				candidate.setVoting(voting);
 
 				candidateService.persist(candidate);
-				
 			}
 		}
 		
-		
+		//delete unselected candidate
+		for(int i = 0 ; i < candidates.size(); i++){
+			Delegate candidate = candidates.get(i);
+			if(!newCandidateIds.contains(candidate.getId())){
+				candidateService.delete(candidate.getId());
+			}
+		}
 		
 		return model;
 	}

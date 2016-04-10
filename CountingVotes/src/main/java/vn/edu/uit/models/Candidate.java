@@ -33,8 +33,8 @@ public class Candidate implements Serializable {
 	private Delegate delegate;
 	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", nullable = false, unique = true)
-	private long id;
+	@Column(name = "id")
+	private Long id;
 	
 	@OneToOne(targetEntity = Barcode.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "selected_barcode")

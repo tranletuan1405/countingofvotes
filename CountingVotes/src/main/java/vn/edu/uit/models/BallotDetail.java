@@ -30,7 +30,7 @@ public class BallotDetail implements Serializable {
 	private long id;
 
 	@Id
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "candidate_id", nullable = false, referencedColumnName = "id")
 	private Candidate candidate;
 	
