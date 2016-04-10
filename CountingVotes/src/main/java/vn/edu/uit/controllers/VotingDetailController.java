@@ -60,8 +60,6 @@ public class VotingDetailController {
 		ModelAndView model = new ModelAndView("voting_detail");
 		HttpSession session = request.getSession();
 		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
-		if (congressId <= 0)
-			return model;
 
 		// Load congress
 		Congress congress = congressService.fetch(congressId);
@@ -89,29 +87,42 @@ public class VotingDetailController {
 
 	@RequestMapping(value = "/select_candidates", method = RequestMethod.POST)
 	public ModelAndView submitSelectedCandidates(
-			@RequestParam(value = "candidates", required = true) Long[] candidates,
-			HttpServletRequest request) {
+			@RequestParam(value = "candidates", required = true) Long[] delegateIds, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
 		ModelAndView model = new ModelAndView("redirect:voting_detail/" + votingId);
+		Voting voting = votingService.fetch(votingId);
 		
-		for(int i = 0; i < candidates.length; i ++){
-			logger.info(String.valueOf(candidates[i]));
-		}
-		return model;
+		List<Delegate> oldCandidates = candidateService.getIsCandidate(votingId);
+		
+		for (int i = 0; i < delegateIds.length; i++) {
+			long delegateId = delegateIds[i];
 
+			if (!candidateService.isExists(oldCandidates, delegateId)) {
+				Delegate delegate = delegateService.fetch(delegateId);
+
+				Candidate candidate = new Candidate();
+				candidate.setDelegate(delegate);
+				candidate.setVoting(voting);
+
+				candidateService.persist(candidate);
+				
+			}
+		}
+		
+		
+		
+		return model;
 	}
 
 	// =========RESPONSE BODY===========
-	@RequestMapping(value = "/candidates")
+	@RequestMapping(value = "/candidates", produces = { "application/json; charset=UTF-8" })
 	@ResponseBody
 	public String loadCandidateTable(HttpServletRequest request) throws JsonProcessingException {
 		HttpSession session = request.getSession();
 		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
-		if (congressId <= 0 || votingId <= 0)
-			return "";
-
+		
 		List<Candidate> candidates = new ArrayList<Candidate>(candidateService.fetch(votingId));
 		List<DelegateJson> candidatesJson = new ArrayList<DelegateJson>();
 		for (int i = 0; i < candidates.size(); i++) {
@@ -129,24 +140,24 @@ public class VotingDetailController {
 		HttpSession session = request.getSession();
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
 
-		//Get Delegates
+		// Get Delegates
 		List<Delegate> delegates = candidateService.getNotCandidate(votingId);
 		List<DelegateJson> delegatesJson = new ArrayList<DelegateJson>();
 		for (int i = 0; i < delegates.size(); i++) {
 			delegatesJson.add(new DelegateJson(delegates.get(i)));
 		}
 
-		//Get Candidates
+		// Get Candidates
 		List<Delegate> candidates = candidateService.getIsCandidate(votingId);
 		List<DelegateJson> candidatesJson = new ArrayList<DelegateJson>();
 		for (int i = 0; i < candidates.size(); i++) {
 			candidatesJson.add(new DelegateJson(candidates.get(i)));
 		}
-		
+
 		CandidateSelectionJson json = new CandidateSelectionJson();
 		json.setCandidates(candidatesJson);
 		json.setDelegates(delegatesJson);
-		
+
 		return mapper.writeValueAsString(json);
 	}
 }

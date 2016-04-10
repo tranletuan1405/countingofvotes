@@ -23,13 +23,13 @@ public class Candidate implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@ManyToOne(targetEntity = Voting.class)
-	@JoinColumn(name = "voting_id", nullable = false)
+	@ManyToOne(targetEntity = Voting.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "voting_id", nullable = false, updatable = false)
 	private Voting voting;
 	
 	@Id 
 	@ManyToOne(targetEntity = Delegate.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "delegate_id", nullable = false)
+	@JoinColumn(name = "delegate_id", nullable = false, updatable = false)
 	private Delegate delegate;
 	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,11 +37,11 @@ public class Candidate implements Serializable {
 	private long id;
 	
 	@OneToOne(targetEntity = Barcode.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "selected_barcode", nullable = false)
+	@JoinColumn(name = "selected_barcode")
 	private Barcode selectedBarcode;
 	
 	@OneToOne(targetEntity = Barcode.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "unselected_barcode", nullable = false)
+	@JoinColumn(name = "unselected_barcode")
 	private Barcode unselectedBarcode;
 	
 	@Column(name = "note", columnDefinition = "varchar(500)")

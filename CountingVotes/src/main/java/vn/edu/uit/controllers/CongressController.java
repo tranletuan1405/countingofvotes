@@ -92,7 +92,6 @@ public class CongressController {
 
 		ListHolder<CongressJson> json = new ListHolder<CongressJson>();
 		json.setData(congressService.fetchJson());
-
 		return mapper.writeValueAsString(json);
 	}
 

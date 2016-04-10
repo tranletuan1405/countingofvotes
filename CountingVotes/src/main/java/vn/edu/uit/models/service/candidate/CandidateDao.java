@@ -25,22 +25,6 @@ public class CandidateDao extends AbstractDao implements ICandidateDao {
 	private static final Logger logger = LoggerFactory.getLogger(CandidateDao.class);
 
 	@Override
-	public boolean create(long votingId, long delegateId) {
-		try {
-			Candidate candidate = new Candidate();
-			Voting v = (Voting) getSession().get(Voting.class, votingId);
-			Delegate d = (Delegate) getSession().get(Delegate.class, delegateId);
-			candidate.setVoting(v);
-			candidate.setDelegate(d);
-			return this.persistObject(candidate);
-			
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			return false;
-		}
-	}
-
-	@Override
 	public boolean delete(long id) {
 		try {
 			Candidate candidate = (Candidate) getSession().get(Candidate.class, id);
@@ -84,6 +68,21 @@ public class CandidateDao extends AbstractDao implements ICandidateDao {
 		Query query = getSession().createQuery(hql);
 		query.setParameter("votingId", votingId);
 		return query.list();
+	}
+
+	@Override
+	public boolean persist(Candidate candidate) {
+		return this.persistObject(candidate);
+	}
+
+	@Override
+	public boolean isExists(List<Delegate> candidates, long delegateId) {
+		
+		for(int i = 0; i < candidates.size(); i ++){
+			if(candidates.get(i).getId() == delegateId)
+				return true;
+		}
+		return false;
 	}
 
 }

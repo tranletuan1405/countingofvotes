@@ -6,7 +6,7 @@ public class DataConfig {
 	public static final String DATE_FORMAT = "dd/MM/yyyy";
 	public static final String DATE_FORMAT_PATH = "dd-MM-yyy";
 
-	public static final String BARCODE_DIRECTORY = "barcode/";
+	public static final String BARCODE_DIRECTORY = "E:/TEMP/barcode/";
 
 	public static final String SESSION_NAME = "congress_id";
 	public static final String SESSION_VOTING_NAME = "voting_id";

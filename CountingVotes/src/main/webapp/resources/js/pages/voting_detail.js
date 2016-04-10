@@ -41,7 +41,7 @@ function loadCandidateTable(){
 	
 	candidate_table = $('#candidate-table').DataTable({
 		destroy : true,
-		url : "candidates",
+		ajax : "candidates",
 		rowId : "id",
 		dom : "<'row'<'col-sm-4'B><'col-sm-4'l><'col-sm-4'f>>"
 			+ "<'row'<'col-sm-12'tr>>"
@@ -54,13 +54,13 @@ function loadCandidateTable(){
 			},
 		},],
 		columns : [ {
-			data : "ordinal"
+			data : "ordinal",
 		}, {
-			data : "name"
+			data : "name",
 		}, {
-			data : "dateOfBirth"
+			data : "dateOfBirth",
 		}, {
-			data : "gender"
+			data : "gender",
 		}, {
 			data : "unitName",
 		}, {

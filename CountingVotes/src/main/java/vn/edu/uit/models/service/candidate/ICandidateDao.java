@@ -7,7 +7,7 @@ import vn.edu.uit.models.Delegate;
 
 public interface ICandidateDao {
 
-	boolean create(long votingId, long delegateId);
+	boolean persist(Candidate candidate);
 	
 	boolean delete(long id);
 	
@@ -17,4 +17,5 @@ public interface ICandidateDao {
 	
 	List<Delegate> getIsCandidate(long votingId);
 
+	boolean isExists(List<Delegate> candidates, long delegateId);
 }

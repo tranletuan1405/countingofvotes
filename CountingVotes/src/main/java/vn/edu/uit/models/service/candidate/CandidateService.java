@@ -15,11 +15,7 @@ public class CandidateService implements ICandidateDao {
 
 	@Autowired
 	private ICandidateDao candidateDao;
-	
-	public boolean create(long votingId, long delegateId){
-		return candidateDao.create(votingId, delegateId);
-	}
-	
+
 	public boolean delete(long id){
 		return candidateDao.delete(id);
 	}
@@ -39,4 +35,15 @@ public class CandidateService implements ICandidateDao {
 		return candidateDao.getIsCandidate(votingId);
 	}
 
+	@Override
+	public boolean persist(Candidate candidate) {
+		return candidateDao.persist(candidate);
+	}
+
+	@Override
+	public boolean isExists(List<Delegate> candidates, long delegateId) {
+		return candidateDao.isExists(candidates, delegateId);
+	}
+
+	
 }
