@@ -19,22 +19,23 @@ import javax.persistence.TemporalType;
 
 import vn.edu.uit.models.common.AbstractEntity;
 
-@Entity
-@Table(name = "Ballot_Detail")
+/*@Entity
+@Table(name = "Ballot_Detail")*/
 public class BallotDetail implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, unique = true)
 	private long id;
 
-	@Id
+	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "candidate_id", nullable = false, referencedColumnName = "id")
 	private Candidate candidate;
 	
-	@Id
+	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "ballot_id", nullable = false)
 	private Ballot ballot;
@@ -42,8 +43,8 @@ public class BallotDetail implements Serializable {
 	@Column(name = "is_selected")
 	private Boolean isSelected;
 	
-	@Temporal(TemporalType.DATE)
-	@Column(name = "checked_time", columnDefinition = "DATETIME")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "checked_time")
 	private Date checkedTime;
 
 	@Column(name = "is_enabled", nullable = false)

@@ -46,8 +46,8 @@ public class Voting extends AbstractEntity {
 	@JoinColumn(name = "counting_rule_id")
 	private CountingRule countingRule;
 
-	@OneToMany(targetEntity = Ballot.class, mappedBy = "voting", fetch = FetchType.EAGER)
-	private Set<Ballot> ballots = new HashSet<Ballot>(0);
+	//@OneToMany(targetEntity = Ballot.class, mappedBy = "voting", fetch = FetchType.EAGER)
+	//private Set<Ballot> ballots = new HashSet<Ballot>(0);
 
 	@OneToMany(targetEntity = Candidate.class, mappedBy = "voting", fetch = FetchType.EAGER)
 	private Set<Candidate> candidates = new HashSet<Candidate>(0);
@@ -117,14 +117,14 @@ public class Voting extends AbstractEntity {
 	public void setCountingRule(CountingRule countingRule) {
 		this.countingRule = countingRule;
 	}
-
+/*
 	public Set<Ballot> getBallots() {
 		return ballots;
 	}
 
 	public void setBallots(Set<Ballot> ballots) {
 		this.ballots = ballots;
-	}
+	}*/
 
 	public Set<Candidate> getCandidates() {
 		return candidates;

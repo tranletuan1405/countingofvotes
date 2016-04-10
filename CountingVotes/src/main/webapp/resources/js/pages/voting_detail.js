@@ -6,18 +6,22 @@ $(document).ready(function () {
 
 	var candidate_table;
 	loadCandidateTable();
-	initSlider();
+	initCountingRule();
 	initSelectCandidateModal();
 });
 
-/* Init Layout*/
-function initSlider(){
+/* Counting Rule */
+function initCountingRule(){
+	
+	var minPercentVal = $('#min-percent').val();
+	var maxSelectedVal = $('#max-selected').val();
+	
 	$('#slider-min-percent').slider({
 	    orientation: "horizontal",
 	    range: "min",
 	    min: 0,
 	    max: 100,
-	    value: 60,
+	    value: minPercentVal,
 	    slide: function (event, ui) {
 	        $("#min-percent").val(ui.value);
 	    }
@@ -27,13 +31,55 @@ function initSlider(){
 	    orientation: "horizontal",
 	    range: "min",
 	    min: 0,
-	    max: 100,
-	    value: 60,
+	    max: maxSelectedVal,
+	    value: maxSelectedVal,
 	    slide: function (event, ui) {
 	        $("#max-selected").val(ui.value);
 	    }
 	});
-
+	
+	$('#min-percent').on('change keyup', function(){
+		var val = parseInt($(this).val());
+	
+		if(val >= 0 && val <= 100){
+			$('#slider-min-percent').slider({value : val});
+		}
+	});
+	
+	$('#min-percent').on('focusout', function(){
+		var val = parseInt($(this).val());
+		var curVal = $('#slider-min-percent').slider('value');
+		if(!(val >= 0 && val <= 100)){
+			$(this).val(curVal);
+		}
+	});
+	
+	$('#max-selected').on('change keyup', function(){
+		var val = parseInt($(this).val());
+	
+		if(val >= 0 && val <= maxSelectedVal){
+			$('#slider-max-selected').slider({value : val});
+		}
+	});
+	
+	$('#max-selected').on('focusout', function(){
+		var val = parseInt($(this).val());
+		var curVal = $('#slider-max-selected').slider('value');
+		if(!(val >= 0 && val <= maxSelectedVal)){
+			$(this).val(curVal);
+		}
+	});
+	
+	$('#min-percent, #max-selected').on('keypress', function(event){
+		if (event.keyCode == 10 || event.keyCode == 13) {
+	        event.preventDefault();
+	        $(this).blur();
+		}
+	});
+	
+	$('#min-percent, #max-selected').on('focus', function(){
+		$(this).select();
+	})
 }
 
 /* Candidate Table */
@@ -95,6 +141,7 @@ function initSelectCandidateModal(){
 	$('#btn-select-candidates').on('click', function(){
 		$('#btn-select-candidates-real').click();
 	});
+
 }
 
 function loadSelectListCandidates(){

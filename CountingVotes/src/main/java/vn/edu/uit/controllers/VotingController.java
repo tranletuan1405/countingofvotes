@@ -65,7 +65,7 @@ public class VotingController {
 	@RequestMapping(value = "create_voting", method = RequestMethod.POST)
 	public ModelAndView createVoting(@RequestParam("name") String name, HttpServletRequest request) {
 
-		ModelAndView model = new ModelAndView("redirect:list");
+		ModelAndView model = new ModelAndView("redirect:/voting/list");
 		if(name == null || name.isEmpty()) return model;
 		
 		HttpSession session = request.getSession();

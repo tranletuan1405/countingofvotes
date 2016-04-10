@@ -23,7 +23,7 @@ public class VotingJson {
 		this.setStartTime(voting.getStartTimeString());
 		this.setEndTime(voting.getEndTimeString());
 		this.setNumOfCandidates(voting.getCandidates().size());
-		this.setNumOfBallots(voting.getBallots().size());
+		//this.setNumOfBallots(voting.getBallots().size());
 	}
 	
 	

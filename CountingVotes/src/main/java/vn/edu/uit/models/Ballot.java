@@ -20,8 +20,8 @@ import com.sun.org.glassfish.gmbal.ManagedAttribute;
 
 import vn.edu.uit.models.common.AbstractEntity;
 
-@Entity
-@Table(name = "Ballot")
+/*@Entity
+@Table(name = "Ballot")*/
 public class Ballot extends AbstractEntity {
 
 	@Temporal(TemporalType.TIMESTAMP)

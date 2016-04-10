@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import vn.edu.uit.models.CountingRule;
 import vn.edu.uit.models.Voting;
 
 @Service("votingService")
@@ -34,13 +35,35 @@ public class VotingService implements IVotingDao {
 	}
 
 	@Override
-	public boolean update(Voting voting) {
-		return votingDao.update(voting);
+	public boolean merge(Voting voting) {
+		return votingDao.merge(voting);
 	}
 
 	@Override
 	public int getCurrentVersion(long congressId, String name) {
 		return votingDao.getCurrentVersion(congressId, name);
+	}
+
+	@Override
+	public boolean persistCountingRule(CountingRule rule) {
+		// TODO Auto-generated method stub
+		return votingDao.persistCountingRule(rule);
+	}
+
+	@Override
+	public boolean update(Voting voting) {
+		return votingDao.update(voting);
+	}
+
+	@Override
+	public CountingRule fetchRule(long votingId) {
+		return votingDao.fetchRule(votingId);
+	}
+
+	@Override
+	public boolean updateCountingRule(CountingRule rule) {
+		// TODO Auto-generated method stub
+		return votingDao.updateCountingRule(rule);
 	}
 
 }

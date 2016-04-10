@@ -24,6 +24,7 @@ import vn.edu.uit.extra.DataConfig;
 import vn.edu.uit.extra.ListHolder;
 import vn.edu.uit.models.Candidate;
 import vn.edu.uit.models.Congress;
+import vn.edu.uit.models.CountingRule;
 import vn.edu.uit.models.Delegate;
 import vn.edu.uit.models.Voting;
 import vn.edu.uit.models.json.CandidateSelectionJson;
@@ -67,30 +68,52 @@ public class VotingDetailController {
 
 		Voting voting = votingService.fetch(id);
 		session.setAttribute(DataConfig.SESSION_VOTING_NAME, id);
-
+		
+		//Create counting rule if the voting has candidates
+		if(voting.getCandidates().size() > 0 && voting.getCountingRule() == null) {
+			CountingRule rule = new CountingRule();
+			rule.setMaxSelected(voting.getCandidates().size());
+			voting.setCountingRule(rule);
+			
+			votingService.persistCountingRule(rule);
+			votingService.merge(voting);
+		}
+		
 		model.addObject("congress", congress);
 		model.addObject("attendees", attendees);
 		model.addObject("voting", voting);
+		
+		
 
 		model.addObject(DataConfig.VOTING_ACTIVE, DataConfig.VOTING_ACTIVE);
 		return model;
 	}
 
-	public ModelAndView submitCountingRules(HttpServletRequest request) {
+	@RequestMapping(value = "/update_rules", method = RequestMethod.POST)
+	public ModelAndView updateCountingRules(
+			@RequestParam("minPercent") int minPercent,
+			@RequestParam("maxSelected") int maxSelected,
+			HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
-		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
-		ModelAndView model = new ModelAndView("redirect:voting_detail/" + votingId);
 
+		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
+		ModelAndView model = new ModelAndView("redirect:/voting_detail/" + votingId);
+	
+		CountingRule rule = votingService.fetchRule(votingId);
+		rule.setMaxSelected(maxSelected);
+		rule.setMinPercent(minPercent);
+		votingService.updateCountingRule(rule);
+		
 		return model;
 	}
 
 	@RequestMapping(value = "/select_candidates", method = RequestMethod.POST)
 	public ModelAndView submitSelectedCandidates(
-			@RequestParam(value = "candidates", required = true) Long[] delegateIds, HttpServletRequest request) {
+			@RequestParam(value = "candidates", required = false) Long[] delegateIds, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
-		ModelAndView model = new ModelAndView("redirect:voting_detail/" + votingId);
+		ModelAndView model = new ModelAndView("redirect:/voting_detail/" + votingId);
+		if(delegateIds == null) return model;
 		Voting voting = votingService.fetch(votingId);
 		
 		List<Delegate> candidates = candidateService.getIsCandidate(votingId);

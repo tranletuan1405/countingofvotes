@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import vn.edu.uit.models.CountingRule;
 import vn.edu.uit.models.Voting;
 import vn.edu.uit.models.common.AbstractDao;
 
@@ -63,7 +64,7 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 	}
 
 	@Override
-	public boolean update(Voting voting) {
+	public boolean merge(Voting voting) {
 		return mergeObject(voting);
 	}
 
@@ -76,6 +77,30 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 		
 		int result = (Integer) query.uniqueResult();
 		return result;
+	}
+
+	@Override
+	public boolean persistCountingRule(CountingRule rule) {
+		return this.persistObject(rule);
+	}
+
+	@Override
+	public boolean update(Voting voting) {
+		return this.saveOrUpdateObject(voting);
+	}
+
+	@Override
+	public CountingRule fetchRule(long votingId) {
+		String hql = "SELECT countingRule FROM Voting v WHERE v.id = :votingId";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("votingId", votingId);
+		return (CountingRule) query.uniqueResult();
+	}
+
+	@Override
+	public boolean updateCountingRule(CountingRule rule) {
+		// TODO Auto-generated method stub
+		return this.mergeObject(rule);
 	}
 
 }
