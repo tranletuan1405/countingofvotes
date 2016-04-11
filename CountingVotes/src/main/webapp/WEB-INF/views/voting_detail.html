@@ -179,10 +179,10 @@
 										</div>
 
 										<div class="form-group">
-											<label for="submit-button" class="col-sm-4 control-label"></label>
+											<label for="btn-submit-rules" class="col-sm-4 control-label"></label>
 											<div class="col-sm-8 input-group">
 												<button type="submit" class="btn btn-success no-radius"
-													id="submit-button">Lưu</button>
+													id="btn-submit-rules" disabled="true">Lưu</button>
 											</div>
 										</div>
 
@@ -204,5 +204,28 @@
 	
 	<div th:replace="fragment/create_ballot :: create_ballot"></div>
 
+	<div class="modal fade" id="create-codes-modal" tabindex="-1"
+		role="dialog" aria-labelledby="create-codes-modal-label">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="create-codes-modal-label">Xác nhận</h4>
+				</div>
+
+				<div class="modal-body">
+					<strong>Bạn chắc chắn muốn tạo phiếu bầu cho danh sách ứng
+						cử viên này?</strong>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						id="btn-cancel-create-codes">Hủy</button>
+
+					<button type="button" class="btn btn-primary" id="btn-create-codes">Chắc
+						chắn</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

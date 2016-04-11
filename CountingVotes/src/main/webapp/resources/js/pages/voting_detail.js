@@ -5,9 +5,12 @@
 $(document).ready(function () {
 
 	var candidate_table;
+	var create_ballot_table;
+	
 	loadCandidateTable();
 	initCountingRule();
 	initSelectCandidateModal();
+	initCreateCodeModal();
 });
 
 /* Counting Rule */
@@ -25,6 +28,8 @@ function initCountingRule(){
 	    value: minPercentVal,
 	    slide: function (event, ui) {
 	        $("#min-percent").val(ui.value);
+			$('#btn-submit-rules').removeAttr('disabled');
+			$('.btn-edit-ballot').addClass('disabled');
 	    }
 	});
 	
@@ -36,6 +41,8 @@ function initCountingRule(){
 	    value: curSelectedVal,
 	    slide: function (event, ui) {
 	        $("#max-selected").val(ui.value);
+			$('#btn-submit-rules').removeAttr('disabled');
+			$('.btn-edit-ballot').addClass('disabled');
 	    }
 	});
 	
@@ -45,6 +52,8 @@ function initCountingRule(){
 		if(val >= 0 && val <= 100){
 			$('#slider-min-percent').slider({value : val});
 		}
+		
+		$('#btn-submit-rules').removeAttr('disabled');
 	});
 	
 	$('#min-percent').on('focusout', function(){
@@ -61,6 +70,8 @@ function initCountingRule(){
 		if(val >= 0 && val <= maxSelectedVal){
 			$('#slider-max-selected').slider({value : val});
 		}
+		
+		$('#btn-submit-rules').removeAttr('disabled');
 	});
 	
 	$('#max-selected').on('focusout', function(){
@@ -101,16 +112,10 @@ function loadCandidateTable(){
 				loadSelectListCandidates();
 			},
 		}, {
-			text : "Tạo phiếu",
-			className : "btn-info btn-voting-detail no-radius " + disableClass,
-			action : function(){
-				
-			},
-		}, {
 			text : "In phiếu",
-			className : "btn-success btn-voting-detail no-radius " + disableClass,
+			className : "btn-success btn-voting-detail no-radius btn-edit-ballot " + disableClass,
 			action : function(){
-				
+				showModal('#create-codes-modal');
 			},
 		}],
 		columns : [ {
@@ -197,6 +202,15 @@ function loadSelectListCandidates(){
 }
 
 /* Create Ballot */
-function loadCreateBallotModal(){
+function initCreateCodeModal(){
+	$('#btn-create-codes').on('click', function(){
+		$('#btn-cancel-create-codes').attr('disabled', 'disabled');
+		$(this).attr('disabled', 'disabled');
+		//ajax create code
+		
+		//show modal edit ballot
+		/*$('#create-codes-modal').modal('hide');
+		showModal('#create-ballot-modal');*/
+	});
 	
 }
