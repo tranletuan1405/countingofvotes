@@ -79,6 +79,12 @@ public class VotingDetailController {
 			votingService.merge(voting);
 		}
 		
+		//Check max-selected 
+		if(voting.getCountingRule() != null && voting.getCountingRule().getMaxSelected() > voting.getCandidates().size()){
+			voting.getCountingRule().setMaxSelected(voting.getCandidates().size());
+			votingService.merge(voting);
+		}
+		
 		model.addObject("congress", congress);
 		model.addObject("attendees", attendees);
 		model.addObject("voting", voting);

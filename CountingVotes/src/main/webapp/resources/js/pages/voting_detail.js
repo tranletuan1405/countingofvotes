@@ -14,7 +14,8 @@ $(document).ready(function () {
 function initCountingRule(){
 	
 	var minPercentVal = $('#min-percent').val();
-	var maxSelectedVal = $('#max-selected').val();
+	var maxSelectedVal = $('#max-selected').attr('max');
+	var curSelectedVal = $('#max-selected').val();
 	
 	$('#slider-min-percent').slider({
 	    orientation: "horizontal",
@@ -32,7 +33,7 @@ function initCountingRule(){
 	    range: "min",
 	    min: 0,
 	    max: maxSelectedVal,
-	    value: maxSelectedVal,
+	    value: curSelectedVal,
 	    slide: function (event, ui) {
 	        $("#max-selected").val(ui.value);
 	    }
@@ -84,6 +85,7 @@ function initCountingRule(){
 
 /* Candidate Table */
 function loadCandidateTable(){
+	var disableClass = $('#max-selected').attr('max') > 0 ? '' : 'disabled';
 	
 	candidate_table = $('#candidate-table').DataTable({
 		destroy : true,
@@ -94,11 +96,23 @@ function loadCandidateTable(){
 			+ "<'row'<'col-sm-5'i><'col-sm-7'p>>",
 		buttons : [ {
 			text : "Chỉnh sửa",
-			className : "btn-warning no-radius",
+			className : "btn-warning btn-voting-detail no-radius",
 			action : function(){
 				loadSelectListCandidates();
 			},
-		},],
+		}, {
+			text : "Tạo phiếu",
+			className : "btn-info btn-voting-detail no-radius " + disableClass,
+			action : function(){
+				
+			},
+		}, {
+			text : "In phiếu",
+			className : "btn-success btn-voting-detail no-radius " + disableClass,
+			action : function(){
+				
+			},
+		}],
 		columns : [ {
 			data : "ordinal",
 		}, {
@@ -180,4 +194,9 @@ function loadSelectListCandidates(){
 			console.log('selection list failed!');
 		}
 	});
+}
+
+/* Create Ballot */
+function loadCreateBallotModal(){
+	
 }

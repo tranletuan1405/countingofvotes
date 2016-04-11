@@ -173,7 +173,7 @@
 											<label for="slider-min-percent" class="col-sm-1 control-label"></label> 
 											
 											<input type="number" th:name="maxSelected" class="col-sm-1 control-label value-slider" id="max-selected" 
-												min = "0" th:attr="max=${voting.countingRule.maxSelected}" required="required"											
+												min = "0" th:attr="max=${voting.candidates.size()}" required="required"											
 												th:value="${voting.countingRule.maxSelected}"
 											/>
 										</div>
@@ -201,5 +201,8 @@
 	</div>
 	
 	<div th:replace="fragment/select_candidates :: select_candidates"></div>
+	
+	<div th:replace="fragment/create_ballot :: create_ballot"></div>
+
 </body>
 </html>

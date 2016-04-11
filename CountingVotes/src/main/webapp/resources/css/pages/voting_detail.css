@@ -26,3 +26,14 @@
 	color: black;
 	font-weight: bolder;
 }
+
+/**/
+.btn-voting-detail {
+	margin-left: 5px;
+	margin-right : 5px;
+}
+
+#create-codes-modal {
+	margin-top: calc(30vh);
+}
+
