@@ -16,6 +16,10 @@ public class Barcode extends AbstractEntity {
 	@Column(name = "content", nullable = false)
 	private String content;
 	
+	@Column(name = "encode", nullable = false)
+	private String encode;
+	
+	
 	public String getImagePath() {
 		return imagePath;
 	}
@@ -31,4 +35,14 @@ public class Barcode extends AbstractEntity {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	public String getEncode() {
+		return encode;
+	}
+
+	public void setEncode(String encode) {
+		this.encode = encode;
+	}
+
+	
 }

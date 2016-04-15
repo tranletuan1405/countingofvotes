@@ -240,13 +240,14 @@ public class CongressController {
 			Barcode barcode = new Barcode();
 			Unit unitTemp = delegate.getUnit();
 			DelegateType typeTemp = delegate.getType();
-			String content = tDes.encryptText(SupportMethods.getUID());
-
+			String content = SupportMethods.getUID();
+			String encode = tDes.encryptText(content);
+			String imagePath = barcodeGenerator.generateQR(congressPath, SupportMethods.getUID(), encode, 320);
+			
 			// Barcode
 			barcode.setContent(content);
-			String directory = barcodeGenerator.generateQR(DataConfig.BARCODE_DIRECTORY + congressPath,
-					SupportMethods.getUID(), content, 320);
-			barcode.setImagePath(directory);
+			barcode.setEncode(encode);
+			barcode.setImagePath(imagePath);
 
 			// Unit
 			if (unitTemp != null && unitTemp.getName() != null && !unitTemp.getName().isEmpty()) {

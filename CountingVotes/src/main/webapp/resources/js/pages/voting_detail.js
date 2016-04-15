@@ -131,9 +131,16 @@ function loadCandidateTable(){
 		}, {
 			data : "position",
 		}, {
-			data : "typeName",
+			data : "codeImagePath",
+			searchable : false,
+			orderable : false,
 		}, ],
-		
+		"columnDefs": [{
+			"render" : function(data, type, row) {
+				return "<img class='' src='../img/barcode/" + row['codeImagePath'] + "'style='width : 50px; height : 50px;'/>";
+			},
+			"targets" : 6
+		},],
 		"lengthMenu" : [ [-1, 5, 10, 15 ], ["Tất cả", 5, 10, 15] ],
 		select : false,
 		
@@ -176,19 +183,19 @@ function loadSelectListCandidates(){
 			
 			$.each(delegates, function (i, item) {
 				var option = "<option value='" + item.id
-						+ "' style='margin-top : 5px; font-weight : bold;' class='" + item.codeContent + "'>"
+						+ "' style='margin-top : 5px; font-weight : bold;' class='" + item.encode + "'>"
 						+ item.name + " - " + item.dateOfBirth + ' - '
 						+ item.gender + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(' 
-						+ item.codeContent + ")</option>";
+						+ item.encode + ")</option>";
 			    $('#select-delegates').append(option);
 			});
 			
 			$.each(candidates, function (i, item) {
 				var option = "<option value='" + item.id
-						+ "' style='margin-top : 5px; font-weight : bold;' class='" + item.codeContent + "'>"
+						+ "' style='margin-top : 5px; font-weight : bold;' class='" + item.encode + "'>"
 						+ item.name + " - " + item.dateOfBirth + ' - '
 						+ item.gender + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(' 
-						+ item.codeContent + ")</option>";
+						+ item.encode + ")</option>";
 			    $('#select-candidates').append(option);
 			});
 			

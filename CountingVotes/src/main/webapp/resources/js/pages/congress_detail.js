@@ -233,7 +233,7 @@ function loadDelegates() {
 							"orderable" : false,
 							"visible" : false
 						}, {
-							data : "codeContent",
+							data : "encode",
 							"visible" : false
 						}, ],
 

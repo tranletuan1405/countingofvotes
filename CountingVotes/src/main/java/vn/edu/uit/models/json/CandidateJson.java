@@ -10,11 +10,12 @@ public class CandidateJson {
 	private String gender;
 	private String unitName;
 	private String position;
-	private String selectedCodeImage;
-	private String unselectedCodeImage;
+	private String codeImagePath;
+	private String countingEncodeImage;
 
 	public CandidateJson(Candidate candidate) {
 		this.setId(candidate.getId());
+		this.setOrdinal(candidate.getDelegate().getOrdinal());
 		this.setName(candidate.getDelegate().getName());
 		this.setDateOfBirth(candidate.getDelegate().getDateOfBirth());
 		this.setGender(candidate.getDelegate().getGender());
@@ -25,14 +26,17 @@ public class CandidateJson {
 		this.setPosition(candidate.getDelegate().getPosition());
 
 		try {
-			this.setSelectedCodeImage(candidate.getSelectedBarcode().getImagePath());
+			this.setCountingEncodeImage(candidate.getCountingBarcode().getImagePath());
 		} catch (Exception e) {
+
 		}
 
 		try {
-			this.setUnselectedCodeImage(candidate.getUnselectedBarcode().getImagePath());
+			this.setCodeImagePath(candidate.getDelegate().getHashCode().getImagePath());
 		} catch (Exception e) {
+
 		}
+
 	}
 
 	public long getId() {
@@ -91,19 +95,23 @@ public class CandidateJson {
 		this.name = name;
 	}
 
-	public String getSelectedCodeImage() {
-		return selectedCodeImage;
+	
+	public String getCountingEncodeImage() {
+		return countingEncodeImage;
 	}
 
-	public void setSelectedCodeImage(String selectedCodeImage) {
-		this.selectedCodeImage = selectedCodeImage;
+	public void setCountingEncodeImage(String countingEncodeImage) {
+		this.countingEncodeImage = countingEncodeImage;
 	}
 
-	public String getUnselectedCodeImage() {
-		return unselectedCodeImage;
+	public String getCodeImagePath() {
+		return codeImagePath;
 	}
 
-	public void setUnselectedCodeImage(String unselectedCodeImage) {
-		this.unselectedCodeImage = unselectedCodeImage;
+	public void setCodeImagePath(String codeImagePath) {
+		this.codeImagePath = codeImagePath;
 	}
+
+	
+
 }

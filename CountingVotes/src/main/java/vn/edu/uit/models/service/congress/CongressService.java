@@ -54,5 +54,10 @@ public class CongressService implements ICongressDao {
 	public boolean update(Congress congress) {
 		return congressDao.update(congress);
 	}
+
+	@Override
+	public String getCongressPath(long congressId) {
+		return congressDao.getCongressPath(congressId);
+	}
 	
 }

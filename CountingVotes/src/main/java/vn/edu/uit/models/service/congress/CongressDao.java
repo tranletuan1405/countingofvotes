@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -57,6 +58,14 @@ public class CongressDao extends AbstractDao implements ICongressDao {
 	public boolean update(Congress congress) {
 	
 		return mergeObject(congress);
+	}
+
+	@Override
+	public String getCongressPath(long congressId) {
+		String hql = "SELECT congressPath FROM Congress WHERE congress.id = :congressId";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("congressId", congressId);
+		return (String) query.uniqueResult();
 	}
 
 }

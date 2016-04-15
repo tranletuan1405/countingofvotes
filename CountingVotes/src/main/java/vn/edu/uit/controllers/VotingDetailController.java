@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import vn.edu.uit.extra.DataConfig;
 import vn.edu.uit.extra.ListHolder;
 import vn.edu.uit.models.Candidate;
@@ -27,6 +26,7 @@ import vn.edu.uit.models.Congress;
 import vn.edu.uit.models.CountingRule;
 import vn.edu.uit.models.Delegate;
 import vn.edu.uit.models.Voting;
+import vn.edu.uit.models.json.CandidateJson;
 import vn.edu.uit.models.json.CandidateSelectionJson;
 import vn.edu.uit.models.json.DelegateJson;
 import vn.edu.uit.models.service.candidate.CandidateService;
@@ -88,8 +88,6 @@ public class VotingDetailController {
 		model.addObject("congress", congress);
 		model.addObject("attendees", attendees);
 		model.addObject("voting", voting);
-		
-		
 
 		model.addObject(DataConfig.VOTING_ACTIVE, DataConfig.VOTING_ACTIVE);
 		return model;
@@ -162,12 +160,12 @@ public class VotingDetailController {
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
 		
 		List<Candidate> candidates = new ArrayList<Candidate>(candidateService.fetch(votingId));
-		List<DelegateJson> candidatesJson = new ArrayList<DelegateJson>();
+		List<CandidateJson> candidatesJson = new ArrayList<CandidateJson>();
 		for (int i = 0; i < candidates.size(); i++) {
-			candidatesJson.add(new DelegateJson(candidates.get(i).getDelegate()));
+			candidatesJson.add(new CandidateJson(candidates.get(i)));
 		}
 
-		ListHolder<DelegateJson> json = new ListHolder<DelegateJson>();
+		ListHolder<CandidateJson> json = new ListHolder<CandidateJson>();
 		json.setData(candidatesJson);
 		return mapper.writeValueAsString(json);
 	}
@@ -197,5 +195,23 @@ public class VotingDetailController {
 		json.setDelegates(delegatesJson);
 
 		return mapper.writeValueAsString(json);
+	}
+	
+	@RequestMapping(value = "/create_codes", produces = {"application/json; charset=UTF-8"})
+	@ResponseBody
+	public String createCandidateCodes(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		Long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
+		Long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
+		
+		Congress congress = congressService.fetch(congressId);
+		List<Candidate> candidates = candidateService.fetch(votingId);
+		
+		String key = congress.getCongressKey();
+		String Iv = congress.getCongressIv();
+		String path = congress.getCongressPath();
+		
+		
+		return "";
 	}
 }

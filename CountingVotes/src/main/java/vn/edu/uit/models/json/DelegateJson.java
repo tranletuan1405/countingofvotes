@@ -32,8 +32,9 @@ public class DelegateJson {
 	private String achievement;
 	
 	private String imagePath;
-	private String codeImage;
-	private String codeContent;
+	
+	private String codeImagePath;
+	private String encode;
 	
 	private String arivalTime;
 	private boolean attended;
@@ -54,8 +55,8 @@ public class DelegateJson {
 		this.setPosition(delegate.getPosition());
 
 		if (delegate.getHashCode() != null) {
-			this.setCodeImage(delegate.getHashCode().getImagePath());
-			this.setCodeContent(delegate.getHashCode().getContent());
+			this.setCodeImagePath(delegate.getHashCode().getImagePath());
+			this.setEncode(delegate.getHashCode().getEncode());
 		}
 
 		try {
@@ -195,23 +196,6 @@ public class DelegateJson {
 		this.note = note;
 	}
 
-
-	public String getCodeContent() {
-		return codeContent;
-	}
-
-	public void setCodeContent(String codeContent) {
-		this.codeContent = codeContent;
-	}
-
-	public String getCodeImage() {
-		return codeImage;
-	}
-
-	public void setCodeImage(String codeImage) {
-		this.codeImage = codeImage;
-	}
-
 	public String getAchievement() {
 		return achievement;
 	}
@@ -250,5 +234,21 @@ public class DelegateJson {
 
 	public void setAttended(boolean attended) {
 		this.attended = attended;
+	}
+
+	public String getCodeImagePath() {
+		return codeImagePath;
+	}
+
+	public void setCodeImagePath(String codeImagePath) {
+		this.codeImagePath = codeImagePath;
+	}
+
+	public String getEncode() {
+		return encode;
+	}
+
+	public void setEncode(String encode) {
+		this.encode = encode;
 	}
 }

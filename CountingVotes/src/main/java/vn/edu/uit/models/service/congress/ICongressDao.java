@@ -14,4 +14,5 @@ public interface ICongressDao {
 	
 	List<Congress> fetch(int min, int max);
 
+	String getCongressPath(long congressId);
 }
