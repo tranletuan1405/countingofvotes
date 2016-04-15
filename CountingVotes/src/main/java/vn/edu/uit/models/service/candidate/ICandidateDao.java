@@ -11,6 +11,8 @@ public interface ICandidateDao {
 	
 	boolean delete(long id);
 	
+	boolean merge(Candidate candidate);
+	
 	List<Candidate> fetch(long votingId);
 	
 	List<Delegate> getNotCandidate(long votingId);

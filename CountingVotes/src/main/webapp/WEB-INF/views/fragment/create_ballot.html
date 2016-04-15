@@ -11,12 +11,25 @@
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title" id="create-ballot-modal-label">Chọn danh sách ứng viên</h4>
+						<h4 class="modal-title" id="create-ballot-modal-label">Mẫu phiếu bầu</h4>
 					</div>
 					
 					<div class="modal-body">
 
-						<table id="candidate-table"
+						<div class="form-group">
+							<p>Tùy chỉnh hiển thị : </p>
+							<div>
+								<a class="toggle-vis" data-column="2">Năm sinh</a>
+								<span class="glyphicon glyphicon-asterisk"></span>
+								<a class="toggle-vis" data-column="3">Giới tính</a>
+								<span class="glyphicon glyphicon-asterisk"></span>
+								<a class="toggle-vis" data-column="4">Tên đơn vị</a>
+								<span class="glyphicon glyphicon-asterisk"></span>
+								<a class="toggle-vis" data-column="5">Chức vụ</a>
+							</div>
+						</div>
+						
+						<table id="create-ballot-table"
 							class="table table-striped table-bordered" cellspacing="0"
 							width="100%">
 							<thead>
@@ -27,7 +40,7 @@
 									<th>Giới tính</th>
 									<th>Tên đơn vị</th>
 									<th>Chức vụ</th>
-									<th>Cơ cấu</th>
+									<th>Mã</th>
 								</tr>
 							</thead>
 
@@ -39,7 +52,7 @@
 									<th>Giới tính</th>
 									<th>Tên đơn vị</th>
 									<th>Chức vụ</th>
-									<th>Cơ cấu</th>
+									<th>Mã</th>
 								</tr>
 							</tfoot>
 

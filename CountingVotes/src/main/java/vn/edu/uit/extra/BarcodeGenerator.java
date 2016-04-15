@@ -40,13 +40,16 @@ public class BarcodeGenerator {
 			}
 
 			Map hintMap = new HashMap();
-			hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+			hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 
 			BitMatrix matrix = new MultiFormatWriter().encode(new String(content.getBytes(CHARSET), CHARSET),
 					BarcodeFormat.QR_CODE, width, width, hintMap);
 
 			MatrixToImageWriter.writeToStream(matrix, "PNG", stream);
-
+			
+			stream.flush();
+			stream.close();
+			System.gc();
 		} catch (Exception e) {
 			return "";
 		}
@@ -77,13 +80,16 @@ public class BarcodeGenerator {
 			}
 
 			Map hintMap = new HashMap();
-			hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+			hintMap.put(EncodeHintType.AZTEC_LAYERS, -4);
 
 			BitMatrix matrix = new MultiFormatWriter().encode(new String(content.getBytes(CHARSET), CHARSET),
 					BarcodeFormat.AZTEC, width, width, hintMap);
 
 			MatrixToImageWriter.writeToStream(matrix, "PNG", stream);
-
+			
+			stream.flush();
+			stream.close();
+			System.gc();
 		} catch (Exception e) {
 			return "";
 		}

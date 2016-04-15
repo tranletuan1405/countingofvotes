@@ -62,9 +62,11 @@ public class CongressDao extends AbstractDao implements ICongressDao {
 
 	@Override
 	public String getCongressPath(long congressId) {
-		String hql = "SELECT congressPath FROM Congress WHERE congress.id = :congressId";
+		String hql = "SELECT congressPath FROM Congress WHERE id = :congressId AND isEnabled = :isEnabled";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("congressId", congressId);
+		query.setParameter("isEnabled", true);
+		
 		return (String) query.uniqueResult();
 	}
 

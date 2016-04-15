@@ -83,4 +83,9 @@ public class CandidateDao extends AbstractDao implements ICandidateDao {
 		return false;
 	}
 
+	@Override
+	public boolean merge(Candidate candidate) {
+		return this.mergeObject(candidate);
+	}
+
 }

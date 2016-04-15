@@ -45,5 +45,10 @@ public class CandidateService implements ICandidateDao {
 		return candidateDao.isExists(candidates, delegateId);
 	}
 
+	@Override
+	public boolean merge(Candidate candidate) {
+		return candidateDao.merge(candidate);
+	}
+
 	
 }

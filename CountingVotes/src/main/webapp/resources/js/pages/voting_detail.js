@@ -115,6 +115,8 @@ function loadCandidateTable(){
 			text : "In phiếu",
 			className : "btn-success btn-voting-detail no-radius btn-edit-ballot " + disableClass,
 			action : function(){
+				$('#btn-create-codes').removeAttr('disabled');
+				$('#btn-cancel-create-codes').removeAttr('disabled');
 				showModal('#create-codes-modal');
 			},
 		}],
@@ -213,7 +215,52 @@ function initCreateCodeModal(){
 	$('#btn-create-codes').on('click', function(){
 		$('#btn-cancel-create-codes').attr('disabled', 'disabled');
 		$(this).attr('disabled', 'disabled');
-		//ajax create code
+		
+		create_ballot_table = $('#create-ballot-table').DataTable({
+			destroy : true,
+			paging : false,
+			ajax : "create_ballot",
+			rowId : "id",
+			columns : [ {
+				data : "ordinal",
+			}, {
+				data : "name",
+			}, {
+				data : "dateOfBirth",
+			}, {
+				data : "gender",
+			}, {
+				data : "unitName",
+			}, {
+				data : "position",
+			}, {
+				data : "countingEncodeImage",
+				searchable : false,
+				orderable : false,
+			},],
+			"columnDefs": [{
+				"render" : function(data, type, row) {
+					return "<img class='' src='../img/barcode/" + row['countingEncodeImage'] + "'style='width : 50px; height : 50px;'/>";
+				},
+				"targets" : 6
+			},],
+			select : false,
+			"initComplete": function(settings, json) {
+				$('#create-codes-modal').modal('hide');
+				showModal('#create-ballot-modal');
+				
+				$('a.toggle-vis').on( 'click', function (e) {
+			        e.preventDefault();
+			 
+			        // Get the column API object
+			        var column = create_ballot_table.column( $(this).attr('data-column') );
+			 
+			        // Toggle the visibility
+			        column.visible( ! column.visible() );
+			    } );
+			},
+		});
+		
 		
 		//show modal edit ballot
 		/*$('#create-codes-modal').modal('hide');

@@ -21,13 +21,6 @@ public class CountingRule extends AbstractEntity {
 	@Column(name = "min_percent", nullable = false)
 	private int minPercent = 50;
 	
-	@OneToOne(targetEntity = Barcode.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "submit_code")
-	private Barcode submitCode;
-
-	
-	
-	
 	
 	public int getMaxSelected() {
 		return maxSelected;
@@ -44,14 +37,5 @@ public class CountingRule extends AbstractEntity {
 	public void setMinPercent(int minPercent) {
 		this.minPercent = minPercent;
 	}
-
-	public Barcode getSubmitCode() {
-		return submitCode;
-	}
-
-	public void setSubmitCode(Barcode submitCode) {
-		this.submitCode = submitCode;
-	}
-
 
 }
