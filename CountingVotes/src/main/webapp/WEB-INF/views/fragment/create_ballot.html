@@ -16,48 +16,76 @@
 					
 					<div class="modal-body">
 
-						<div class="form-group">
-							<p>Tùy chỉnh hiển thị : </p>
-							<div>
-								<a class="toggle-vis" data-column="2">Năm sinh</a>
-								<span class="glyphicon glyphicon-asterisk"></span>
-								<a class="toggle-vis" data-column="3">Giới tính</a>
-								<span class="glyphicon glyphicon-asterisk"></span>
-								<a class="toggle-vis" data-column="4">Tên đơn vị</a>
-								<span class="glyphicon glyphicon-asterisk"></span>
-								<a class="toggle-vis" data-column="5">Chức vụ</a>
+						<ul class="nav nav-pills nav-justified tab-manager">
+							<li role="presentation" class="active font-menu"><a
+								href="#design-panel" aria-controls="design-panel" role="tab"
+								data-toggle="tab"> <span
+									class="glyphicon glyphicon-pencil"></span> Chỉnh sửa mẫu
+							</a></li>
+
+							<li role="presentation" class="font-menu"><a
+								href="#result-panel" aria-controls="result-panel" role="tab"
+								data-toggle="tab"> <span
+									class="glyphicon glyphicon-print"></span> Xem mẫu in
+							</a></li>
+						</ul>
+
+						<div class="tab-content" id="create-ballot-content">
+							<div role="tabpanel" class="tab-pane fade in active" id="design-panel">
+								<div class="panel-body">
+									<div class="page-header">
+										<textarea id="title-editor" rows="10" />
+									</div>
+
+									<div class="form-group">
+										<p>Tùy chỉnh hiển thị :</p>
+										<div>
+											<a class="toggle-vis" data-column="2">Năm sinh</a> <span
+												class="glyphicon glyphicon-asterisk"></span> <a
+												class="toggle-vis" data-column="3">Giới tính</a> <span
+												class="glyphicon glyphicon-asterisk"></span> <a
+												class="toggle-vis" data-column="4">Tên đơn vị</a> <span
+												class="glyphicon glyphicon-asterisk"></span> <a
+												class="toggle-vis" data-column="5">Chức vụ</a>
+										</div>
+									</div>
+
+									<table id="create-ballot-table"
+										class="table table-striped table-bordered" cellspacing="0"
+										width="100%">
+										<thead>
+											<tr>
+												<th>STT</th>
+												<th>Họ tên</th>
+												<th>Năm sinh</th>
+												<th>Giới tính</th>
+												<th>Tên đơn vị</th>
+												<th>Chức vụ</th>
+												<th>Mã</th>
+											</tr>
+										</thead>
+
+										<tfoot>
+											<tr>
+												<th>STT</th>
+												<th>Họ tên</th>
+												<th>Năm sinh</th>
+												<th>Giới tính</th>
+												<th>Tên đơn vị</th>
+												<th>Chức vụ</th>
+												<th>Mã</th>
+											</tr>
+										</tfoot>
+
+									</table>
+								</div>
+							</div>
+							
+							<div role="tabpanel" class="tab-pane fade" id="result-panel">
 							</div>
 						</div>
 						
-						<table id="create-ballot-table"
-							class="table table-striped table-bordered" cellspacing="0"
-							width="100%">
-							<thead>
-								<tr>
-									<th>STT</th>
-									<th>Họ tên</th>
-									<th>Năm sinh</th>
-									<th>Giới tính</th>
-									<th>Tên đơn vị</th>
-									<th>Chức vụ</th>
-									<th>Mã</th>
-								</tr>
-							</thead>
-
-							<tfoot>
-								<tr>
-									<th>STT</th>
-									<th>Họ tên</th>
-									<th>Năm sinh</th>
-									<th>Giới tính</th>
-									<th>Tên đơn vị</th>
-									<th>Chức vụ</th>
-									<th>Mã</th>
-								</tr>
-							</tfoot>
-
-
-						</table>
+						
 					</div>
 					
 					<div class="modal-footer">

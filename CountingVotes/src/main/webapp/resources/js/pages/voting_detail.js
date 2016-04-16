@@ -260,11 +260,15 @@ function initCreateCodeModal(){
 			    } );
 			},
 		});
-		
-		
-		//show modal edit ballot
-		/*$('#create-codes-modal').modal('hide');
-		showModal('#create-ballot-modal');*/
 	});
 	
+	CKEDITOR.replace( 'title-editor' );
+	
+	$('#create-ballot-modal').on('shown.bs.modal', function(e){
+		$('body').css('overflow', 'hidden');
+	});
+	
+	$('#create-ballot-modal').on('hidden.bs.modal', function(e){
+		$('body').css('overflow', 'auto');
+	});
 }

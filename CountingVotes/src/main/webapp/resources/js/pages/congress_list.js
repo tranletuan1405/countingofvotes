@@ -4,6 +4,19 @@ $(document).ready(function() {
 	var delegate_table;
 	var unit_table;
 	
+	$('.form-datetime').datetimepicker({
+		format : "dd/mm/yyyy - hh:ii",
+		weekStart : 1,
+		todayBtn : 1,
+		autoclose : 1,
+		todayHighlight : 1,
+		startView : 2,
+		forceParse : 0,
+		showMeridian : 1,
+		
+	});
+	
+	
 	$('.form-datetime').val(getDateTimeNow());
 
 	table = $('#congress-table').DataTable( {
