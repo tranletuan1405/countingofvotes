@@ -6,6 +6,7 @@ $(document).ready(function () {
 
 	var candidate_table;
 	var create_ballot_table;
+	var editor;
 	
 	loadCandidateTable();
 	initCountingRule();
@@ -112,12 +113,20 @@ function loadCandidateTable(){
 				loadSelectListCandidates();
 			},
 		}, {
-			text : "In phiếu",
+			text : "Tạo phiếu",
 			className : "btn-success btn-voting-detail no-radius btn-edit-ballot " + disableClass,
 			action : function(){
 				$('#btn-create-codes').removeAttr('disabled');
 				$('#btn-cancel-create-codes').removeAttr('disabled');
 				showModal('#create-codes-modal');
+			},
+		}, {
+			text : "In phiếu",
+			className : "btn-info btn-voting-detail no-radius btn-edit-ballot " + disableClass,
+			action : function(){
+			/*	$('#btn-create-codes').removeAttr('disabled');
+				$('#btn-cancel-create-codes').removeAttr('disabled');
+				showModal('#create-codes-modal');*/
 			},
 		}],
 		columns : [ {
@@ -219,10 +228,13 @@ function initCreateCodeModal(){
 		create_ballot_table = $('#create-ballot-table').DataTable({
 			destroy : true,
 			paging : false,
+			orderMulti : true,
 			ajax : "create_ballot",
 			rowId : "id",
 			columns : [ {
-				data : "ordinal",
+				data : "id",
+				orderable : false,
+				searchable : false,
 			}, {
 				data : "name",
 			}, {
@@ -239,8 +251,14 @@ function initCreateCodeModal(){
 				orderable : false,
 			},],
 			"columnDefs": [{
+				"render" : function(data, type, row){
+					console.log(data);
+					return "1";
+				},
+				"targets" : 0
+			},{
 				"render" : function(data, type, row) {
-					return "<img class='' src='../img/barcode/" + row['countingEncodeImage'] + "'style='width : 50px; height : 50px;'/>";
+					return "<img class='' src='../img/barcode/" + data + "'style='width : 50px; height : 50px;'/>";
 				},
 				"targets" : 6
 			},],
@@ -262,7 +280,7 @@ function initCreateCodeModal(){
 		});
 	});
 	
-	CKEDITOR.replace( 'title-editor' );
+	editor = CKEDITOR.replace( 'title-editor' );
 	
 	$('#create-ballot-modal').on('shown.bs.modal', function(e){
 		$('body').css('overflow', 'hidden');
@@ -271,4 +289,32 @@ function initCreateCodeModal(){
 	$('#create-ballot-modal').on('hidden.bs.modal', function(e){
 		$('body').css('overflow', 'auto');
 	});
+	
+	$('#tab-result').on('show.bs.tab', function (e) {
+		  
+		//Get title design 
+		var title = editor.getData();
+		
+		//Get table
+		var body = $('#create-ballot-table').html();
+	
+		//Append title & body
+		var title_ballot = $('#title-ballot');
+		var body_ballot = $('#body-ballot');
+		
+		title_ballot.empty();
+		body_ballot.empty();
+		
+		title_ballot.append(title);
+		body_ballot.append(body);
+		body_ballot.find('thead').empty();
+		body_ballot.find('tfoot').empty();
+	});
+	
+	
+	
+	
+	
+	
+	
 }

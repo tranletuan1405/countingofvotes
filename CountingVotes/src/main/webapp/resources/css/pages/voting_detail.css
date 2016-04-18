@@ -42,3 +42,13 @@
     max-height: calc(80vh);
     overflow-y: auto;
 }
+
+.table-children-ver-center {
+	display: table-cell;
+}
+
+.table-children-ver-center>tbody>tr>td{
+	vertical-align: middle;
+	border : 0px;
+	text-align: left;
+}
