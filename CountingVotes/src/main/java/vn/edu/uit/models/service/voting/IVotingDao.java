@@ -8,23 +8,25 @@ import vn.edu.uit.models.Voting;
 public interface IVotingDao {
 
 	boolean persist(Voting voting);
-	
+
 	boolean merge(Voting voting);
-	
-	long recreate(long oldId);
-	
-	Voting fetch(long id);
-	
-	List<Voting> fetch(int min, int max);
 
 	boolean update(Voting voting);
-	
+
+	boolean savePattern(long votingId, String pattern);
+
+	long recreate(long oldId);
+
+	Voting fetch(long id);
+
+	List<Voting> fetch(int min, int max);
+
 	int getCurrentVersion(long congressId, String name);
-	
-	//Rule
+
+	// Rule
 	boolean persistCountingRule(CountingRule rule);
-	
+
 	CountingRule fetchRule(long votingId);
-	
+
 	boolean updateCountingRule(CountingRule rule);
 }

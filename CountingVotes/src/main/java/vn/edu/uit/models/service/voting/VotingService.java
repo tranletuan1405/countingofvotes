@@ -62,8 +62,12 @@ public class VotingService implements IVotingDao {
 
 	@Override
 	public boolean updateCountingRule(CountingRule rule) {
-		// TODO Auto-generated method stub
 		return votingDao.updateCountingRule(rule);
+	}
+
+	@Override
+	public boolean savePattern(long votingId, String pattern) {
+		return votingDao.savePattern(votingId, pattern);
 	}
 
 }

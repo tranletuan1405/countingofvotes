@@ -74,7 +74,7 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 		Query query = getSession().createQuery(hql);
 		query.setParameter("congressId", congressId);
 		query.setParameter("name", name);
-		
+
 		int result = (Integer) query.uniqueResult();
 		return result;
 	}
@@ -99,8 +99,17 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 
 	@Override
 	public boolean updateCountingRule(CountingRule rule) {
-		// TODO Auto-generated method stub
 		return this.mergeObject(rule);
+	}
+
+	@Override
+	public boolean savePattern(long votingId, String pattern) {
+		String hql = "UPDATE Voting SET ballotPattern = :pattern WHERE id = :votingId";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("pattern", pattern);
+		query.setParameter("votingId", votingId);
+		int result = query.executeUpdate();
+		return result > 0 ? true : false;
 	}
 
 }

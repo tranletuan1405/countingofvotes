@@ -248,4 +248,24 @@ public class VotingDetailController {
 		
 		return mapper.writeValueAsString(json);
 	}
+	
+	
+	@RequestMapping(value = "save_pattern", method = RequestMethod.POST, produces = {"application/text; charset=UTF-8" })
+	@ResponseBody
+	public String saveBallotPattern(@RequestParam(value = "pattern", required = true) String pattern,
+			HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		Long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
+
+		if(pattern.isEmpty()) return "Failed";
+		
+		boolean execute = votingService.savePattern(votingId, pattern);
+		
+		if(execute){
+			return pattern;
+		}
+
+		return "Failed";
+	}
 }

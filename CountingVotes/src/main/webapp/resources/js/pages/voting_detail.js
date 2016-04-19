@@ -169,10 +169,8 @@ function initSelectCandidateModal(){
         right : "#select-candidates",
         submitAllLeft : false,
         
-        /*rightAll: '#select_rightAll',*/
         rightSelected: '#select_rightSelected',
         leftSelected: '#select_leftSelected',
-        /*leftAll: '#select_leftAll'*/
     });
 	
 	$('#btn-select-candidates').on('click', function(){
@@ -225,6 +223,7 @@ function initCreateCodeModal(){
 		$('#btn-cancel-create-codes').attr('disabled', 'disabled');
 		$(this).attr('disabled', 'disabled');
 		
+		var index = 1;
 		create_ballot_table = $('#create-ballot-table').DataTable({
 			destroy : true,
 			paging : false,
@@ -252,8 +251,8 @@ function initCreateCodeModal(){
 			},],
 			"columnDefs": [{
 				"render" : function(data, type, row){
-					console.log(data);
-					return "1";
+					
+					return index++;
 				},
 				"targets" : 0
 			},{
@@ -309,12 +308,45 @@ function initCreateCodeModal(){
 		body_ballot.append(body);
 		body_ballot.find('thead').empty();
 		body_ballot.find('tfoot').empty();
+		
+		$('#btn-create-ballot').removeClass('hidden');
 	});
 	
 	
+	$('#tab-create-ballot').on('show.bs.tab', function(e){
+		//Append title & body
+		var title_ballot = $('#title-ballot');
+		var body_ballot = $('#body-ballot');
+		
+		title_ballot.empty();
+		body_ballot.empty();
+		$('#btn-create-ballot').addClass('hidden');
+	});
 	
+	$('#btn-create-ballot').on('click', function(){
+		savePattern();
+	});
+}
+
+function savePattern() {
 	
+	$('.btn-ballot').attr('disabled', 'disabled');
 	
+	var patternStr = $('#result-panel').html();
 	
-	
+	$.ajax({
+		url : "save_pattern",
+		type : "POST",
+		data : {
+			pattern : patternStr
+		},
+		success : function(response) {
+			if(response != 'Failed'){
+				//Show modal print ballot
+			}
+			
+			$('.btn-ballot').removeAttr('disabled');
+		},
+		
+	});
 }
