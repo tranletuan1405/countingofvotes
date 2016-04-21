@@ -268,4 +268,20 @@ public class VotingDetailController {
 
 		return "Failed";
 	}
+	
+	@RequestMapping(value = "get_pattern", method = RequestMethod.GET, produces = {"application/text; charset=UTF-8" })
+	@ResponseBody
+	public String getBallotPattern(HttpServletRequest request){
+		
+		HttpSession session = request.getSession();
+		Long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
+		
+		String pattern = votingService.getPattern(votingId);
+		
+		if(pattern != null && !pattern.isEmpty()){
+			return pattern;
+		}
+		
+		return "Failed";
+	}
 }

@@ -12,6 +12,7 @@ $(document).ready(function () {
 	initCountingRule();
 	initSelectCandidateModal();
 	initCreateCodeModal();
+	initPrintBallotModal();
 });
 
 /* Counting Rule */
@@ -103,7 +104,7 @@ function loadCandidateTable(){
 		destroy : true,
 		ajax : "candidates",
 		rowId : "id",
-		dom : "<'row'<'col-sm-4'B><'col-sm-4'l><'col-sm-4'f>>"
+		dom : "<'row'<'col-sm-5'B><'col-sm-3'l><'col-sm-4'f>>"
 			+ "<'row'<'col-sm-12'tr>>"
 			+ "<'row'<'col-sm-5'i><'col-sm-7'p>>",
 		buttons : [ {
@@ -121,12 +122,10 @@ function loadCandidateTable(){
 				showModal('#create-codes-modal');
 			},
 		}, {
-			text : "In phiếu",
+			text : "Xuất phiếu",
 			className : "btn-info btn-voting-detail no-radius btn-edit-ballot " + disableClass,
 			action : function(){
-			/*	$('#btn-create-codes').removeAttr('disabled');
-				$('#btn-cancel-create-codes').removeAttr('disabled');
-				showModal('#create-codes-modal');*/
+				getPattern();
 			},
 		}],
 		columns : [ {
@@ -281,11 +280,11 @@ function initCreateCodeModal(){
 	
 	editor = CKEDITOR.replace( 'title-editor' );
 	
-	$('#create-ballot-modal').on('shown.bs.modal', function(e){
+	$('.modal').on('show.bs.modal', function(e){
 		$('body').css('overflow', 'hidden');
 	});
 	
-	$('#create-ballot-modal').on('hidden.bs.modal', function(e){
+	$('.modal').on('hide.bs.modal', function(e){
 		$('body').css('overflow', 'auto');
 	});
 	
@@ -340,13 +339,57 @@ function savePattern() {
 		data : {
 			pattern : patternStr
 		},
-		success : function(response) {
-			if(response != 'Failed'){
-				//Show modal print ballot
+		success : function(data) {
+			if (data.trim() && data != 'Failed') {
+				showPrintBallotModal(data);
+				$('#create-ballot-modal').modal('hide');
 			}
 			
 			$('.btn-ballot').removeAttr('disabled');
 		},
+		error : function(){
+			console.log('Save Ballot Pattern Error');
+		}
+	});
+}
+
+function getPattern(){
+	
+	$.ajax({
+		url : "get_pattern",
+		type : "GET",
+		success : function(data){
+			showPrintBallotModal(data);
+		},
+		error : function(){
+			console.log('Get Ballot Pattern Error');
+		}
+	});
+}
+
+function showPrintBallotModal(data){
+	var content = $('#print-ballot-content').empty();
+	
+	if (data.trim() && data != 'Failed') {
+		content.append(data);
+		$('#btn-print-ballot').removeAttr('disabled');
+	} else {
+		var error = "<strong>Bạn chưa tạo mẫu phiếu, vui lòng tạo mẫu phiếu trước khi xuất!</strong>";
+		$('#btn-print-ballot').attr('disabled', 'disabled');
+		content.append(error);
+	}
+	
+	showModal('#print-ballot-modal');
+}
+
+
+/* Print Ballot */
+
+function initPrintBallotModal(){
+	
+	$('#btn-print-ballot').on('click', function(){
+		
 		
 	});
 }
+

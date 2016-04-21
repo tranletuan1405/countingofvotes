@@ -14,6 +14,8 @@ public interface IVotingDao {
 	boolean update(Voting voting);
 
 	boolean savePattern(long votingId, String pattern);
+	
+	String getPattern(long votingId);
 
 	long recreate(long oldId);
 

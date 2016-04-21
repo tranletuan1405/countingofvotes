@@ -46,7 +46,6 @@ public class VotingService implements IVotingDao {
 
 	@Override
 	public boolean persistCountingRule(CountingRule rule) {
-		// TODO Auto-generated method stub
 		return votingDao.persistCountingRule(rule);
 	}
 
@@ -68,6 +67,11 @@ public class VotingService implements IVotingDao {
 	@Override
 	public boolean savePattern(long votingId, String pattern) {
 		return votingDao.savePattern(votingId, pattern);
+	}
+
+	@Override
+	public String getPattern(long votingId) {
+		return votingDao.getPattern(votingId);
 	}
 
 }

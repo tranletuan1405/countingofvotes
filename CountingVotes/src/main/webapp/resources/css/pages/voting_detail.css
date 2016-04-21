@@ -39,7 +39,7 @@
 
 /* MODAL CREATE BALLOT */
 .modal .modal-body {
-    max-height: calc(80vh);
+    max-height: calc(82vh);
     overflow-y: auto;
 }
 

@@ -112,4 +112,13 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 		return result > 0 ? true : false;
 	}
 
+	@Override
+	public String getPattern(long votingId) {
+		String hql = "SELECT v.ballotPattern FROM Voting v WHERE v.id = :votingId AND v.isEnabled = :isEnabled";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("votingId", votingId);
+		query.setParameter("isEnabled", true);
+		return (String) query.uniqueResult();
+	}
+
 }
