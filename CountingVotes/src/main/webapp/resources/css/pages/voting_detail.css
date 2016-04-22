@@ -34,12 +34,12 @@
 }
 
 #create-codes-modal {
-	margin-top: calc(30vh);
+	margin-top: calc(32vh);
 }
 
 /* MODAL CREATE BALLOT */
 .modal .modal-body {
-    max-height: calc(82vh);
+    max-height: calc(81vh);
     overflow-y: auto;
 }
 

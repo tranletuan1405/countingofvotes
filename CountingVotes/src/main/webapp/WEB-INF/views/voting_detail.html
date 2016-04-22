@@ -31,6 +31,7 @@
 <script type="text/javascript" th:src="@{/js/common/jquery-ui-1.9.2.custom.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/pages/voting_detail.js}"></script>
 <script type="text/javascript" th:src="@{/js/common/ckeditor/ckeditor.js}"></script>
+<script type="text/javascript" th:src="@{/js/common/jQuery.print.js}"></script>
 
 <link rel="stylesheet" type="text/css" th:href="@{/css/pages/voting_detail.css}" />
 <link rel="stylesheet" type="text/css" th:href="@{/css/common/jquery-ui-1.9.2.custom.css}" />
@@ -172,7 +173,7 @@
 											<div class="col-sm-4 slider" id="slider-max-selected"
 												style="top: 12px;"></div>
 
-											<label for="slider-min-percent" class="col-sm-1 control-label"></label> 
+											<label for="slider-max-selected" class="col-sm-1 control-label"></label> 
 											
 											<input type="number" th:name="maxSelected" class="col-sm-1 control-label value-slider" id="max-selected" 
 												min = "0" th:attr="max=${voting.candidates.size()}" required="required"											

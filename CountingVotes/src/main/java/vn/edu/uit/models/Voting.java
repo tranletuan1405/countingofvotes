@@ -52,7 +52,7 @@ public class Voting extends AbstractEntity {
 	@OneToMany(targetEntity = Candidate.class, mappedBy = "voting", fetch = FetchType.EAGER)
 	private Set<Candidate> candidates = new HashSet<Candidate>(0);
 
-	@Column(name = "ballot_pattern", columnDefinition = "VARCHAR(5000)")
+	@Column(name = "ballot_pattern", columnDefinition = "VARCHAR(15000)")
 	private String ballotPattern;
 	
 	
