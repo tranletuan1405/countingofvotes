@@ -12,7 +12,7 @@ $(document).ready(function () {
 	loadCandidateTable();
 	initCountingRule();
 	initSelectCandidateModal();
-	initCreateCodeModal();
+	initCreateBallotModal();
 	initPrintBallotModal();
 });
 
@@ -230,121 +230,156 @@ function loadSelectListCandidates(){
 
 /* Create Ballot */
 
-function initCreateCodeModal(){
+function initCreateBallotModal(){
 	$('#btn-create-codes').on('click', function(){
 		$('#btn-cancel-create-codes').attr('disabled', 'disabled');
 		$(this).attr('disabled', 'disabled');
 		
-		var index = 1;
-		create_ballot_table = $('#create-ballot-table').DataTable({
-			destroy : true,
-			paging : false,
-			orderMulti : true,
-			ajax : "create_ballot",
-			rowId : "id",
-			columns : [ {
-				data : "id",
-				orderable : false,
-				searchable : false,
-			}, {
-				data : "name",
-			}, {
-				data : "dateOfBirth",
-			}, {
-				data : "gender",
-			}, {
-				data : "unitName",
-			}, {
-				data : "position",
-			}, {
-				data : "countingEncodeImage",
-				searchable : false,
-				orderable : false,
-			},],
-			"columnDefs": [{
-				"render" : function(data, type, row){
-					
-					return index++;
-				},
-				"targets" : 0
-			},{
-				"render" : function(data, type, row) {
-					return "<img class='img-responsive code-pattern' src='../img/barcode/" + data + "'style='width : 50px; height : 50px;'/>";
-				},
-				"targets" : 6
-			},],
-			select : false,
-			"initComplete": function(settings, json) {
-				$('#create-codes-modal').modal('hide');
-				showModal('#create-ballot-modal');
-				
-				$('a.toggle-vis').on( 'click', function (e) {
-			        e.preventDefault();
-			 
-			        // Get the column API object
-			        var column = create_ballot_table.column( $(this).attr('data-column') );
-			 
-			        // Toggle the visibility
-			        column.visible( ! column.visible() );
-			    } );
-				
-				editor = CKEDITOR.replace( 'title-editor' );
-				
-				$('#tab-result').on('show.bs.tab', function (e) {
-					  
-					//Get title design 
-					var title = editor.getData();
-					
-					//Get table
-					var body = $('#create-ballot-table').html();
-				
-					//Append title & body
-					var title_ballot = $('#title-ballot');
-					var body_ballot = $('#body-ballot');
-					
-					title_ballot.empty();
-					body_ballot.empty();
-					
-					title_ballot.append(title);
-					body_ballot.append(body);
-					body_ballot.find('thead').empty();
-					body_ballot.find('tfoot').empty();
-					
-					$('#btn-create-ballot').removeClass('hidden');
-				});
-				
-				
-				$('#tab-create-ballot').on('show.bs.tab', function(e){
-					//Append title & body
-					var title_ballot = $('#title-ballot');
-					var body_ballot = $('#body-ballot');
-					
-					title_ballot.empty();
-					body_ballot.empty();
-					$('#btn-create-ballot').addClass('hidden');
-				});
-				
-				$('#btn-create-ballot').on('click', function(){
-					savePattern();
-				});
-				
-				$('#slider-code-size').slider({
-				    orientation: "horizontal",
-				    range: "min",
-				    min: 30,
-				    max: 120,
-				    value: 50,
-				    slide: function (event, ui) {
-				       var code = $('.code-pattern');
-				       code.css('width', ui.value + "px");
-				       code.css('height', ui.value + "px");
-				    }
-				});
+		$.ajax({
+			url : "get_create_ballot_modal",
+			type : "GET",
+			success : function (data){
+				var fragment = $('#fragment-create-ballot-modal').empty();
+				fragment.append(data);
+				initCreateBallotTable();
 			},
+			error : function(){
+				console.log("Get create ballot modal failed!");
+			}
 		});
 	});
 	
 	
+}
+
+function initCreateBallotTable(){
+	create_ballot_table = $('#create-ballot-table').DataTable({
+		destroy : true,
+		paging : false,
+		orderMulti : true,
+		ajax : "create_ballot",
+		rowId : "id",
+		order : [[ 1, 'asc' ]],
+		columns : [ {
+			data : "id",
+			orderable : false,
+			searchable : false,
+		}, {
+			data : "name",
+		}, {
+			data : "dateOfBirth",
+			orderable : false,
+		}, {
+			data : "gender",
+			orderable : false,
+		}, {
+			data : "unitName",
+			orderable : false,
+		}, {
+			data : "position",
+			orderable : false,
+		}, {
+			data : "countingEncodeImage",
+			searchable : false,
+			orderable : false,
+		},],
+		"columnDefs": [{
+			"render" : function(data, type, row) {
+				return "<img class='img-responsive code-pattern' src='../img/barcode/" + data + "'style='width : 50px; height : 50px;'/>";
+			},
+			"targets" : 6
+		},],
+		select : false,
+		"initComplete": function(settings, json) {
+			
+			initEventModal();			
+			$('#create-codes-modal').modal('hide');
+			showModal('#create-ballot-modal');
+			
+			$('a.toggle-vis').on( 'click', function (e) {
+		        e.preventDefault();
+		 
+		        // Get the column API object
+		        var column = create_ballot_table.column( $(this).attr('data-column') );
+		 
+		        // Toggle the visibility
+		        column.visible( ! column.visible() );
+		    } );
+			
+			editor = CKEDITOR.replace( 'title-editor' );
+			
+			$('#tab-result').on('show.bs.tab', function (e) {
+				  
+				//Get title design 
+				var title = editor.getData();
+				
+				//Get table
+				var body = $('#create-ballot-table').html();
+			
+				//Append title & body
+				var title_ballot = $('#title-ballot');
+				var body_ballot = $('#body-ballot');
+				
+				title_ballot.empty();
+				body_ballot.empty();
+				
+				title_ballot.append(title);
+				body_ballot.append(body);
+				body_ballot.find('thead').empty();
+				body_ballot.find('tfoot').empty();
+				
+				$('#btn-create-ballot').removeClass('hidden');
+			});
+			
+			
+			$('#tab-create-ballot').on('show.bs.tab', function(e){
+				//Append title & body
+				var title_ballot = $('#title-ballot');
+				var body_ballot = $('#body-ballot');
+				
+				title_ballot.empty();
+				body_ballot.empty();
+				$('#btn-create-ballot').addClass('hidden');
+			});
+			
+			$('#btn-create-ballot').on('click', function(){
+				savePattern();
+			});
+			
+			$('#slider-code-size').slider({
+			    orientation: "horizontal",
+			    range: "min",
+			    min: 15,
+			    max: 120,
+			    value: 50,
+			    slide: function (event, ui) {
+			       var code = $('.code-pattern');
+			       code.css('width', ui.value + "px");
+			       code.css('height', ui.value + "px");
+			       
+			       $('#code-size').html(ui.value + "px");
+			    }
+			});
+			
+			$('#slider-font-size').slider({
+			    orientation: "horizontal",
+			    range: "min",
+			    min: 4,
+			    max: 30,
+			    value: 13,
+			    slide: function (event, ui) {
+			       $('#create-ballot-table>tbody>tr>td').css('font-size', ui.value + "pt");
+			       $('#font-size').html(ui.value + "pt");
+			    }
+			});
+		},
+	});
+	
+	create_ballot_table.on( 'order.dt search.dt', function () {
+		create_ballot_table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        });
+    }).draw();
 }
 
 function savePattern() {
@@ -413,9 +448,9 @@ function initPrintBallotModal(){
 		$('#print-ballot-modal').modal('hide');
 		
 		$("#print-ballot-content").print({
-			globalStyles : false,
-			mediaPrint : true,
-			stylesheet : "../css/common/print_ballot.css",
+			globalStyles : true,
+			mediaPrint : false,
+			stylesheet : null,
 			noPrintSelector : ".no-print",
 			iframe : true,
 			append : null,
@@ -423,7 +458,6 @@ function initPrintBallotModal(){
 			manuallyCopyFormValues : true,
 			deferred : $.Deferred(),
 			timeout : 250,
-			title : "Phiếu bầu",
 			doctype : '<!doctype html>'
 		});
 		

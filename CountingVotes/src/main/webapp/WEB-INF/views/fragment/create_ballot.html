@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8"/>
-<title>Insert title here</title>
-</head>
-<body>
+
 	<div th:fragment="create_ballot">
 		<div class="modal fade" id="create-ballot-modal" tabindex="-1" role="dialog"
 			aria-labelledby="create-ballot-modal-label">
@@ -50,8 +44,13 @@
 										</div>
 										
 										<br/>
-										<p>Kích cỡ mã </p>
+										<p>Kích cỡ mã : <span id="code-size">50px</span></p>
 										<div class="col-sm-4 slider" id="slider-code-size"></div>
+										
+										<br/>
+										<p>Kích cỡ chữ : <span id="font-size">13pt</span></p>
+										<div class="col-sm-4 slider" id="slider-font-size"></div>
+										
 									</div>
 
 									<table id="create-ballot-table"
@@ -109,5 +108,3 @@
 			</div>
 		</div>
 	</div>
-</body>
-</html>

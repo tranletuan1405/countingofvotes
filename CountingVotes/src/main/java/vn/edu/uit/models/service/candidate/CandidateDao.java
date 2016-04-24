@@ -50,21 +50,23 @@ public class CandidateDao extends AbstractDao implements ICandidateDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Delegate> getNotCandidate(long votingId) {
+	public List<Delegate> getNotCandidate(long votingId, long congressId) {
 		String hql = "FROM Delegate WHERE id NOT IN "
-				+ "(SELECT delegate.id FROM Candidate WHERE voting.id = :votingId)  AND arivalTime IS NOT NULL";
+				+ "(SELECT delegate.id FROM Candidate WHERE voting.id = :votingId)  AND arivalTime IS NOT NULL AND congress.id = :congressId";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("votingId", votingId);
+		query.setParameter("congressId", congressId);
 		return query.list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Delegate> getIsCandidate(long votingId) {
+	public List<Delegate> getIsCandidate(long votingId, long congressId) {
 		String hql = "FROM Delegate WHERE id IN ("
-				+ "SELECT delegate.id FROM Candidate WHERE voting.id = :votingId) AND arivalTime IS NOT NULL";
+				+ "SELECT delegate.id FROM Candidate WHERE voting.id = :votingId) AND arivalTime IS NOT NULL AND congress.id = :congressId";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("votingId", votingId);
+		query.setParameter("congressId", congressId);
 		return query.list();
 	}
 

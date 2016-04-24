@@ -26,13 +26,13 @@ public class CandidateService implements ICandidateDao {
 	}
 
 	@Override
-	public List<Delegate> getNotCandidate(long votingId) {
-		return candidateDao.getNotCandidate(votingId);
+	public List<Delegate> getNotCandidate(long votingId, long congressId) {
+		return candidateDao.getNotCandidate(votingId, congressId);
 	}
 
 	@Override
-	public List<Delegate> getIsCandidate(long votingId) {
-		return candidateDao.getIsCandidate(votingId);
+	public List<Delegate> getIsCandidate(long votingId, long congressId) {
+		return candidateDao.getIsCandidate(votingId, congressId);
 	}
 
 	@Override

@@ -126,13 +126,14 @@ public class VotingDetailController {
 	public ModelAndView submitSelectedCandidates(
 			@RequestParam(value = "candidates", required = false) Long[] delegateIds, HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
 		ModelAndView model = new ModelAndView("redirect:/voting_detail/" + votingId);
 		if (delegateIds == null)
 			return model;
 		Voting voting = votingService.fetch(votingId);
 
-		List<Delegate> candidates = candidateService.getIsCandidate(votingId);
+		List<Delegate> candidates = candidateService.getIsCandidate(votingId, congressId);
 		List<Long> newCandidateIds = new ArrayList<Long>();
 
 		for (int i = 0; i < delegateIds.length; i++) {
@@ -172,6 +173,7 @@ public class VotingDetailController {
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
 
 		List<Candidate> candidates = new ArrayList<Candidate>(candidateService.fetch(votingId));
+		logger.info(candidates.size() + "");
 		List<CandidateJson> candidatesJson = new ArrayList<CandidateJson>();
 		for (int i = 0; i < candidates.size(); i++) {
 			candidatesJson.add(new CandidateJson(candidates.get(i)));
@@ -186,17 +188,18 @@ public class VotingDetailController {
 	@ResponseBody
 	public String getDelegatesNotCandidate(HttpServletRequest request) throws JsonProcessingException {
 		HttpSession session = request.getSession();
+		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
 
 		// Get Delegates
-		List<Delegate> delegates = candidateService.getNotCandidate(votingId);
+		List<Delegate> delegates = candidateService.getNotCandidate(votingId, congressId);
 		List<DelegateJson> delegatesJson = new ArrayList<DelegateJson>();
 		for (int i = 0; i < delegates.size(); i++) {
 			delegatesJson.add(new DelegateJson(delegates.get(i)));
 		}
 
 		// Get Candidates
-		List<Delegate> candidates = candidateService.getIsCandidate(votingId);
+		List<Delegate> candidates = candidateService.getIsCandidate(votingId, congressId);
 		List<DelegateJson> candidatesJson = new ArrayList<DelegateJson>();
 		for (int i = 0; i < candidates.size(); i++) {
 			candidatesJson.add(new DelegateJson(candidates.get(i)));
@@ -207,6 +210,14 @@ public class VotingDetailController {
 		json.setDelegates(delegatesJson);
 
 		return mapper.writeValueAsString(json);
+	}
+	
+	
+	@RequestMapping(value = "/get_create_ballot_modal", produces = {"application/text; charset=UTF-8" })
+	@ResponseBody
+	public ModelAndView getCreateBallotModal() {
+		ModelAndView model = new ModelAndView("fragment/create_ballot");
+		return model;
 	}
 
 	@RequestMapping(value = "/create_ballot", produces = { "application/json; charset=UTF-8" })

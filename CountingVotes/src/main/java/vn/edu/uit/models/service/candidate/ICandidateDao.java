@@ -15,9 +15,9 @@ public interface ICandidateDao {
 	
 	List<Candidate> fetch(long votingId);
 	
-	List<Delegate> getNotCandidate(long votingId);
+	List<Delegate> getNotCandidate(long votingId, long congressId);
 	
-	List<Delegate> getIsCandidate(long votingId);
+	List<Delegate> getIsCandidate(long votingId, long congressId);
 
 	boolean isExists(List<Delegate> candidates, long delegateId);
 }
