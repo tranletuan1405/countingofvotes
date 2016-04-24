@@ -1,0 +1,24 @@
+@CHARSET "ISO-8859-1";
+
+/* PRINT MEDIA */
+@media print {
+	* {
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+	#controls, .footer, .footerarea {
+		display: none;
+	}
+	html, body {
+		/*changing width to 100% causes huge overflow and wrap*/
+		height: 100%;
+		overflow: hidden;
+	}
+
+	.template {
+		width: auto;
+		left: 0;
+		top: 0;
+	}
+}
+

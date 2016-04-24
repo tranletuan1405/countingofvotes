@@ -413,9 +413,9 @@ function initPrintBallotModal(){
 		$('#print-ballot-modal').modal('hide');
 		
 		$("#print-ballot-content").print({
-			globalStyles : true,
-			mediaPrint : false,
-			stylesheet : null,
+			globalStyles : false,
+			mediaPrint : true,
+			stylesheet : "../css/common/print_ballot.css",
 			noPrintSelector : ".no-print",
 			iframe : true,
 			append : null,

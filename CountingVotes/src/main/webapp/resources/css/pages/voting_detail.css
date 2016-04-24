@@ -39,16 +39,16 @@
 
 /* MODAL CREATE BALLOT */
 .modal .modal-body {
-    max-height: calc(81vh);
-    overflow-y: auto;
+	max-height: calc(81vh);
+	overflow-y: auto;
 }
 
 .table-children-ver-center {
 	display: table-cell;
 }
 
-.table-children-ver-center>tbody>tr>td{
+.table-children-ver-center>tbody>tr>td {
 	vertical-align: middle;
-	border : 0px;
+	border: 0px;
 	text-align: left;
 }
