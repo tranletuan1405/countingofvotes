@@ -26,7 +26,7 @@ public class Unit extends AbstractEntity {
 	@Column(name = "short_name", columnDefinition = "varchar(50)")
 	private String shortName;
 
-	@ManyToOne(targetEntity = Congress.class, fetch = FetchType.LAZY)
+	@OneToOne(targetEntity = Congress.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "congress_id", updatable = false)
 	private Congress congress;
 

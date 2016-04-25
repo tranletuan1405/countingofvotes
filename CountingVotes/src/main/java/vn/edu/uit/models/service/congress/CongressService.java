@@ -40,16 +40,6 @@ public class CongressService implements ICongressDao {
 		return congressDao.fetch(min, max);
 	}
 
-	public List<CongressJson> fetchJson() {
-		List<Congress> list = congressDao.fetch(0, 0);
-		List<CongressJson> result = new ArrayList<CongressJson>();
-		for (int i = 0; i < list.size(); i++) {
-			result.add(new CongressJson(list.get(i)));
-		}
-
-		return result;
-	}
-
 	@Override
 	public boolean update(Congress congress) {
 		return congressDao.update(congress);
@@ -58,6 +48,11 @@ public class CongressService implements ICongressDao {
 	@Override
 	public String getCongressPath(long congressId) {
 		return congressDao.getCongressPath(congressId);
+	}
+
+	@Override
+	public List<CongressJson> fetchJson() {
+		return congressDao.fetchJson();
 	}
 	
 }

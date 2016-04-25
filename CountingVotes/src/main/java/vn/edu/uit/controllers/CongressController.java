@@ -86,7 +86,7 @@ public class CongressController {
 	}
 
 	// LOAD TABLE
-	@RequestMapping(value = "/congress_table", method = RequestMethod.GET)
+	@RequestMapping(value = "/congress_table", method = RequestMethod.GET, produces = { "application/json; charset=UTF-8"})
 	@ResponseBody
 	public String congressList() throws JsonProcessingException {
 
@@ -243,7 +243,7 @@ public class CongressController {
 			String content = SupportMethods.getUID();
 			String encode = tDes.encryptText(content);
 			String imagePath = barcodeGenerator.generateQR(congressPath, SupportMethods.getUID(), encode, 320);
-			
+
 			// Barcode
 			barcode.setContent(content);
 			barcode.setEncode(encode);

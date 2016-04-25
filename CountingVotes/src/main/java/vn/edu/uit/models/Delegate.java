@@ -92,7 +92,7 @@ public class Delegate extends AbstractEntity {
 	@JoinColumn(name = "hash_code_id", nullable = false)
 	private Barcode hashCode;
 
-	@ManyToOne(targetEntity = Congress.class, fetch = FetchType.LAZY)
+	@OneToOne(targetEntity = Congress.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "congress_id", nullable = false, updatable = false)
 	private Congress congress;
 

@@ -3,6 +3,7 @@ package vn.edu.uit.models.service.congress;
 import java.util.List;
 
 import vn.edu.uit.models.Congress;
+import vn.edu.uit.models.json.CongressJson;
 
 public interface ICongressDao {
 
@@ -15,4 +16,6 @@ public interface ICongressDao {
 	List<Congress> fetch(int min, int max);
 
 	String getCongressPath(long congressId);
+	
+	List<CongressJson> fetchJson();
 }

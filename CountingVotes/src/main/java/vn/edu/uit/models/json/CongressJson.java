@@ -1,5 +1,7 @@
 package vn.edu.uit.models.json;
 
+import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import vn.edu.uit.extra.DataConfig;
@@ -8,33 +10,23 @@ import vn.edu.uit.models.Congress;
 
 public class CongressJson {
 
-	private long id;
+	private BigInteger id;
 	private String name;
-	private int totalUnit;
-	private int totalDelegate;
-	private int totalVoting;
+	private BigInteger totalUnit;
+	private BigInteger totalDelegate;
+	private BigInteger totalVoting;
 	private String startTime;
 	private String endTime;
-	private String logo;
-	private String banner;
-	
-	public CongressJson(Congress congress){
-		this.setId(congress.getId());
-		this.setName(congress.getName());
-		this.setTotalUnit(congress.getUnits().size());
-		this.setTotalDelegate(congress.getDelegates().size());
-		this.setTotalVoting(congress.getVotings().size());
-		this.setStartTime(SupportMethods.dateToString(congress.getStartTime(), DataConfig.DATE_TIME_FORMAT));
-		this.setEndTime(SupportMethods.dateToString(congress.getEndTime(), DataConfig.DATE_TIME_FORMAT));
-		this.setLogo(congress.getLogo());
-		this.setBanner(congress.getBanner());
+
+	public CongressJson() {
+
 	}
 
-	public long getId() {
+	public BigInteger getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(BigInteger id) {
 		this.id = id;
 	}
 
@@ -46,27 +38,27 @@ public class CongressJson {
 		this.name = name;
 	}
 
-	public int getTotalUnit() {
+	public BigInteger getTotalUnit() {
 		return totalUnit;
 	}
 
-	public void setTotalUnit(int totalUnit) {
+	public void setTotalUnit(BigInteger totalUnit) {
 		this.totalUnit = totalUnit;
 	}
 
-	public int getTotalDelegate() {
+	public BigInteger getTotalDelegate() {
 		return totalDelegate;
 	}
 
-	public void setTotalDelegate(int totalDelegate) {
+	public void setTotalDelegate(BigInteger totalDelegate) {
 		this.totalDelegate = totalDelegate;
 	}
 
-	public int getTotalVoting() {
+	public BigInteger getTotalVoting() {
 		return totalVoting;
 	}
 
-	public void setTotalVoting(int totalVoting) {
+	public void setTotalVoting(BigInteger totalVoting) {
 		this.totalVoting = totalVoting;
 	}
 
@@ -74,31 +66,24 @@ public class CongressJson {
 		return startTime;
 	}
 
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
+	public void setStartTime(Timestamp startTime) {
+		try {
+			this.startTime = SupportMethods.dateToString(new Date(startTime.getTime()), DataConfig.DATE_TIME_FORMAT);
+		} catch (Exception e) {
+
+		}
 	}
 
 	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
+	public void setEndTime(Timestamp endTime) {
+		try {
+			this.endTime = SupportMethods.dateToString(new Date(endTime.getTime()), DataConfig.DATE_TIME_FORMAT);
+		} catch (Exception e) {
+
+		}
 	}
 
-	public String getLogo() {
-		return logo;
-	}
-
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
-
-	public String getBanner() {
-		return banner;
-	}
-
-	public void setBanner(String banner) {
-		this.banner = banner;
-	}
 }

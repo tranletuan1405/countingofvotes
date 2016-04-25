@@ -96,20 +96,20 @@ public class CongressDetailController {
 	}
 
 	// Load delegates table
-	@RequestMapping(value = "/delegates")
+	/*@RequestMapping(value = "/delegates")
 	@ResponseBody
 	public String delegates(HttpServletRequest request) throws JsonProcessingException {
 		HttpSession session = request.getSession();
 		long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		ListHolder<DelegateJson> json = new ListHolder<DelegateJson>();
-		List<Delegate> delegates = new ArrayList<Delegate>(congressService.fetch(id).getDelegates());
+		List<Delegate> delegates = new ArrayList<Delegate>(congressService.fetch(id).);
 
 		for (int i = 0; i < delegates.size(); i++) {
 			json.getData().add(new DelegateJson(delegates.get(i)));
 		}
 
 		return mapper.writeValueAsString(json);
-	}
+	}*/
 
 	// Load units table
 	@RequestMapping(value = "/units")

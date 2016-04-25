@@ -83,7 +83,7 @@ public class VotingController {
 	}
 	
 	// ======================request body==========================
-	@RequestMapping(value = "/table")
+	/*@RequestMapping(value = "/table")
 	@ResponseBody
 	public String loadVotingList(HttpServletRequest request) throws JsonProcessingException {
 		HttpSession session = request.getSession();
@@ -102,7 +102,7 @@ public class VotingController {
 		}
 
 		return "";
-	}
+	}*/
 
 
 }

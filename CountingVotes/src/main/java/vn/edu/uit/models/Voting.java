@@ -38,8 +38,8 @@ public class Voting extends AbstractEntity {
 	@Column(name = "end_time")
 	private Date endTime;
 
-	@ManyToOne(targetEntity = Congress.class, fetch = FetchType.LAZY)
-	@JoinColumn(name = "congress_id", nullable = false, updatable = false)
+	@OneToOne(targetEntity = Congress.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "congress_id", updatable = false)
 	private Congress congress;
 
 	@OneToOne(targetEntity = CountingRule.class, fetch = FetchType.EAGER)

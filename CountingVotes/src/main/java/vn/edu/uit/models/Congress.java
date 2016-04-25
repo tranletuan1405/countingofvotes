@@ -46,16 +46,6 @@ public class Congress extends AbstractEntity{
 	@Column(name = "banner")
 	private String banner;
 	
-	@OneToMany(targetEntity = Unit.class, fetch = FetchType.EAGER, mappedBy = "congress")
-	private Set<Unit> units = new HashSet<Unit>(0);
-	
-	@OneToMany(targetEntity = Voting.class, fetch = FetchType.EAGER , mappedBy = "congress")
-	private Set<Voting> votings = new HashSet<Voting>(0);
-	
-	@OneToMany(targetEntity = Delegate.class, fetch = FetchType.EAGER, mappedBy = "congress")
-	private Set<Delegate> delegates = new HashSet<Delegate>(0);
-	
-	
 	@Column(name = "congress_key", nullable = false, updatable = false, columnDefinition = "varchar(24)")
 	private String congressKey;
 
@@ -96,30 +86,6 @@ public class Congress extends AbstractEntity{
 
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
-	}
-
-	public Set<Unit> getUnits() {
-		return units;
-	}
-
-	public void setUnits(Set<Unit> units) {
-		this.units = units;
-	}
-
-	public Set<Voting> getVotings() {
-		return votings;
-	}
-
-	public void setVotings(Set<Voting> votings) {
-		this.votings = votings;
-	}
-
-	public Set<Delegate> getDelegates() {
-		return delegates;
-	}
-
-	public void setDelegates(Set<Delegate> delegates) {
-		this.delegates = delegates;
 	}
 
 	public String getCongressKey() {
