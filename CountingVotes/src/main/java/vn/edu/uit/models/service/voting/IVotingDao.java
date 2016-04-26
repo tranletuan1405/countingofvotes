@@ -21,9 +21,11 @@ public interface IVotingDao {
 
 	Voting fetch(long id);
 
-	List<Voting> fetch(int min, int max);
+	List<Voting> fetchAll(long congressId);
 
 	int getCurrentVersion(long congressId, String name);
+	
+	long getTotalVoting(long congressId);
 
 	// Rule
 	boolean persistCountingRule(CountingRule rule);

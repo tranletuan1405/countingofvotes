@@ -35,10 +35,6 @@ public class Candidate implements Serializable {
 	@JoinColumn(name = "delegate_id", nullable = false, updatable = false)
 	private Delegate delegate;
 	
-	@OneToOne(targetEntity = Barcode.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "couting_barcode")
-	private Barcode countingBarcode;
-	
 	@Column(name = "note", columnDefinition = "varchar(500)")
 	private String note;
 	
@@ -101,14 +97,5 @@ public class Candidate implements Serializable {
 	public void setUpdatable(boolean isUpdatable) {
 		this.isUpdatable = isUpdatable;
 	}
-
-	public Barcode getCountingBarcode() {
-		return countingBarcode;
-	}
-
-	public void setCountingBarcode(Barcode countingBarcode) {
-		this.countingBarcode = countingBarcode;
-	}
-
 
 }

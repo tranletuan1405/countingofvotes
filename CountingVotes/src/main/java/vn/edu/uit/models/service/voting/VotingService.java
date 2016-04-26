@@ -30,10 +30,6 @@ public class VotingService implements IVotingDao {
 		return votingDao.fetch(id);
 	}
 
-	public List<Voting> fetch(int min, int max) {
-		return votingDao.fetch(min, max);
-	}
-
 	@Override
 	public boolean merge(Voting voting) {
 		return votingDao.merge(voting);
@@ -72,6 +68,16 @@ public class VotingService implements IVotingDao {
 	@Override
 	public String getPattern(long votingId) {
 		return votingDao.getPattern(votingId);
+	}
+
+	@Override
+	public long getTotalVoting(long congressId) {
+		return votingDao.getTotalVoting(congressId);
+	}
+
+	@Override
+	public List<Voting> fetchAll(long congressId) {
+		return votingDao.fetchAll(congressId);
 	}
 
 }

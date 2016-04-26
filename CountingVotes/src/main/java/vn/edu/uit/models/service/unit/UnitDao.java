@@ -78,4 +78,13 @@ public class UnitDao extends AbstractDao implements IUnitDao {
 		return (Unit) query.uniqueResult();
 	}
 
+	@Override
+	public long getTotalUnit(long congressId) {
+		String hql = "SELECT count(*) FROM Unit WHERE congress.id = :congressId AND isEnabled = :isEnabled";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("congressId", congressId);
+		query.setParameter("isEnabled", true);
+		return (Long)query.uniqueResult();
+	}
+
 }

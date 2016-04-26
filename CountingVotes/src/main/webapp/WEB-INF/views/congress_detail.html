@@ -191,7 +191,7 @@
 										<div class="input-group-addon title-readonly-data">Tổng
 											số Đại biểu</div>
 										<input
-											th:value="${attendees} + ' / ' + ${congress.delegates.size()}"
+											th:value="${attendees} + ' / ' + ${totalDelegate}"
 											th:name="totalDelegate" type="text"
 											class="form-control readonly-data" id="total-delegate"
 											readonly="true" />
@@ -208,7 +208,7 @@
 										</div>
 										<div class="input-group-addon title-readonly-data">Tổng
 											số Đơn vị</div>
-										<input th:value="${congress.units.size()}" th:name="totalUnit"
+										<input th:value="${totalUnit}" th:name="totalUnit"
 											type="text" class="form-control readonly-data"
 											id="total-unit" readonly="true" />
 
@@ -224,7 +224,7 @@
 										</div>
 										<div class="input-group-addon title-readonly-data">Tổng
 											số Bầu cử</div>
-										<input th:value="${congress.votings.size()}"
+										<input th:value="${totalVoting}"
 											th:name="totalVoting" type="text"
 											class="form-control readonly-data" id="total-voting"
 											readonly="true" />

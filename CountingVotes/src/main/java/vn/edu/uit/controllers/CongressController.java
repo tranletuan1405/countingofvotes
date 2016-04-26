@@ -243,7 +243,11 @@ public class CongressController {
 			String content = SupportMethods.getUID();
 			String encode = tDes.encryptText(content);
 			String imagePath = barcodeGenerator.generateQR(congressPath, SupportMethods.getUID(), encode, 320);
-
+			
+			//check if generate barcode fail
+			if (imagePath == null || imagePath.isEmpty()){
+				imagePath = barcodeGenerator.generateQR(congressPath, SupportMethods.getUID(), encode, 320);
+			}
 			// Barcode
 			barcode.setContent(content);
 			barcode.setEncode(encode);

@@ -31,13 +31,13 @@ import vn.edu.uit.models.Congress;
 import vn.edu.uit.models.CountingRule;
 import vn.edu.uit.models.Delegate;
 import vn.edu.uit.models.Voting;
-import vn.edu.uit.models.json.CandidateJson;
 import vn.edu.uit.models.json.CandidateSelectionJson;
 import vn.edu.uit.models.json.DelegateJson;
 import vn.edu.uit.models.service.barcode.BarcodeService;
 import vn.edu.uit.models.service.candidate.CandidateService;
 import vn.edu.uit.models.service.congress.CongressService;
 import vn.edu.uit.models.service.delegate.DelegateService;
+import vn.edu.uit.models.service.unit.UnitService;
 import vn.edu.uit.models.service.voting.VotingService;
 
 @Controller
@@ -60,6 +60,9 @@ public class VotingDetailController {
 	
 	@Autowired
 	private BarcodeService barcodeService;
+	
+	@Autowired
+	private UnitService unitService;
 
 	@Autowired
 	private ObjectMapper mapper;
@@ -76,7 +79,10 @@ public class VotingDetailController {
 
 		// Load congress
 		Congress congress = congressService.fetch(congressId);
+		
 		long attendees = delegateService.getNumOfAttendees(congressId);
+		long totalDelegate = delegateService.getTotalDelegate(id);
+		long totalUnit = unitService.getTotalUnit(id);
 
 		Voting voting = votingService.fetch(id);
 		session.setAttribute(DataConfig.SESSION_VOTING_NAME, id);
@@ -97,9 +103,11 @@ public class VotingDetailController {
 			voting.getCountingRule().setMaxSelected(voting.getCandidates().size());
 			votingService.merge(voting);
 		}
-
-		model.addObject("congress", congress);
+		
 		model.addObject("attendees", attendees);
+		model.addObject("totalDelegate", totalDelegate);
+		model.addObject("totalUnit", totalUnit);
+		model.addObject("congress", congress);
 		model.addObject("voting", voting);
 
 		model.addObject(DataConfig.VOTING_ACTIVE, DataConfig.VOTING_ACTIVE);
@@ -171,16 +179,16 @@ public class VotingDetailController {
 		HttpSession session = request.getSession();
 		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
-
-		List<Candidate> candidates = new ArrayList<Candidate>(candidateService.fetch(votingId));
-		logger.info(candidates.size() + "");
-		List<CandidateJson> candidatesJson = new ArrayList<CandidateJson>();
-		for (int i = 0; i < candidates.size(); i++) {
-			candidatesJson.add(new CandidateJson(candidates.get(i)));
+		
+		List<Delegate> candidates = candidateService.getIsCandidate(votingId, congressId);
+		List<DelegateJson> candidateJson = new ArrayList<DelegateJson>();
+		ListHolder<DelegateJson> json = new ListHolder<DelegateJson>();
+		
+		for(int i = 0; i < candidates.size(); i ++){
+			candidateJson.add(new DelegateJson(candidates.get(i)));
 		}
-
-		ListHolder<CandidateJson> json = new ListHolder<CandidateJson>();
-		json.setData(candidatesJson);
+		
+		json.setData(candidateJson);
 		return mapper.writeValueAsString(json);
 	}
 
@@ -220,7 +228,7 @@ public class VotingDetailController {
 		return model;
 	}
 
-	@RequestMapping(value = "/create_ballot", produces = { "application/json; charset=UTF-8" })
+	/*@RequestMapping(value = "/create_ballot", produces = { "application/json; charset=UTF-8" })
 	@ResponseBody
 	public String createCandidateCodes(HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession();
@@ -259,7 +267,7 @@ public class VotingDetailController {
 		
 		return mapper.writeValueAsString(json);
 	}
-	
+	*/
 	
 	@RequestMapping(value = "save_pattern", method = RequestMethod.POST, produces = {"application/text; charset=UTF-8" })
 	@ResponseBody

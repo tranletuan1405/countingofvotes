@@ -37,6 +37,7 @@ import vn.edu.uit.models.service.delegate.DelegateService;
 import vn.edu.uit.models.service.delegate.support.EnumDelegateType;
 import vn.edu.uit.models.service.delegate_type.DelegateTypeService;
 import vn.edu.uit.models.service.unit.UnitService;
+import vn.edu.uit.models.service.voting.VotingService;
 
 @Controller
 @RequestMapping(value = "detail/**")
@@ -55,6 +56,9 @@ public class CongressDetailController {
 
 	@Autowired
 	private DelegateService delegateService;
+	
+	@Autowired
+	private VotingService votingService;
 
 	@Autowired
 	private ObjectMapper mapper;
@@ -68,8 +72,14 @@ public class CongressDetailController {
 		Congress congress = congressService.fetch(id);
 
 		long attendees = delegateService.getNumOfAttendees(id);
-
+		long totalDelegate = delegateService.getTotalDelegate(id);
+		long totalUnit = unitService.getTotalUnit(id);
+		long totalVoting = votingService.getTotalVoting(id);
+		
 		model.addObject("attendees", attendees);
+		model.addObject("totalDelegate", totalDelegate);
+		model.addObject("totalUnit", totalUnit);
+		model.addObject("totalVoting", totalVoting);
 		model.addObject("congress", congress);
 		
 		model.addObject(DataConfig.DETAIL_ACTIVE, DataConfig.DETAIL_ACTIVE);
@@ -86,8 +96,14 @@ public class CongressDetailController {
 		Congress congress = congressService.fetch(id);
 
 		long attendees = delegateService.getNumOfAttendees(id);
-
+		long totalDelegate = delegateService.getTotalDelegate(id);
+		long totalUnit = unitService.getTotalUnit(id);
+		long totalVoting = votingService.getTotalVoting(id);
+		
 		model.addObject("attendees", attendees);
+		model.addObject("totalDelegate", totalDelegate);
+		model.addObject("totalUnit", totalUnit);
+		model.addObject("totalVoting", totalVoting);
 		model.addObject("congress", congress);
 		
 		model.addObject(DataConfig.DETAIL_ACTIVE, DataConfig.DETAIL_ACTIVE);
@@ -96,20 +112,20 @@ public class CongressDetailController {
 	}
 
 	// Load delegates table
-	/*@RequestMapping(value = "/delegates")
+	@RequestMapping(value = "/delegates")
 	@ResponseBody
 	public String delegates(HttpServletRequest request) throws JsonProcessingException {
 		HttpSession session = request.getSession();
 		long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		ListHolder<DelegateJson> json = new ListHolder<DelegateJson>();
-		List<Delegate> delegates = new ArrayList<Delegate>(congressService.fetch(id).);
+		List<Delegate> delegates = delegateService.fetchAll(id);
 
 		for (int i = 0; i < delegates.size(); i++) {
 			json.getData().add(new DelegateJson(delegates.get(i)));
 		}
 
 		return mapper.writeValueAsString(json);
-	}*/
+	}
 
 	// Load units table
 	@RequestMapping(value = "/units")

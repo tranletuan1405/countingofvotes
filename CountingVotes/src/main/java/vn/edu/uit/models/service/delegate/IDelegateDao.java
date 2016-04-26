@@ -16,11 +16,13 @@ public interface IDelegateDao {
 	
 	Delegate fetch(long id);
 	
-	List<Delegate> fetch(int min, int max);
-	
 	List<Delegate> getByDocument(InputStream is);
+	
+	List<Delegate> fetchAll(long congressId);
 
 	long getNumOfDelegate(long congressId, long unitId, long typeId);
 	
 	long getNumOfAttendees(long congressId);
+	
+	long getTotalDelegate(long congressId);
 }

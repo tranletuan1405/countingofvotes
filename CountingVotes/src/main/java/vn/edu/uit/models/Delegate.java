@@ -88,9 +88,13 @@ public class Delegate extends AbstractEntity {
 	@Column(name = "attended", columnDefinition = "boolean default false", nullable = false)
 	private boolean attended = false;
 
-	@OneToOne(targetEntity = Barcode.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(targetEntity = Barcode.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "hash_code_id", nullable = false)
 	private Barcode hashCode;
+	
+	@OneToOne(targetEntity = Barcode.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "counting_code_id")
+	private Barcode countingCode;
 
 	@OneToOne(targetEntity = Congress.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "congress_id", nullable = false, updatable = false)
@@ -280,6 +284,14 @@ public class Delegate extends AbstractEntity {
 
 	public void setAttended(boolean attended) {
 		this.attended = attended;
+	}
+
+	public Barcode getCountingCode() {
+		return countingCode;
+	}
+
+	public void setCountingCode(Barcode countingCode) {
+		this.countingCode = countingCode;
 	}
 	
 }

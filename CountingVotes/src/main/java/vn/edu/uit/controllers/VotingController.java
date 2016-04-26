@@ -27,6 +27,7 @@ import vn.edu.uit.models.Voting;
 import vn.edu.uit.models.json.VotingJson;
 import vn.edu.uit.models.service.congress.CongressService;
 import vn.edu.uit.models.service.delegate.DelegateService;
+import vn.edu.uit.models.service.unit.UnitService;
 import vn.edu.uit.models.service.voting.VotingService;
 
 @Controller
@@ -43,6 +44,9 @@ public class VotingController {
 	
 	@Autowired
 	private DelegateService delegateService;
+	
+	@Autowired
+	private UnitService unitService;
 
 	@Autowired
 	private ObjectMapper mapper;
@@ -53,9 +57,15 @@ public class VotingController {
 		HttpSession session = request.getSession();
 		long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		Congress congress = congressService.fetch(id);
+
 		long attendees = delegateService.getNumOfAttendees(id);
+		long totalDelegate = delegateService.getTotalDelegate(id);
+		long totalUnit = unitService.getTotalUnit(id);
+		long totalVoting = votingService.getTotalVoting(id);
 		
 		model.addObject("attendees", attendees);
+		model.addObject("totalDelegate", totalDelegate);
+		model.addObject("totalUnit", totalUnit);
 		model.addObject("congress", congress);
 		model.addObject(DataConfig.VOTING_ACTIVE, DataConfig.VOTING_ACTIVE);
 		
@@ -83,26 +93,22 @@ public class VotingController {
 	}
 	
 	// ======================request body==========================
-	/*@RequestMapping(value = "/table")
+	@RequestMapping(value = "/table")
 	@ResponseBody
 	public String loadVotingList(HttpServletRequest request) throws JsonProcessingException {
 		HttpSession session = request.getSession();
 		long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 
-		if (id > 0) {
-			Congress congress = congressService.fetch(id);
-			List<Voting> votings = new ArrayList<Voting>(congress.getVotings());
-			List<VotingJson> votingJson = new ArrayList<VotingJson>();
-			for (int i = 0; i < votings.size(); i++) {
-				votingJson.add(new VotingJson(votings.get(i)));
-			}
-			ListHolder<VotingJson> json = new ListHolder<VotingJson>();
-			json.setData(votingJson);
-			return mapper.writeValueAsString(json);
+		List<Voting> votings = votingService.fetchAll(id);
+		List<VotingJson> votingJson = new ArrayList<VotingJson>();
+		
+		for (int i = 0; i < votings.size(); i++) {
+			votingJson.add(new VotingJson(votings.get(i)));
 		}
-
-		return "";
-	}*/
-
+		
+		ListHolder<VotingJson> json = new ListHolder<VotingJson>();
+		json.setData(votingJson);
+		return mapper.writeValueAsString(json);
+	}
 
 }

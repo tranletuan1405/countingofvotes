@@ -75,21 +75,6 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 		return (Delegate) getSession().get(Delegate.class, id);
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Delegate> fetch(int min, int max) {
-		Criteria crit = getSession().createCriteria(Delegate.class);
-		crit.add(Restrictions.eq("isEnabled", true));
-
-		if (min >= 0 && max > 0 && max > min) {
-			crit.setFirstResult(min);
-			crit.setMaxResults(max);
-		}
-
-		crit.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-		return crit.list();
-	}
-
 	@Override
 	public List<Delegate> getByDocument(InputStream is) {
 
@@ -300,6 +285,27 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 	@Override
 	public boolean update(Delegate delegate) {
 		return mergeObject(delegate);
+	}
+
+	@Override
+	public long getTotalDelegate(long congressId) {
+		String hql = "SELECT count(*) FROM Delegate WHERE congress.id = :congressId AND isEnabled = :isEnabled";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("congressId", congressId);
+		query.setParameter("isEnabled", true);
+		
+		return (Long) query.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Delegate> fetchAll(long congressId) {
+		String hql = "FROM Delegate WHERE congress.id = :congressId AND isEnabled = :isEnabled";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("congressId", congressId);
+		query.setParameter("isEnabled", true);
+		
+		return query.list();
 	}
 
 }

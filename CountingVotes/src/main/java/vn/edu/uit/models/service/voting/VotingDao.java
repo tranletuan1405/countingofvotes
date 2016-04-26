@@ -47,22 +47,7 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 	public Voting fetch(long id) {
 		return (Voting) getSession().get(Voting.class, id);
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Voting> fetch(int min, int max) {
-		Criteria crit = getSession().createCriteria(Voting.class);
-		crit.add(Restrictions.eq("isEnabled", true));
-
-		if (min >= 0 && max > 0 && min < max) {
-			crit.setFirstResult(min);
-			crit.setMaxResults(max);
-		}
-
-		crit.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-		return crit.list();
-	}
-
+	
 	@Override
 	public boolean merge(Voting voting) {
 		return mergeObject(voting);
@@ -119,6 +104,25 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 		query.setParameter("votingId", votingId);
 		query.setParameter("isEnabled", true);
 		return (String) query.uniqueResult();
+	}
+
+	@Override
+	public long getTotalVoting(long congressId) {
+		String hql = "SELECT count(*) FROM Voting WHERE congress.id = :congressId AND isEnabled = :isEnabled";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("congressId", congressId);
+		query.setParameter("isEnabled", true);
+		return (Long)query.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Voting> fetchAll(long congressId) {
+		String hql = "FROM Voting WHERE congress.id = :congressId AND isEnabled = :isEnabled";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("congressId", congressId);
+		query.setParameter("isEnabled", true);
+		return query.list();
 	}
 
 }

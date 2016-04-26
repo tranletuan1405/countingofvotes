@@ -34,11 +34,6 @@ public class DelegateService implements IDelegateDao{
 	public Delegate fetch(long id){
 		return delegateDao.fetch(id);
 	}
-	
-	@Override
-	public List<Delegate> fetch(int min, int max){
-		return delegateDao.fetch(min, max);
-	}
 
 	@Override
 	public List<Delegate> getByDocument(InputStream is) {
@@ -58,6 +53,16 @@ public class DelegateService implements IDelegateDao{
 	@Override
 	public boolean update(Delegate delegate) {
 		return delegateDao.update(delegate);
+	}
+
+	@Override
+	public long getTotalDelegate(long congressId) {
+		return delegateDao.getTotalDelegate(congressId);
+	}
+
+	@Override
+	public List<Delegate> fetchAll(long congressId) {
+		return delegateDao.fetchAll(congressId);
 	}
 
 }
