@@ -226,7 +226,7 @@ public class CongressDetailController {
 			delegate.setArivalTime(null);
 		}
 
-		delegateService.update(delegate);
+		delegateService.merge(delegate);
 		String json = mapper.writeValueAsString(new DelegateJson(delegate));
 
 		return json;

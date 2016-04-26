@@ -163,7 +163,7 @@ function loadCandidateTable(){
 			},
 			"targets" : 6
 		},],
-		"lengthMenu" : [ [-1, 5, 10, 15 ], ["Tất cả", 5, 10, 15] ],
+		"lengthMenu" : [ [ 5, 10, 15, -1 ], [5, 10, 15, "Tất cả"] ],
 		select : false,
 		
 	});
@@ -257,7 +257,7 @@ function initCreateBallotTable(){
 		destroy : true,
 		paging : false,
 		orderMulti : true,
-		ajax : "create_ballot",
+		ajax : "create_codes",
 		rowId : "id",
 		order : [[ 1, 'asc' ]],
 		columns : [ {
@@ -279,7 +279,7 @@ function initCreateBallotTable(){
 			data : "position",
 			orderable : false,
 		}, {
-			data : "countingEncodeImage",
+			data : "countingCodeImagePath",
 			searchable : false,
 			orderable : false,
 		},],

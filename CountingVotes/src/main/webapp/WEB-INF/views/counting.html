@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+
+<!-- JQuery -->
+<script type="text/javascript" th:src="@{/js/common/jquery-2.1.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}" />
+<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/common/common.css}" />
+
+<!-- Datatables -->
+<script type="text/javascript" th:src="@{/js/datatables/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/dataTables.bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/dataTables.select.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/dataTables.buttons.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/buttons.bootstrap.min.js}"></script>
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/datatables/dataTables.bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/datatables/select.bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/datatables/buttons.bootstrap.min.css}" />
+
+<!-- Date Time Picker -->
+<!-- <script type="text/javascript" th:src="@{/js/bootstrap/bootstrap-datetimepicker.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap-datetimepicker.min.css}" /> -->
+
+<script type="text/javascript" th:src="@{/js/common/timer.jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/pages/counting.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/pages/counting.css}" />
+
+</head>
+<body>
+	<div class="container">
+		<div class="my-container">
+
+			<ol class="breadcrumb no-radius">
+				<li><a th:href="@{/voting/list}" class="standard-text-color"><span
+						class="glyphicon glyphicon-list-alt"></span> Danh sách bầu cử</a></li>
+				<li><a th:href="@{'/voting_detail/' + ${voting.id}}" class="standard-text-color"><span th:text="${voting.name}"></span></a></li>
+				
+				<li class="active">Kiểm phiếu</li>
+			</ol>
+
+
+		</div>
+		
+		<div th:replace="fragment/footer :: footer"></div>
+	</div>
+</body>
+</html>

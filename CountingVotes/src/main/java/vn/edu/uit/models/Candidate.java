@@ -46,14 +46,6 @@ public class Candidate implements Serializable {
 
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	public Voting getVoting() {
 		return voting;
 	}

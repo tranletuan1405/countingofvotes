@@ -51,8 +51,8 @@ public class DelegateService implements IDelegateDao{
 	}
 
 	@Override
-	public boolean update(Delegate delegate) {
-		return delegateDao.update(delegate);
+	public boolean merge(Delegate delegate) {
+		return delegateDao.merge(delegate);
 	}
 
 	@Override

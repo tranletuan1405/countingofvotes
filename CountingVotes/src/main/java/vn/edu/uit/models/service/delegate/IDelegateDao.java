@@ -10,7 +10,7 @@ public interface IDelegateDao {
 
 	boolean persist(Delegate delegate);
 	
-	boolean update(Delegate delegate);
+	boolean merge(Delegate delegate);
 	
 	boolean delete(Delegate delegate);
 	

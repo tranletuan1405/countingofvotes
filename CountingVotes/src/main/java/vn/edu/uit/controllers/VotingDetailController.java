@@ -228,7 +228,7 @@ public class VotingDetailController {
 		return model;
 	}
 
-	/*@RequestMapping(value = "/create_ballot", produces = { "application/json; charset=UTF-8" })
+	@RequestMapping(value = "/create_codes", produces = { "application/json; charset=UTF-8" })
 	@ResponseBody
 	public String createCandidateCodes(HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession();
@@ -237,37 +237,41 @@ public class VotingDetailController {
 
 		String congressPath = congressService.getCongressPath(congressId);
 		
-		List<Candidate> candidates = candidateService.fetch(votingId);
-		List<CandidateJson> candidatesJson = new ArrayList<CandidateJson>();
+		List<Delegate> candidates = candidateService.getIsCandidate(votingId, congressId);
+		List<DelegateJson> candidatesJson = new ArrayList<DelegateJson>();
 
 		for (int i = 0; i < candidates.size(); i++) {
-			Candidate candidate = candidates.get(i);
-			if (candidate.getCountingBarcode() == null || candidate.getCountingBarcode().getImagePath().isEmpty()) {
+			Delegate candidate = candidates.get(i);
+			if (candidate.getCountingCode() == null || candidate.getCountingCode().getImagePath().isEmpty()) {
 				
-				Barcode delegateCode = candidate.getDelegate().getHashCode();
+				Barcode delegateCode = candidate.getHashCode();
 				Barcode countingCode = new Barcode();
 				String content = delegateCode.getContent();
 				String encode = delegateCode.getEncode();
-				String imagePath = barcodeGenerator.generateAztec(congressPath, SupportMethods.getUID(), encode, 200);
+				String imagePath = barcodeGenerator.generateAztec(congressPath, SupportMethods.getUID(), encode, 320);
+				
+				if(imagePath == null || imagePath.isEmpty()){
+					imagePath = barcodeGenerator.generateAztec(congressPath, SupportMethods.getUID(), encode, 320);
+				}
 
 				countingCode.setContent(content);
 				countingCode.setEncode(encode);
 				countingCode.setImagePath(imagePath);
 				
 				barcodeService.persist(countingCode);
-				candidate.setCountingBarcode(countingCode);
-				candidateService.merge(candidate);
+				candidate.setCountingCode(countingCode);
+				delegateService.merge(candidate);
 			}
 			
-			candidatesJson.add(new CandidateJson(candidate));
+			candidatesJson.add(new DelegateJson(candidate));
 		}
 
-		ListHolder<CandidateJson> json = new ListHolder<CandidateJson>();
+		ListHolder<DelegateJson> json = new ListHolder<DelegateJson>();
 		json.setData(candidatesJson);
 		
 		return mapper.writeValueAsString(json);
 	}
-	*/
+	
 	
 	@RequestMapping(value = "save_pattern", method = RequestMethod.POST, produces = {"application/text; charset=UTF-8" })
 	@ResponseBody

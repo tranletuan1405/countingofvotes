@@ -30,17 +30,19 @@ public class DelegateJson {
 	private String typeName;
 	private String note;
 	private String achievement;
-	
+
 	private String imagePath;
-	
+
 	private String codeImagePath;
 	private String encode;
-	
+	private String countingCodeImagePath;
+
 	private String arivalTime;
 	private boolean attended;
 
 	public DelegateJson(Delegate delegate) {
-		if(delegate.getId() != null) this.setId(delegate.getId());
+		if (delegate.getId() != null)
+			this.setId(delegate.getId());
 		this.setOrdinal(delegate.getOrdinal());
 		this.setName(delegate.getName());
 		this.setPlaceOfBirth(delegate.getPlaceOfBirth());
@@ -54,9 +56,15 @@ public class DelegateJson {
 		this.setDateOfPartyOfficial(delegate.getDateOfPartyOfficial());
 		this.setPosition(delegate.getPosition());
 
-		if (delegate.getHashCode() != null) {
+		try {
 			this.setCodeImagePath(delegate.getHashCode().getImagePath());
 			this.setEncode(delegate.getHashCode().getEncode());
+		} catch (Exception e) {
+		}
+
+		try {
+			this.setCountingCodeImagePath(delegate.getCountingCode().getImagePath());
+		} catch (Exception e) {
 		}
 
 		try {
@@ -250,5 +258,13 @@ public class DelegateJson {
 
 	public void setEncode(String encode) {
 		this.encode = encode;
+	}
+
+	public String getCountingCodeImagePath() {
+		return countingCodeImagePath;
+	}
+
+	public void setCountingCodeImagePath(String countingCodeImagePath) {
+		this.countingCodeImagePath = countingCodeImagePath;
 	}
 }

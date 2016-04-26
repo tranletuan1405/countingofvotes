@@ -52,22 +52,31 @@
 				<div class="col-md-10">
 					<!-- Header -->
 					<div class="page-header">
+
 						<h2 th:text="${congress.name}" class="standard-text-color"></h2>
 
 						<h5>
 							Đại biểu : <span class="standard-text-color"
 								th:text="${attendees} + ' / ' + ${totalDelegate}"></span>
 						</h5>
-						<h5>
-							Đơn vị : <span class="standard-text-color"
-								th:text="${totalUnit}"></span>
-						</h5>
+
+						<div class="row" style="margin-right: 0px;">
+							<h5 class="col-md-10" style="margin: 0px">
+								Đơn vị : <span class="standard-text-color"
+									th:text="${totalUnit}"></span>
+							</h5>
+							<a class="col-md-2 btn no-radius standard-color btn-edit-ballot"
+								th:href="@{../counting}"
+								style="font-size: 13pt; color: white; font-weight: bold;">Kiếm
+								phiếu</a>
+						</div>
+
+
 					</div>
 
 					<!-- Breadcrumbs -->
 					<ol class="breadcrumb no-radius">
-						<li><a th:href="@{../voting/list}"
-							class="standard-text-color"><span
+						<li><a th:href="@{/voting/list}" class="standard-text-color"><span
 								class="glyphicon glyphicon-list-alt"></span> Danh sách bầu cử</a></li>
 						<li class="active" th:text="${voting.name}"></li>
 					</ol>
@@ -146,7 +155,8 @@
 								class="panel-collapse collapsed in" role="tabpanel"
 								aria-labelledby="heading-counting-rules">
 								<div class="panel-body">
-									<form id="form-counting-rules" class="form-horizontal" autocomplete="off" th:action="@{update_rules}" method="POST">
+									<form id="form-counting-rules" class="form-horizontal"
+										autocomplete="off" th:action="@{update_rules}" method="POST">
 
 										<!-- Tổng bầu chọn tối thiểu -->
 										<div class="form-group">
@@ -158,11 +168,12 @@
 											<div class="col-sm-4 slider" id="slider-min-percent"
 												style="top: 12px;"></div>
 
-											<label for="slider-min-percent" class="col-sm-1 control-label"></label> 
-											<input type="number" th:name="minPercent" class="col-sm-1 control-label value-slider" id="min-percent" 
-												min = "0" max="100" required="required"
-												th:value="${voting.countingRule.minPercent}"
-											/>
+											<label for="slider-min-percent"
+												class="col-sm-1 control-label"></label> <input type="number"
+												th:name="minPercent"
+												class="col-sm-1 control-label value-slider" id="min-percent"
+												min="0" max="100" required="required"
+												th:value="${voting.countingRule.minPercent}" />
 										</div>
 
 										<!-- Số lượng Đại biểu trúng cử tối đa -->
@@ -173,12 +184,14 @@
 											<div class="col-sm-4 slider" id="slider-max-selected"
 												style="top: 12px;"></div>
 
-											<label for="slider-max-selected" class="col-sm-1 control-label"></label> 
-											
-											<input type="number" th:name="maxSelected" class="col-sm-1 control-label value-slider" id="max-selected" 
-												min = "0" th:attr="max=${voting.candidates.size()}" required="required"											
-												th:value="${voting.countingRule.maxSelected}"
-											/>
+											<label for="slider-max-selected"
+												class="col-sm-1 control-label"></label> <input type="number"
+												th:name="maxSelected"
+												class="col-sm-1 control-label value-slider"
+												id="max-selected" min="0"
+												th:attr="max=${voting.candidates.size()}"
+												required="required"
+												th:value="${voting.countingRule.maxSelected}" />
 										</div>
 
 										<div class="form-group">

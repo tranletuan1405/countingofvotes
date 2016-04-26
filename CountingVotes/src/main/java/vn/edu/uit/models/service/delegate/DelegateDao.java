@@ -283,7 +283,7 @@ public class DelegateDao extends AbstractDao implements IDelegateDao {
 	}
 
 	@Override
-	public boolean update(Delegate delegate) {
+	public boolean merge(Delegate delegate) {
 		return mergeObject(delegate);
 	}
 
