@@ -81,16 +81,18 @@ public class VotingDetailController {
 		Congress congress = congressService.fetch(congressId);
 		
 		long attendees = delegateService.getNumOfAttendees(congressId);
-		long totalDelegate = delegateService.getTotalDelegate(id);
-		long totalUnit = unitService.getTotalUnit(id);
-
+		long totalDelegate = delegateService.getTotalDelegate(congressId);
+		long totalUnit = unitService.getTotalUnit(congressId);
+		long totalCandidate = candidateService.getTotalCandidate(id);
+				
+		logger.info(totalCandidate + "");
 		Voting voting = votingService.fetch(id);
 		session.setAttribute(DataConfig.SESSION_VOTING_NAME, id);
 
 		// Create counting rule if the voting has candidates
-		if (voting.getCandidates().size() > 0 && voting.getCountingRule() == null) {
+		if (totalCandidate > 0 && voting.getCountingRule() == null) {
 			CountingRule rule = new CountingRule();
-			rule.setMaxSelected(voting.getCandidates().size());
+			rule.setMaxSelected((int)totalCandidate);
 			voting.setCountingRule(rule);
 
 			votingService.persistCountingRule(rule);
@@ -99,14 +101,15 @@ public class VotingDetailController {
 
 		// Check max-selected
 		if (voting.getCountingRule() != null
-				&& voting.getCountingRule().getMaxSelected() > voting.getCandidates().size()) {
-			voting.getCountingRule().setMaxSelected(voting.getCandidates().size());
+				&& voting.getCountingRule().getMaxSelected() > totalCandidate) {
+			voting.getCountingRule().setMaxSelected((int)totalCandidate);
 			votingService.merge(voting);
 		}
 		
 		model.addObject("attendees", attendees);
 		model.addObject("totalDelegate", totalDelegate);
 		model.addObject("totalUnit", totalUnit);
+		model.addObject("totalCandidate", totalCandidate);
 		model.addObject("congress", congress);
 		model.addObject("voting", voting);
 
@@ -234,8 +237,12 @@ public class VotingDetailController {
 		HttpSession session = request.getSession();
 		Long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		Long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
-
-		String congressPath = congressService.getCongressPath(congressId);
+		Congress congress = congressService.fetch(congressId);
+		
+		String congressPath = congress.getCongressPath();
+		String congressKey = congress.getCongressKey();
+		String congressIv = congress.getCongressIv();
+		TripleDes tDes = new TripleDes(congressKey, congressIv);
 		
 		List<Delegate> candidates = candidateService.getIsCandidate(votingId, congressId);
 		List<DelegateJson> candidatesJson = new ArrayList<DelegateJson>();
@@ -246,8 +253,8 @@ public class VotingDetailController {
 				
 				Barcode delegateCode = candidate.getHashCode();
 				Barcode countingCode = new Barcode();
-				String content = delegateCode.getContent();
-				String encode = delegateCode.getEncode();
+				String content = String.valueOf(candidate.getId());
+				String encode = tDes.encryptText(content);
 				String imagePath = barcodeGenerator.generateAztec(congressPath, SupportMethods.getUID(), encode, 320);
 				
 				if(imagePath == null || imagePath.isEmpty()){

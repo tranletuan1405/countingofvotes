@@ -26,21 +26,7 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 
 	@Override
 	public long recreate(long oldId) {
-		try {
-			Voting oldVersion = fetch(oldId);
-			Voting newVersion = new Voting(oldVersion);
-			boolean result = this.persist(newVersion);
-
-			if (result) {
-				return newVersion.getId();
-			}
-
-			return -1;
-
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			return -1;
-		}
+		return 0;
 	}
 
 	@Override

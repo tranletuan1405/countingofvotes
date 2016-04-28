@@ -55,17 +55,17 @@
 
 						<h2 th:text="${congress.name}" class="standard-text-color"></h2>
 
-						<h5>
-							Đại biểu : <span class="standard-text-color"
+						<h4>
+							Đại biểu hiện diện : <span class="standard-text-color"
 								th:text="${attendees} + ' / ' + ${totalDelegate}"></span>
-						</h5>
+						</h4>
 
 						<div class="row" style="margin-right: 0px;">
-							<h5 class="col-md-10" style="margin: 0px">
+							<h4 class="col-md-10" style="margin: 0px">
 								Đơn vị : <span class="standard-text-color"
 									th:text="${totalUnit}"></span>
-							</h5>
-							<a class="col-md-2 btn no-radius standard-color btn-edit-ballot"
+							</h4>
+							<a th:if="${totalCandidate}" class="col-md-2 btn no-radius standard-color btn-edit-ballot"
 								th:href="@{../counting}"
 								style="font-size: 13pt; color: white; font-weight: bold;">Kiếm
 								phiếu</a>
@@ -140,7 +140,7 @@
 						</div>
 
 						<!-- Counting Rule -->
-						<div th:if="${voting.candidates.size() > 0}"
+						<div th:if="${totalCandidate}"
 							class="panel panel-info" id="panel-counting-rules">
 							<div class="panel-heading" role="tab" id="heading-counting-rules">
 								<h2 class="panel-title">
@@ -189,7 +189,7 @@
 												th:name="maxSelected"
 												class="col-sm-1 control-label value-slider"
 												id="max-selected" min="0"
-												th:attr="max=${voting.candidates.size()}"
+												th:attr="max=${totalCandidate}"
 												required="required"
 												th:value="${voting.countingRule.maxSelected}" />
 										</div>

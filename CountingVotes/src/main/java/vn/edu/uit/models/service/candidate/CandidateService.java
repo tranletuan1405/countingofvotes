@@ -50,5 +50,10 @@ public class CandidateService implements ICandidateDao {
 		return candidateDao.merge(candidate);
 	}
 
+	@Override
+	public long getTotalCandidate(long votingId) {
+		return candidateDao.getTotalCandidate(votingId);
+	}
+
 	
 }

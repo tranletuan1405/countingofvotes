@@ -22,8 +22,6 @@ public class VotingJson {
 		this.setVersion(voting.getVersion());
 		this.setStartTime(voting.getStartTimeString());
 		this.setEndTime(voting.getEndTimeString());
-		this.setNumOfCandidates(voting.getCandidates().size());
-		//this.setNumOfBallots(voting.getBallots().size());
 	}
 	
 	

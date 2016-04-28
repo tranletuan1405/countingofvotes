@@ -90,4 +90,13 @@ public class CandidateDao extends AbstractDao implements ICandidateDao {
 		return this.mergeObject(candidate);
 	}
 
+	@Override
+	public long getTotalCandidate(long votingId) {
+		String hql = "SELECT count(*) FROM Candidate WHERE voting.id = :votingId AND isEnabled = :isEnabled";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("votingId", votingId);
+		query.setParameter("isEnabled", true);
+		return (Long)query.uniqueResult();
+	}
+
 }

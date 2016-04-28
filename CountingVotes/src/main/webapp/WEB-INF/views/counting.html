@@ -33,19 +33,98 @@
 </head>
 <body>
 	<div class="container">
+
 		<div class="my-container">
+
+			<div class="page-header">
+				<h3 th:text="${voting.name}" class="standard-text-color"></h3>
+
+				<h4>
+					Đại biểu hiện diện : <span class="standard-text-color"
+						th:text="${attendees} + ' / ' + ${totalDelegate}"></span>
+				</h4>
+
+				<h4>
+					Số ứng viên : <span class="standard-text-color"
+						th:text="${totalCandidate}"></span>
+				</h4>
+
+			</div>
 
 			<ol class="breadcrumb no-radius">
 				<li><a th:href="@{/voting/list}" class="standard-text-color"><span
 						class="glyphicon glyphicon-list-alt"></span> Danh sách bầu cử</a></li>
-				<li><a th:href="@{'/voting_detail/' + ${voting.id}}" class="standard-text-color"><span th:text="${voting.name}"></span></a></li>
-				
+				<li><a th:href="@{'/voting_detail/' + ${voting.id}}"
+					class="standard-text-color"><span th:text="${voting.name}"></span></a></li>
+
 				<li class="active">Kiểm phiếu</li>
 			</ol>
 
+			<div>
+				<div class="panel panel-default no-radius">
+					<div class="panel-body">
+						<div class="col-md-6 col-sm-6">
+							<input type="text" class="form-control no-radius" id="input-code" />
+						</div>
 
+						<div class="col-md-4 col-sm-4">
+							<div class="checkbox">
+								<label> <input type="checkbox" id="checkbox-use-code" />Lưu
+									phiếu bằng mã
+								</label>
+							</div>
+						</div>
+
+						<div class="col-md-2 col-sm-2">
+							<button type="button" class="btn btn-success no-radius">Lưu
+								phiếu</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel panel-default no-radius">
+					<div class="panel-body">
+						<div class="form-group">
+							<p>Tùy chỉnh hiển thị :</p>
+							<div>
+								<a class="toggle-vis" data-column="2">Năm sinh</a> <span
+									class="glyphicon glyphicon-asterisk"></span> <a
+									class="toggle-vis" data-column="3">Giới tính</a> <span
+									class="glyphicon glyphicon-asterisk"></span> <a
+									class="toggle-vis" data-column="4">Tên đơn vị</a> <span
+									class="glyphicon glyphicon-asterisk"></span> <a
+									class="toggle-vis" data-column="5">Chức vụ</a>
+							</div>
+						</div>
+
+						<table id="candidate-table" class="table table-hover"
+							cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th>STT</th>
+									<th>Họ tên</th>
+									<th>Năm sinh</th>
+									<th>Giới tính</th>
+									<th>Tên đơn vị</th>
+									<th>Chức vụ</th>
+								</tr>
+							</thead>
+
+							<tfoot>
+								<tr>
+									<th>STT</th>
+									<th>Họ tên</th>
+									<th>Năm sinh</th>
+									<th>Giới tính</th>
+									<th>Tên đơn vị</th>
+									<th>Chức vụ</th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+			</div>
 		</div>
-		
 		<div th:replace="fragment/footer :: footer"></div>
 	</div>
 </body>
