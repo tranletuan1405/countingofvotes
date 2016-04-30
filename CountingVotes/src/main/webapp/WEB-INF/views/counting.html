@@ -62,22 +62,21 @@
 
 			<div>
 				<div class="panel panel-default no-radius">
-					<div class="panel-body">
-						<div class="col-md-6 col-sm-6">
+					<div class="panel-body" style="margin-left: -15px; margin-right: -15px">
+						<div class="col-md-5 col-sm-5">
 							<input type="text" class="form-control no-radius" id="input-encode" />
 						</div>
 
-						<div class="col-md-4 col-sm-4">
-							<div class="checkbox">
-								<label> <input type="checkbox" id="checkbox-use-code" />Lưu
-									phiếu bằng mã
-								</label>
-							</div>
-						</div>
+						<div class="col-md-7 col-sm-7">
+							<div class="form-inline" style="float: right;">
+								<div class="checkbox"> <label> <input type="checkbox" id="checkbox-use-code"/>Lưu phiếu bằng mã </label> </div>
 
-						<div class="col-md-2 col-sm-2">
-							<button type="button" class="btn btn-success no-radius">Lưu
-								phiếu</button>
+								<button type="button" class="btn btn-success no-radius" disabled="disabled" id="btn-save-ballot">Lưu
+									phiếu</button>
+
+								<button type="button" class="btn btn-info no-radius" id="btn-refresh">Phiếu
+									mới</button>
+							</div>
 						</div>
 					</div>
 				</div>

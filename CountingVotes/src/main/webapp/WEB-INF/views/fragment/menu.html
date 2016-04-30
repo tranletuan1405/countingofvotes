@@ -6,7 +6,7 @@
 <body>
 	<div th:fragment="menu" class="container-fluid" id="congress-detail-menu">
  		
-		<img class="img-circle" id="congress-logo" src="http://goo.gl/PFT9FD" alt="congres-logo"/>
+		<img class="img-circle" id="congress-logo" src="../images/page/default-avatar.png" alt="congres-logo"/>
 
 		<ul class="nav nav-pills" id="nav-congress-menu">
 			<li role="presentation" th:class="${detail_active} ? 'active' : 'inactive'"><a th:href="${detail_active} ? '#' : '../detail/this'"><span class="glyphicon glyphicon-info-sign"></span>  Thông tin</a></li>

@@ -61,6 +61,8 @@ function loadCandidateTable(){
 
 /* INPUT ENCODE */
 function initControl(){
+	
+	//Input code
 	$('#input-encode').keypress(function(event) {
 		var code = event.keyCode || event.which;
 		if (code == 13) {
@@ -73,10 +75,10 @@ function initControl(){
 				data : {encode : val},
 				success : function(response) {
 					if(response > 0){
-						$('#error-msg').removeClass("hidden");
-						$('#' + response).addClass("success");
-					} else if(response > 0) {
 						$('#error-msg').addClass("hidden");
+						$('#' + response).addClass("success");
+					} else {
+						$('#error-msg').removeClass("hidden");
 					}
 					
 					console.log(response);
@@ -94,5 +96,27 @@ function initControl(){
 	$('#input-encode').focus(function(){
 		$('error-msg').addClass("hidden");
 		$(this).select();
+	});
+	
+	//Checkbox
+	$('#checkbox-use-code').change(function() {
+		if (this.checked) {
+			$('#btn-save-ballot').attr('disabled', 'disabled');
+		} else {
+			$('#btn-save-ballot').removeAttr('disabled');
+		}
+
+	});
+	
+	//Btn refresh
+	$('#btn-refresh').click(function(){
+		var input = $('#input-encode').val('');
+		input.focus();
+		$('#candidate-table>tbody>tr').removeClass('success');
+	});
+	
+	//Btn save ballot
+	$('#btn-save-ballot').click(function(){
+		
 	});
 }
