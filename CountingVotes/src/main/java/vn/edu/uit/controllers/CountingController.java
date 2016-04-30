@@ -6,9 +6,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,10 +21,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import vn.edu.uit.extra.DataConfig;
 import vn.edu.uit.extra.ListHolder;
+import vn.edu.uit.extra.TripleDes;
+import vn.edu.uit.models.Congress;
 import vn.edu.uit.models.Delegate;
 import vn.edu.uit.models.Voting;
 import vn.edu.uit.models.json.DelegateJson;
 import vn.edu.uit.models.service.candidate.CandidateService;
+import vn.edu.uit.models.service.congress.CongressService;
 import vn.edu.uit.models.service.delegate.DelegateService;
 import vn.edu.uit.models.service.voting.VotingService;
 
@@ -28,6 +35,11 @@ import vn.edu.uit.models.service.voting.VotingService;
 @RequestMapping(value = "counting/**")
 public class CountingController {
 
+	private static final Logger logger = LoggerFactory.getLogger(CountingController.class);
+	
+	@Autowired
+	private CongressService congressService;
+	
 	@Autowired
 	private VotingService votingService;
 	
@@ -85,5 +97,20 @@ public class CountingController {
 		json.setData(data);
 		return mapper.writeValueAsString(json);
 
+	}
+	
+	@RequestMapping(value = "/check_code", method = RequestMethod.POST)
+	@ResponseBody
+	public String checkingCandidate(@RequestParam(value ="encode", required = true) String encode, HttpServletRequest request) throws NumberFormatException, Exception{
+		HttpSession session = request.getSession();
+		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
+		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
+		Congress congress = congressService.fetch(congressId);
+		TripleDes tDes = new TripleDes(congress.getCongressKey(), congress.getCongressIv());
+		long delegateId = Long.valueOf(tDes.decryptText(encode));
+		logger.info(delegateId + "");
+		
+		boolean isExists = candidateService.isExists(delegateId, votingId);
+		return isExists == true ? String.valueOf(delegateId) : "failed";
 	}
 }

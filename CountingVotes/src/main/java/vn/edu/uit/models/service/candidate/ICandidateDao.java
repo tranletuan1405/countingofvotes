@@ -22,4 +22,6 @@ public interface ICandidateDao {
 	boolean isExists(List<Delegate> candidates, long delegateId);
 	
 	long getTotalCandidate(long votingId);
+	
+	boolean isExists(long delegateId, long votingId);
 }

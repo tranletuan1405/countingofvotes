@@ -225,11 +225,7 @@ function loadDelegates() {
 							visible : false
 						}, {
 							data : "arivalTime"
-						},
-
-						/* { data : "codeImage" }, */
-
-						{
+						}, {
 							data : "attended",
 							searchable : false
 						}, {
@@ -300,8 +296,7 @@ function loadDelegates() {
 	
 
 	delegate_table.on('init.dt', function() {
-		loadEnterEvent();
-		
+		loadEnterEvent();	
 	});
 	
 	delegate_table.on('draw.dt', function(){

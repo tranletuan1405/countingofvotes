@@ -5,6 +5,7 @@
 $(document).ready(function(){
 	var candidate_table;
 	loadCandidateTable();
+	initControl();
 });
 
 //====CANDIDATE TABLE====
@@ -35,12 +36,7 @@ function loadCandidateTable(){
 			data : "position",
 			orderable : false,
 		},],
-		/*"columnDefs": [{
-			"render" : function(data, type, row) {
-				return "<img class='img-responsive code-pattern' src='../img/barcode/" + data + "'style='width : 50px; height : 50px;'/>";
-			},
-			"targets" : 6
-		},],*/
+	
 		select : false,
 		"initComplete": function(settings, json) {
 			
@@ -61,4 +57,42 @@ function loadCandidateTable(){
             cell.innerHTML = i+1;
         });
     }).draw();
+}
+
+/* INPUT ENCODE */
+function initControl(){
+	$('#input-encode').keypress(function(event) {
+		var code = event.keyCode || event.which;
+		if (code == 13) {
+			event.preventDefault();
+			$('#error-msg').addClass("hidden");
+			var val = $(this).val();
+			$.ajax({
+				url : "counting/check_code",
+				type : "POST",
+				data : {encode : val},
+				success : function(response) {
+					if(response > 0){
+						$('#error-msg').removeClass("hidden");
+						$('#' + response).addClass("success");
+					} else if(response > 0) {
+						$('#error-msg').addClass("hidden");
+					}
+					
+					console.log(response);
+				},
+				error : function (){
+					$('#error-msg').removeClass("hidden");
+				},
+			
+			});
+			
+			$(this).select();
+		}
+	});
+	
+	$('#input-encode').focus(function(){
+		$('error-msg').addClass("hidden");
+		$(this).select();
+	});
 }

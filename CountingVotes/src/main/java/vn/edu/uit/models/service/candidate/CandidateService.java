@@ -55,5 +55,10 @@ public class CandidateService implements ICandidateDao {
 		return candidateDao.getTotalCandidate(votingId);
 	}
 
+	@Override
+	public boolean isExists(long delegateId, long votingId) {
+		return candidateDao.isExists(delegateId, votingId);
+	}
+
 	
 }

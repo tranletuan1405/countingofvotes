@@ -251,7 +251,6 @@ public class VotingDetailController {
 			Delegate candidate = candidates.get(i);
 			if (candidate.getCountingCode() == null || candidate.getCountingCode().getImagePath().isEmpty()) {
 				
-				Barcode delegateCode = candidate.getHashCode();
 				Barcode countingCode = new Barcode();
 				String content = String.valueOf(candidate.getId());
 				String encode = tDes.encryptText(content);
