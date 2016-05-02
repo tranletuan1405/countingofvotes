@@ -25,6 +25,7 @@ import vn.edu.uit.extra.ListHolder;
 import vn.edu.uit.models.Congress;
 import vn.edu.uit.models.Voting;
 import vn.edu.uit.models.json.VotingJson;
+import vn.edu.uit.models.service.candidate.CandidateService;
 import vn.edu.uit.models.service.congress.CongressService;
 import vn.edu.uit.models.service.delegate.DelegateService;
 import vn.edu.uit.models.service.unit.UnitService;
@@ -46,6 +47,9 @@ public class VotingController {
 	private DelegateService delegateService;
 	
 	@Autowired
+	private CandidateService candidateService;
+	
+	@Autowired
 	private UnitService unitService;
 
 	@Autowired
@@ -61,7 +65,6 @@ public class VotingController {
 		long attendees = delegateService.getNumOfAttendees(id);
 		long totalDelegate = delegateService.getTotalDelegate(id);
 		long totalUnit = unitService.getTotalUnit(id);
-		long totalVoting = votingService.getTotalVoting(id);
 		
 		model.addObject("attendees", attendees);
 		model.addObject("totalDelegate", totalDelegate);
@@ -103,7 +106,10 @@ public class VotingController {
 		List<VotingJson> votingJson = new ArrayList<VotingJson>();
 		
 		for (int i = 0; i < votings.size(); i++) {
-			votingJson.add(new VotingJson(votings.get(i)));
+			Voting v = votings.get(i);
+			VotingJson vj = new VotingJson(v);
+			vj.setNumOfCandidates(candidateService.getNumOfCandidates(v.getId()));
+			votingJson.add(vj);
 		}
 		
 		ListHolder<VotingJson> json = new ListHolder<VotingJson>();

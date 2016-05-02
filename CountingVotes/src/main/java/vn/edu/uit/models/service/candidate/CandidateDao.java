@@ -110,4 +110,12 @@ public class CandidateDao extends AbstractDao implements ICandidateDao {
 		return result > 0 ? true : false;
 	}
 
+	@Override
+	public long getNumOfCandidates(long votingId) {
+		String hql = "SELECT count(*) FROM Candidate WHERE voting.id = :votingId";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("votingId", votingId);
+		return (Long) query.uniqueResult();
+	}
+
 }

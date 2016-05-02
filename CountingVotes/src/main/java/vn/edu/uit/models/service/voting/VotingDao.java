@@ -111,4 +111,6 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 		return query.list();
 	}
 
+
+
 }

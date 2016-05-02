@@ -47,7 +47,7 @@ public class Voting extends AbstractEntity {
 	private CountingRule countingRule;
 
 
-	@Column(name = "ballot_pattern", columnDefinition = "VARCHAR(15000)")
+	@Column(name = "ballot_pattern", columnDefinition = "VARCHAR(20000)")
 	private String ballotPattern;
 	
 	

@@ -28,11 +28,6 @@ function loadVotings() {
 		}, {
 			data : "numOfCandidates",
 		}, {
-			data : "numOfBallots",
-			visible : false,
-			searchable : false,
-			orderable : false,
-		}, {
 			data : "id",
 			orderable : false,
 			searchable : false,

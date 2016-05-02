@@ -78,7 +78,6 @@ public class CountingController {
 		return model;
 	}
 	
-	
 	//==================RESPONSE BODY===================
 	@RequestMapping(value = "/ballot_canidates", produces = { "application/json; charset=UTF-8" })
 	@ResponseBody
@@ -96,7 +95,6 @@ public class CountingController {
 
 		json.setData(data);
 		return mapper.writeValueAsString(json);
-
 	}
 	
 	@RequestMapping(value = "/check_code", method = RequestMethod.POST)
@@ -108,7 +106,6 @@ public class CountingController {
 		Congress congress = congressService.fetch(congressId);
 		TripleDes tDes = new TripleDes(congress.getCongressKey(), congress.getCongressIv());
 		long delegateId = Long.valueOf(tDes.decryptText(encode));
-		logger.info(delegateId + "");
 		
 		boolean isExists = candidateService.isExists(delegateId, votingId);
 		return isExists == true ? String.valueOf(delegateId) : "failed";

@@ -13,7 +13,7 @@ public class VotingJson {
 	private String startTime;
 	private String endTime;
 	
-	private int numOfCandidates;
+	private long numOfCandidates;
 	private int numOfBallots;
 	
 	public VotingJson(Voting voting) {
@@ -23,15 +23,7 @@ public class VotingJson {
 		this.setStartTime(voting.getStartTimeString());
 		this.setEndTime(voting.getEndTimeString());
 	}
-	
-	
 
-	
-	
-	
-	
-	
-	
 	
 	public String getName() {
 		return name;
@@ -65,11 +57,11 @@ public class VotingJson {
 		this.endTime = endTime;
 	}
 
-	public int getNumOfCandidates() {
+	public long getNumOfCandidates() {
 		return numOfCandidates;
 	}
 
-	public void setNumOfCandidates(int numOfCandidates) {
+	public void setNumOfCandidates(long numOfCandidates) {
 		this.numOfCandidates = numOfCandidates;
 	}
 

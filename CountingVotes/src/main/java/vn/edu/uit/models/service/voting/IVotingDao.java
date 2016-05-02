@@ -33,4 +33,5 @@ public interface IVotingDao {
 	CountingRule fetchRule(long votingId);
 
 	boolean updateCountingRule(CountingRule rule);
+
 }

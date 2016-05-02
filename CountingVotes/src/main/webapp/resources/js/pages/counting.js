@@ -35,7 +35,18 @@ function loadCandidateTable(){
 		}, {
 			data : "position",
 			orderable : false,
+		}, {
+			data : "id",
+			orderable : false,
+			searchable : false,
 		},],
+		
+		columnDefs : [{
+			render : function(data, type, row){
+				return "<input type='checkbox' />";
+			},
+			targets : 6,
+		}],
 	
 		select : false,
 		"initComplete": function(settings, json) {
@@ -59,6 +70,7 @@ function loadCandidateTable(){
     }).draw();
 }
 
+
 /* INPUT ENCODE */
 function initControl(){
 	
@@ -77,6 +89,7 @@ function initControl(){
 					if(response > 0){
 						$('#error-msg').addClass("hidden");
 						$('#' + response).addClass("success");
+						$('#' + response + ">td>input[type='checkbox']").attr('checked', 'checked');
 					} else {
 						$('#error-msg').removeClass("hidden");
 					}
