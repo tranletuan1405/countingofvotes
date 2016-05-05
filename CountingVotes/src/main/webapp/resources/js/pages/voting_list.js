@@ -39,9 +39,9 @@ function loadVotings() {
 			"render" : function(data, type, row) {
 				return "<a class='btn btn-default no-radius' href='../voting_detail/" + data + "'>Chi tiết</a>";
 			},				
-			"targets" : 6,		
+			"targets" : 5,		
 			},],
-		"order": [[ 7, "desc" ]],
+		"order": [[ 6, "desc" ]],
 		
 		dom : "<'row'<'col-sm-4'B><'col-sm-4'l><'col-sm-4'f>>"
 			+ "<'row'<'col-sm-12'tr>>"

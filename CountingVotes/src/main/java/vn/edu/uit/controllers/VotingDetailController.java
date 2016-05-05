@@ -84,8 +84,7 @@ public class VotingDetailController {
 		long totalDelegate = delegateService.getTotalDelegate(congressId);
 		long totalUnit = unitService.getTotalUnit(congressId);
 		long totalCandidate = candidateService.getTotalCandidate(id);
-				
-		logger.info(totalCandidate + "");
+	
 		Voting voting = votingService.fetch(id);
 		session.setAttribute(DataConfig.SESSION_VOTING_NAME, id);
 

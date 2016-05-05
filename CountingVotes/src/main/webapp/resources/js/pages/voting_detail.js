@@ -47,6 +47,19 @@ function initCountingRule(){
 	    }
 	});
 	
+	$('#slider-min-selected').slider({
+	    orientation: "horizontal",
+	    range: "min",
+	    min: 0,
+	    max: maxSelectedVal,
+	    value: curSelectedVal,
+	    slide: function (event, ui) {
+	        $("#max-selected").val(ui.value);
+			$('#btn-submit-rules').removeAttr('disabled');
+			$('.btn-edit-ballot').addClass('disabled');
+	    }
+	});
+	
 	$('#slider-max-selected').slider({
 	    orientation: "horizontal",
 	    range: "min",

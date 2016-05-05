@@ -21,10 +21,11 @@
 }
 
 /* COUNTING RULES */
-#min-percent, #max-selected {
+#min-percent, #max-selected, #min-selected {
 	text-align: center;
 	color: black;
 	font-weight: bolder;
+	font-size: 13pt;
 }
 
 /**/

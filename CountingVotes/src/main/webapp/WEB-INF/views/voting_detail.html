@@ -133,7 +133,6 @@
 											</tr>
 										</tfoot>
 
-
 									</table>
 								</div>
 							</div>
@@ -158,12 +157,11 @@
 									<form id="form-counting-rules" class="form-horizontal"
 										autocomplete="off" th:action="@{update_rules}" method="POST">
 
-										<!-- Tổng bầu chọn tối thiểu -->
+										<!-- Tín nhiệm tối thiểu -->
 										<div class="form-group">
 
 											<label for="slider-min-percent"
-												class="col-sm-4 control-label"> Tổng bầu chọn tối
-												thiểu (%) : </label>
+												class="col-sm-4 control-label"> Tín nhiệm tối thiếu (%) : </label>
 
 											<div class="col-sm-4 slider" id="slider-min-percent"
 												style="top: 12px;"></div>
@@ -175,11 +173,26 @@
 												min="0" max="100" required="required"
 												th:value="${voting.countingRule.minPercent}" />
 										</div>
-
-										<!-- Số lượng Đại biểu trúng cử tối đa -->
+										
+										<!-- Chọn tối thiểu -->
 										<div class="form-group">
-											<label for="max-selected" class="col-sm-4 control-label">Số
-												Đại biểu trúng cử tối đa : </label>
+											<label for="min-selected" class="col-sm-4 control-label">Chọn tối thiểu : </label>
+
+											<div class="col-sm-4 slider" id="slider-min-selected"
+												style="top: 12px;"></div>
+
+											<label for="slider-min-selected"
+												class="col-sm-1 control-label"></label> <input type="number"
+												class="col-sm-1 control-label value-slider"
+												id="min-selected" min="0"
+												required="required"
+												th:attr="max=${totalCandidate}"
+												th:value="${voting.countingRule.minSelected}" />
+										</div>
+
+										<!-- Chọn tối đa-->
+										<div class="form-group">
+											<label for="max-selected" class="col-sm-4 control-label">Chọn tối da : </label>
 
 											<div class="col-sm-4 slider" id="slider-max-selected"
 												style="top: 12px;"></div>
@@ -189,10 +202,25 @@
 												th:name="maxSelected"
 												class="col-sm-1 control-label value-slider"
 												id="max-selected" min="0"
-												th:attr="max=${totalCandidate}"
 												required="required"
+												th:attr="max=${totalCandidate}"
 												th:value="${voting.countingRule.maxSelected}" />
 										</div>
+										
+										<!-- Loại bầu cử -->
+										<div class="form-group">
+											<label for="is-residual" class="col-sm-4 control-label">Loại bầu cử : </label> 
+											<div>
+												<label class="radio-inline"> <input type="radio"
+													name="isResidual" id="is-residual" value="true" th:attr="checked=${voting.countingRule.isResidual()? 'true' : 'false'}"/>
+													Có dư
+												</label> <label class="radio-inline"> <input
+													type="radio" name="isResidual" id="is-not-residual"
+													value="false" th:attr="checked=${voting.countingRule.isResidual()? 'false' : 'true'}"/> Không dư
+												</label>
+											</div>
+										</div>									
+										
 
 										<div class="form-group">
 											<label for="btn-submit-rules" class="col-sm-4 control-label"></label>
