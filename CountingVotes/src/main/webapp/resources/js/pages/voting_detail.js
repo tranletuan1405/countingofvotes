@@ -31,8 +31,11 @@ function initEventModal(){
 function initCountingRule(){
 	
 	var minPercentVal = $('#min-percent').val();
-	var maxSelectedVal = $('#max-selected').attr('max');
-	var curSelectedVal = $('#max-selected').val();
+	var maxMaxSelectedVal = $('#max-selected').attr('max');
+	var curMaxSelectedVal = $('#max-selected').val();
+	
+	var maxMinSelected = $('#min-selected').attr('max');
+	
 	
 	$('#slider-min-percent').slider({
 	    orientation: "horizontal",
@@ -47,31 +50,23 @@ function initCountingRule(){
 	    }
 	});
 	
-	$('#slider-min-selected').slider({
-	    orientation: "horizontal",
-	    range: "min",
-	    min: 0,
-	    max: maxSelectedVal,
-	    value: curSelectedVal,
-	    slide: function (event, ui) {
-	        $("#max-selected").val(ui.value);
-			$('#btn-submit-rules').removeAttr('disabled');
-			$('.btn-edit-ballot').addClass('disabled');
-	    }
-	});
 	
 	$('#slider-max-selected').slider({
 	    orientation: "horizontal",
 	    range: "min",
 	    min: 0,
-	    max: maxSelectedVal,
-	    value: curSelectedVal,
+	    max: maxMaxSelectedVal,
+	    value: curMaxSelectedVal,
 	    slide: function (event, ui) {
 	        $("#max-selected").val(ui.value);
 			$('#btn-submit-rules').removeAttr('disabled');
 			$('.btn-edit-ballot').addClass('disabled');
+			
+			initMinSelectedSlider(ui.value);
 	    }
 	});
+	
+	initMinSelectedSlider(maxMinSelected);
 	
 	$('#min-percent').on('change keyup', function(){
 		var val = parseInt($(this).val());
@@ -109,16 +104,58 @@ function initCountingRule(){
 		}
 	});
 	
-	$('#min-percent, #max-selected').on('keypress', function(event){
+	$('#min-selected').on('change keyup', function(){
+		var val = parseInt($(this).val());
+	
+		if(val >= 0 && val <= maxSelectedVal){
+			$('#slider-min-selected').slider({value : val});
+		}
+		
+		$('#btn-submit-rules').removeAttr('disabled');
+	});
+	
+	$('#min-selected').on('focusout', function(){
+		var val = parseInt($(this).val());
+		var curVal = $('#slider-min-selected').slider('value');
+		if(!(val >= 0 && val <= maxSelectedVal)){
+			$(this).val(curVal);
+		}
+	});
+	
+	$('#min-percent, #max-selected, #min-selected').on('keypress', function(event){
 		if (event.keyCode == 10 || event.keyCode == 13) {
 	        event.preventDefault();
 	        $(this).blur();
 		}
 	});
 	
-	$('#min-percent, #max-selected').on('focus', function(){
+	$('#min-percent, #max-selected, #min-selected').on('focus', function(){
 		$(this).select();
-	})
+	});
+	
+	$('#is-residual, #is-not-residual').on('change', function(){
+		$('#btn-submit-rules').removeAttr('disabled');
+		$('.btn-edit-ballot').addClass('disabled');
+	});
+}
+
+function initMinSelectedSlider(maxValue){
+	var curMinSelected = $('#min-selected').val() > maxValue ? maxValue : $('#min-selected').val();
+	$('#min-selected').attr('max', maxValue);
+	$('#min-selected').val(curMinSelected);
+	
+	$('#slider-min-selected').slider({
+	    orientation: "horizontal",
+	    range: "min",
+	    min: 0,
+	    max: maxValue,
+	    value: curMinSelected,
+	    slide: function (event, ui) {
+	        $("#min-selected").val(ui.value);
+			$('#btn-submit-rules').removeAttr('disabled');
+			$('.btn-edit-ballot').addClass('disabled');
+	    }
+	});
 }
 
 /* Candidate Table */
@@ -270,6 +307,7 @@ function initCreateBallotTable(){
 		destroy : true,
 		paging : false,
 		orderMulti : true,
+		searching : false,
 		ajax : "create_codes",
 		rowId : "id",
 		order : [[ 1, 'asc' ]],
@@ -282,28 +320,50 @@ function initCreateBallotTable(){
 		}, {
 			data : "dateOfBirth",
 			orderable : false,
+			visible : false,
 		}, {
 			data : "gender",
 			orderable : false,
+			visible : false,
 		}, {
 			data : "unitName",
 			orderable : false,
+			visible : false,
 		}, {
 			data : "position",
 			orderable : false,
+			visible : false,
 		}, {
+			data : "residual",
+			searchable : false,
+			orderable : false,
+		},{
 			data : "countingCodeImagePath",
 			searchable : false,
 			orderable : false,
 		},],
 		"columnDefs": [{
+			render : function(data, type, row){
+				if(data == false){
+					return "<p class='code-pattern' style='margin : 0; width : 50px; height : 50px; border: 3px solid;'/>";
+				}
+				
+				return "";
+			}, 
+			targets : 6
+		},{
 			"render" : function(data, type, row) {
-				return "<img class='img-responsive code-pattern' src='../img/barcode/" + data + "'style='width : 50px; height : 50px;'/>";
+				return "<img class='img-responsive code-pattern' src='../img/barcode/" + data + "'style='width : 50px; height : 50px; border: 3px solid;'/>";
 			},
-			"targets" : 6
+			"targets" : 7
 		},],
 		select : false,
 		"initComplete": function(settings, json) {
+			var residual = ((json['data'])[0])['residual'];
+			if(residual == false) {
+				$('#is-residual-title').text('Đồng ý');
+				$('#code-title').text('Không đồng ý')
+			}
 			
 			initEventModal();			
 			$('#create-codes-modal').modal('hide');
@@ -338,7 +398,15 @@ function initCreateBallotTable(){
 				
 				title_ballot.append(title);
 				body_ballot.append(body);
-				body_ballot.find('thead').empty();
+				
+				if($('#is-use-title').is(":checked")){
+					body_ballot.find('thead>tr>th').css('width', '0');
+				}
+				else{
+			
+					body_ballot.find('thead').empty();
+				}
+				
 				body_ballot.find('tfoot').empty();
 				
 				$('#btn-create-ballot').removeClass('hidden');
@@ -381,7 +449,7 @@ function initCreateBallotTable(){
 			    max: 30,
 			    value: 13,
 			    slide: function (event, ui) {
-			       $('#create-ballot-table>tbody>tr>td').css('font-size', ui.value + "pt");
+			       $('#create-ballot-table>tbody>tr>td, #create-ballot-table>thead>tr>th').css('font-size', ui.value + "pt");
 			       $('#font-size').html(ui.value + "pt");
 			    }
 			});

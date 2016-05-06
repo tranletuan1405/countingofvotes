@@ -111,6 +111,15 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 		return query.list();
 	}
 
+	@Override
+	public boolean getCountingType(long votingId) {
+		String hql = "SELECT countingRule.isResidual FROM Voting v WHERE v.id = :votingId AND v.isEnabled = :isEnabled";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("votingId", votingId);
+		query.setParameter("isEnabled", true);
+		return (Boolean) query.uniqueResult();
+	}
+
 
 
 }

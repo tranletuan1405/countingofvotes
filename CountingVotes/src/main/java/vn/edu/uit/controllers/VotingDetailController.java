@@ -31,6 +31,7 @@ import vn.edu.uit.models.Congress;
 import vn.edu.uit.models.CountingRule;
 import vn.edu.uit.models.Delegate;
 import vn.edu.uit.models.Voting;
+import vn.edu.uit.models.json.CandidateJson;
 import vn.edu.uit.models.json.CandidateSelectionJson;
 import vn.edu.uit.models.json.DelegateJson;
 import vn.edu.uit.models.service.barcode.BarcodeService;
@@ -118,7 +119,8 @@ public class VotingDetailController {
 
 	@RequestMapping(value = "/update_rules", method = RequestMethod.POST)
 	public ModelAndView updateCountingRules(@RequestParam("minPercent") int minPercent,
-			@RequestParam("maxSelected") int maxSelected, HttpServletRequest request) {
+			@RequestParam("minSelected") int minSelected, @RequestParam("maxSelected") int maxSelected,
+			@RequestParam("isResidual") boolean isResidual, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
@@ -127,6 +129,8 @@ public class VotingDetailController {
 		CountingRule rule = votingService.fetchRule(votingId);
 		rule.setMaxSelected(maxSelected);
 		rule.setMinPercent(minPercent);
+		rule.setMinSelected(minSelected);
+		rule.setResidual(isResidual);
 		votingService.updateCountingRule(rule);
 
 		return model;
@@ -237,6 +241,7 @@ public class VotingDetailController {
 		Long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		Long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
 		Congress congress = congressService.fetch(congressId);
+		boolean isResidual = votingService.getCountingType(votingId);
 		
 		String congressPath = congress.getCongressPath();
 		String congressKey = congress.getCongressKey();
@@ -244,7 +249,7 @@ public class VotingDetailController {
 		TripleDes tDes = new TripleDes(congressKey, congressIv);
 		
 		List<Delegate> candidates = candidateService.getIsCandidate(votingId, congressId);
-		List<DelegateJson> candidatesJson = new ArrayList<DelegateJson>();
+		List<CandidateJson> candidatesJson = new ArrayList<CandidateJson>();
 
 		for (int i = 0; i < candidates.size(); i++) {
 			Delegate candidate = candidates.get(i);
@@ -268,10 +273,10 @@ public class VotingDetailController {
 				delegateService.merge(candidate);
 			}
 			
-			candidatesJson.add(new DelegateJson(candidate));
+			candidatesJson.add(new CandidateJson(candidate, isResidual));
 		}
 
-		ListHolder<DelegateJson> json = new ListHolder<DelegateJson>();
+		ListHolder<CandidateJson> json = new ListHolder<CandidateJson>();
 		json.setData(candidatesJson);
 		
 		return mapper.writeValueAsString(json);

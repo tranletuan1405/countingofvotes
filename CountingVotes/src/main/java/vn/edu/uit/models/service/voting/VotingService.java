@@ -80,4 +80,9 @@ public class VotingService implements IVotingDao {
 		return votingDao.fetchAll(congressId);
 	}
 
+	@Override
+	public boolean getCountingType(long votingId) {
+		return votingDao.getCountingType(votingId);
+	}
+
 }

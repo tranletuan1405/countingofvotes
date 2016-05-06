@@ -184,9 +184,10 @@
 											<label for="slider-min-selected"
 												class="col-sm-1 control-label"></label> <input type="number"
 												class="col-sm-1 control-label value-slider"
+												th:name="minSelected"
 												id="min-selected" min="0"
 												required="required"
-												th:attr="max=${totalCandidate}"
+												th:attr="max=${voting.countingRule.maxSelected}"
 												th:value="${voting.countingRule.minSelected}" />
 										</div>
 
