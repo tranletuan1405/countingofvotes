@@ -185,7 +185,7 @@
 												class="col-sm-1 control-label"></label> <input type="number"
 												class="col-sm-1 control-label value-slider"
 												th:name="minSelected"
-												id="min-selected" min="0"
+												id="min-selected" min="1"
 												required="required"
 												th:attr="max=${voting.countingRule.maxSelected}"
 												th:value="${voting.countingRule.minSelected}" />
@@ -202,7 +202,7 @@
 												class="col-sm-1 control-label"></label> <input type="number"
 												th:name="maxSelected"
 												class="col-sm-1 control-label value-slider"
-												id="max-selected" min="0"
+												id="max-selected" min="1"
 												required="required"
 												th:attr="max=${totalCandidate}"
 												th:value="${voting.countingRule.maxSelected}" />

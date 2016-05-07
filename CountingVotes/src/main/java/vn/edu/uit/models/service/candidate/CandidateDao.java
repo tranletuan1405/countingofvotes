@@ -106,7 +106,6 @@ public class CandidateDao extends AbstractDao implements ICandidateDao {
 		query.setParameter("delegateId", delegateId);
 		query.setParameter("votingId", votingId);
 		long result = (Long) query.uniqueResult();
-		logger.info(result + "");
 		return result > 0 ? true : false;
 	}
 

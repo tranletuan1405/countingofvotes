@@ -26,20 +26,29 @@ function loadCandidateTable(){
 		}, {
 			data : "dateOfBirth",
 			orderable : false,
+			visible : false,
 		}, {
 			data : "gender",
 			orderable : false,
+			visible : false,
 		}, {
 			data : "unitName",
 			orderable : false,
+			visible : false,
 		}, {
 			data : "position",
 			orderable : false,
+			visible : false,
 		}, {
 			data : "id",
 			orderable : false,
 			searchable : false,
-		},],
+		}, {
+			data : "countingCode",
+			orderable : false,
+			searchable : false,
+			visible : false
+		}],
 		
 		columnDefs : [{
 			render : function(data, type, row){
@@ -68,8 +77,61 @@ function loadCandidateTable(){
             cell.innerHTML = i+1;
         });
     }).draw();
+	
+	$('#candidate-table tbody').on('click', 'tr', function (event) {
+		var data = candidate_table.row( this ).data();
+		var rowId = candidate_table.row( this ).id();
+	    var checkbox = $("#" + rowId + ">td>input[type='checkbox']");
+
+	    if(checkbox.is(':checked')){ //Đã chọn (sau response sẽ bỏ trạng thái chọn)'
+	    	deselectCandidate(data['countingCode']);
+	    }else { //Chưa chọn (sau response sẽ chọn)
+	    	selectCandidate(data['countingCode']);
+	    }
+	});
 }
 
+function selectCandidate(val){
+	$.ajax({
+		url : "counting/select_candidate",
+		type : "POST",
+		data : {encode : val},
+		success : function(response) {
+			if(response > 0){
+				$('#error-msg').addClass("hidden");
+				$('#' + response).addClass("success");
+				$('#' + response + ">td>input[type='checkbox']").prop('checked', true);
+			} else {
+				$('#error-msg').removeClass("hidden");
+			}
+		},
+		error : function (){
+			$('#error-msg').removeClass("hidden");
+		},
+	
+	});
+}
+
+function deselectCandidate(val){
+	$.ajax({
+		url : "counting/deselect_candidate",
+		type : "POST",
+		data : {encode : val},
+		success : function(response) {
+			if(response > 0){
+				$('#error-msg').addClass("hidden");
+				$('#' + response).removeClass("success");
+				$('#' + response + ">td>input[type='checkbox']").prop('checked', false);
+			} else {
+				$('#error-msg').removeClass("hidden");
+			}
+		},
+		error : function (){
+			$('#error-msg').removeClass("hidden");
+		},
+	
+	});
+}
 
 /* INPUT ENCODE */
 function initControl(){
@@ -81,27 +143,7 @@ function initControl(){
 			event.preventDefault();
 			$('#error-msg').addClass("hidden");
 			var val = $(this).val();
-			$.ajax({
-				url : "counting/check_code",
-				type : "POST",
-				data : {encode : val},
-				success : function(response) {
-					if(response > 0){
-						$('#error-msg').addClass("hidden");
-						$('#' + response).addClass("success");
-						$('#' + response + ">td>input[type='checkbox']").attr('checked', 'checked');
-					} else {
-						$('#error-msg').removeClass("hidden");
-					}
-					
-					console.log(response);
-				},
-				error : function (){
-					$('#error-msg').removeClass("hidden");
-				},
-			
-			});
-			
+			selectCandidate(val);
 			$(this).select();
 		}
 	});

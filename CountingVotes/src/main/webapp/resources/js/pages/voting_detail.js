@@ -40,7 +40,7 @@ function initCountingRule(){
 	$('#slider-min-percent').slider({
 	    orientation: "horizontal",
 	    range: "min",
-	    min: 0,
+	    min: 1,
 	    max: 100,
 	    value: minPercentVal,
 	    slide: function (event, ui) {
@@ -54,7 +54,7 @@ function initCountingRule(){
 	$('#slider-max-selected').slider({
 	    orientation: "horizontal",
 	    range: "min",
-	    min: 0,
+	    min: 1,
 	    max: maxMaxSelectedVal,
 	    value: curMaxSelectedVal,
 	    slide: function (event, ui) {
@@ -147,7 +147,7 @@ function initMinSelectedSlider(maxValue){
 	$('#slider-min-selected').slider({
 	    orientation: "horizontal",
 	    range: "min",
-	    min: 0,
+	    min: 1,
 	    max: maxValue,
 	    value: curMinSelected,
 	    slide: function (event, ui) {

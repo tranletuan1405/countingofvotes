@@ -10,7 +10,8 @@ public class DataConfig {
 
 	public static final String SESSION_NAME = "congress_id";
 	public static final String SESSION_VOTING_NAME = "voting_id";
-
+	public static final String SESSION_SELECTED_CANDIDATES = "selected_candidates";
+	
 	public static final String DETAIL_ACTIVE = "detail_active";
 	public static final String VOTING_ACTIVE = "voting_active";
 	public static final String STATISTICS_ACTIVE = "statistics_active";

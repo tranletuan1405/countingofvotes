@@ -1,7 +1,9 @@
 package vn.edu.uit.controllers;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,6 +27,7 @@ import vn.edu.uit.extra.TripleDes;
 import vn.edu.uit.models.Congress;
 import vn.edu.uit.models.Delegate;
 import vn.edu.uit.models.Voting;
+import vn.edu.uit.models.json.CandidateJson;
 import vn.edu.uit.models.json.DelegateJson;
 import vn.edu.uit.models.service.candidate.CandidateService;
 import vn.edu.uit.models.service.congress.CongressService;
@@ -57,6 +60,9 @@ public class CountingController {
 		HttpSession session = request.getSession();
 		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
+		Set<Long> candidates = new HashSet<Long>();
+		session.setAttribute(DataConfig.SESSION_SELECTED_CANDIDATES, candidates);
+		
 		Voting voting = votingService.fetch(votingId);
 		ModelAndView model = new ModelAndView("counting");
 		
@@ -85,29 +91,63 @@ public class CountingController {
 		HttpSession session = request.getSession();
 		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
+		boolean isResidual = votingService.getCountingType(votingId);
+		
 		List<Delegate> candidates = candidateService.getIsCandidate(votingId, congressId);
-		List<DelegateJson> data = new ArrayList<DelegateJson>();
-		ListHolder<DelegateJson> json = new ListHolder<DelegateJson>();
+		List<CandidateJson> data = new ArrayList<CandidateJson>();
+		ListHolder<CandidateJson> json = new ListHolder<CandidateJson>();
 
 		for (int i = 0; i < candidates.size(); i++) {
-			data.add(new DelegateJson(candidates.get(i)));
+			data.add(new CandidateJson(candidates.get(i), isResidual));
 		}
 
 		json.setData(data);
 		return mapper.writeValueAsString(json);
 	}
 	
-	@RequestMapping(value = "/check_code", method = RequestMethod.POST)
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/select_candidate", method = RequestMethod.POST)
 	@ResponseBody
-	public String checkingCandidate(@RequestParam(value ="encode", required = true) String encode, HttpServletRequest request) throws NumberFormatException, Exception{
+	public String selectCandidate(@RequestParam(value ="encode", required = true) String encode, HttpServletRequest request) throws NumberFormatException, Exception{
 		HttpSession session = request.getSession();
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
 		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
+		Set<Long> candidates = (HashSet<Long>) session.getAttribute(DataConfig.SESSION_SELECTED_CANDIDATES);
+		if(candidates == null) candidates = new HashSet<Long>();
+		
 		Congress congress = congressService.fetch(congressId);
 		TripleDes tDes = new TripleDes(congress.getCongressKey(), congress.getCongressIv());
 		long delegateId = Long.valueOf(tDes.decryptText(encode));
 		
 		boolean isExists = candidateService.isExists(delegateId, votingId);
+		if (isExists) {
+			candidates.add(delegateId);
+			session.setAttribute(DataConfig.SESSION_SELECTED_CANDIDATES, candidates);
+		}
+		
+		return isExists == true ? String.valueOf(delegateId) : "failed";
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/deselect_candidate", method = RequestMethod.POST)
+	@ResponseBody
+	public String deselectCandidate(@RequestParam(value = "encode", required = true) String encode, HttpServletRequest request) throws NumberFormatException, Exception {
+		HttpSession session = request.getSession();
+		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
+		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
+		Set<Long> candidates = (HashSet<Long>) session.getAttribute(DataConfig.SESSION_SELECTED_CANDIDATES);
+		if(candidates == null) candidates = new HashSet<Long>();
+		
+		Congress congress = congressService.fetch(congressId);
+		TripleDes tDes = new TripleDes(congress.getCongressKey(), congress.getCongressIv());
+		long delegateId = Long.valueOf(tDes.decryptText(encode));
+		
+		boolean isExists = candidateService.isExists(delegateId, votingId);
+		if (isExists) {
+			candidates.remove(delegateId);
+			session.setAttribute(DataConfig.SESSION_SELECTED_CANDIDATES, candidates);
+		}
+		
 		return isExists == true ? String.valueOf(delegateId) : "failed";
 	}
 }

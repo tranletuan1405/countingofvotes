@@ -12,10 +12,10 @@ public class CountingRule extends AbstractEntity {
 
 	
 	@Column(name = "max_selected", nullable = false)
-	private int maxSelected;
+	private int maxSelected = 1;
 	
 	@Column(name = "min_selected", nullable = false)
-	private int minSelected;
+	private int minSelected = 1;
 	
 	@Column(name = "min_percent", nullable = false)
 	private int minPercent = 50;
@@ -28,7 +28,7 @@ public class CountingRule extends AbstractEntity {
 	}
 
 	public void setMaxSelected(int maxSelected) {
-		this.maxSelected = maxSelected;
+		this.maxSelected = maxSelected > 0 ? maxSelected : 1;
 	}
 
 	public int getMinPercent() {
@@ -36,7 +36,7 @@ public class CountingRule extends AbstractEntity {
 	}
 
 	public void setMinPercent(int minPercent) {
-		this.minPercent = minPercent;
+		this.minPercent = minPercent > 0 ? minPercent : 1;
 	}
 
 	public int getMinSelected() {
@@ -44,7 +44,7 @@ public class CountingRule extends AbstractEntity {
 	}
 
 	public void setMinSelected(int minSelected) {
-		this.minSelected = minSelected;
+		this.minSelected = minSelected > 0 ? minSelected : 1;
 	}
 
 	public boolean isResidual() {
