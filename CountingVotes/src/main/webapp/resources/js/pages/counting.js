@@ -14,7 +14,7 @@ function loadCandidateTable(){
 		destroy : true,
 		paging : false,
 		searching : false,
-		ajax : "counting/ballot_canidates",
+		ajax : "counting/get_candidates",
 		rowId : "id",
 		order : [[ 1, 'asc' ]],
 		columns : [ {
@@ -143,15 +143,18 @@ function initControl(){
 			event.preventDefault();
 			$('#error-msg').addClass("hidden");
 			var val = $(this).val();
-			selectCandidate(val);
+			
+			if(val == "submit"){
+				$('#form-submit-ballot').submit();
+			}
+			else {
+				selectCandidate(val);
+			}
 			$(this).select();
 		}
 	});
 	
-	$('#input-encode').focus(function(){
-		$('error-msg').addClass("hidden");
-		$(this).select();
-	});
+	$('#input-encode').focus();
 	
 	//Checkbox
 	$('#checkbox-use-code').change(function() {
@@ -160,7 +163,6 @@ function initControl(){
 		} else {
 			$('#btn-save-ballot').removeAttr('disabled');
 		}
-
 	});
 	
 	//Btn refresh
@@ -169,9 +171,5 @@ function initControl(){
 		input.focus();
 		$('#candidate-table>tbody>tr').removeClass('success');
 	});
-	
-	//Btn save ballot
-	$('#btn-save-ballot').click(function(){
-		
-	});
+
 }

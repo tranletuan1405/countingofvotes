@@ -20,20 +20,10 @@ import com.sun.org.glassfish.gmbal.ManagedAttribute;
 
 import vn.edu.uit.models.common.AbstractEntity;
 
-/*@Entity
-@Table(name = "Ballot")*/
+@Entity
+@Table(name = "Ballot")
 public class Ballot extends AbstractEntity {
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "start_time")
-	private Date startTime;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "end_time")
-	private Date endTime;
-
-	@Column(name = "is_valid")
-	private Boolean isValid;
 
 	@ManyToOne(targetEntity = Voting.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "voting_id", nullable = false, updatable = false)
@@ -42,41 +32,14 @@ public class Ballot extends AbstractEntity {
 	@OneToMany(targetEntity = BallotDetail.class, mappedBy = "ballot")
 	private Set<BallotDetail> details = new HashSet<BallotDetail>(0);
 
-	
-	
-	
-	
-	
+	@Column(name = "is_valid")
+	private boolean isValid = true;
 	
 	
 	
 	
 	public Ballot() {
 
-	}
-
-	public Date getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-
-	public Date getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
-
-	public Boolean getIsValid() {
-		return isValid;
-	}
-
-	public void setIsValid(Boolean isValid) {
-		this.isValid = isValid;
 	}
 
 	public Voting getVoting() {
@@ -93,6 +56,14 @@ public class Ballot extends AbstractEntity {
 
 	public void setDetails(Set<BallotDetail> details) {
 		this.details = details;
+	}
+
+	public boolean isValid() {
+		return isValid;
+	}
+
+	public void setValid(boolean isValid) {
+		this.isValid = isValid;
 	}
 
 }

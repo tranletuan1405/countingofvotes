@@ -100,13 +100,12 @@ public class CandidateDao extends AbstractDao implements ICandidateDao {
 	}
 
 	@Override
-	public boolean isExists(long delegateId, long votingId) {
-		String hql = "SELECT count(*) FROM Candidate WHERE delegate.id = :delegateId AND voting.id = :votingId";
+	public long isExists(long delegateId, long votingId) {
+		String hql = "SELECT id FROM Candidate WHERE delegate.id = :delegateId AND voting.id = :votingId";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("delegateId", delegateId);
 		query.setParameter("votingId", votingId);
-		long result = (Long) query.uniqueResult();
-		return result > 0 ? true : false;
+		return (Long) query.uniqueResult();
 	}
 
 	@Override

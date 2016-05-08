@@ -19,8 +19,8 @@ import javax.persistence.TemporalType;
 
 import vn.edu.uit.models.common.AbstractEntity;
 
-/*@Entity
-@Table(name = "Ballot_Detail")*/
+@Entity
+@Table(name = "Ballot_Detail")
 public class BallotDetail implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -31,17 +31,13 @@ public class BallotDetail implements Serializable {
 	private long id;
 
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "candidate_id", nullable = false, referencedColumnName = "id")
+	@OneToOne(targetEntity=Candidate.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "candidate_id", nullable = false)
 	private Candidate candidate;
 	
-	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "ballot_id", nullable = false)
+	@ManyToOne(targetEntity=Ballot.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "ballot_id", nullable = false, updatable = false)
 	private Ballot ballot;
-		
-	@Column(name = "is_selected")
-	private Boolean isSelected;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "checked_time")
@@ -50,21 +46,10 @@ public class BallotDetail implements Serializable {
 	@Column(name = "is_enabled", nullable = false)
 	private boolean isEnabled = true;
 	
-	@Column(name = "note", columnDefinition = "varchar(500)")
-	private String note;
-	
 	public BallotDetail(){
 		
 	}
 			
-	public Boolean getIsSelected() {
-		return isSelected;
-	}
-
-	public void setIsSelected(Boolean isSelected) {
-		this.isSelected = isSelected;
-	}
-
 	public Date getCheckedTime() {
 		return checkedTime;
 	}
@@ -96,14 +81,6 @@ public class BallotDetail implements Serializable {
 
 	public void setCandidate(Candidate candidate) {
 		this.candidate = candidate;
-	}
-
-	public String getNote() {
-		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
 	}
 
 	public Candidate getCandidate() {

@@ -48,6 +48,16 @@
 					Số ứng viên : <span class="standard-text-color"
 						th:text="${totalCandidate}"></span>
 				</h4>
+				
+				<h4>
+					Số lượng bầu chọn tối thiểu : <span class="standard-text-color"
+						th:text="${voting.countingRule.minSelected}"></span>
+				</h4>
+				
+				<h4>
+					Số lượng bầu chọn tối đa : <span class="standard-text-color"
+						th:text="${voting.countingRule.maxSelected}"></span>
+				</h4>
 
 			</div>
 
@@ -68,15 +78,21 @@
 						</div>
 
 						<div class="col-md-7 col-sm-7">
-							<div class="form-inline" style="float: right;">
-								<div class="checkbox"> <label> <input type="checkbox" id="checkbox-use-code" checked='checked'/>Lưu phiếu bằng mã </label> </div>
+							<form class="form-inline" id="form-submit-ballot"
+								th:action="@{counting/submit_ballot}" style="float: right;" method="POST">
 
-								<button type="button" class="btn btn-success no-radius" disabled="disabled" id="btn-save-ballot">Lưu
-									phiếu</button>
+								<div class="checkbox">
+									<label> <input type="checkbox" id="checkbox-use-code"
+										checked='checked' />Lưu phiếu bằng mã
+									</label>
+								</div>
 
-								<button type="button" class="btn btn-info no-radius" id="btn-refresh">Phiếu
-									mới</button>
-							</div>
+								<button type="submit" class="btn btn-success no-radius"
+									disabled="disabled" id="btn-save-ballot">Lưu phiếu</button>
+
+								<button type="button" class="btn btn-info no-radius"
+									id="btn-refresh">Phiếu mới</button>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -84,6 +100,15 @@
 				<div class="alert alert-danger no-radius hidden" role="alert" id="error-msg">
 					<strong>Lỗi!</strong> Không tìm thấy nội dung vừa nhập
 				</div>
+				
+				<div th:if="${serverError}" class="alert alert-danger no-radius" role="alert" id="server-error">
+					<strong>Lỗi!</strong> <span th:text="${serverError}"></span>
+				</div>
+				
+				<div th:if="${serverSuccess}" class="alert alert-success no-radius" role="alert" id="server-success">
+					<strong>Thông báo!</strong> <span th:text="${serverSuccess}"></span> <a th:href="'../counting/ballot/' + ${preBallotId}" th:text="${preBallotId}"></a>
+				</div>
+				
 
 				<div class="panel panel-default no-radius">
 					<div class="panel-body">
