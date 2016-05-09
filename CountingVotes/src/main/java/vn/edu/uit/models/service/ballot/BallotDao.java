@@ -29,5 +29,14 @@ public class BallotDao extends AbstractDao implements IBallotDao {
 		return query.executeUpdate();
 	}
 
+	@Override
+	public long count(long votingId) {
+		String hql = "SELECT count(*) FROM Ballot WHERE voting.id = :votingId AND isEnabled = :isEnabled";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("votingId", votingId);
+		query.setParameter("isEnabled", true);
+		return (Long) query.uniqueResult();
+	}
+
 	
 }

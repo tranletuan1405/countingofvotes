@@ -95,10 +95,18 @@ public class CountingController {
 	public ModelAndView submitBallot(HttpServletRequest request, RedirectAttributes reAttr){
 		ModelAndView model = new ModelAndView("redirect:/counting/this");
 		HttpSession session = request.getSession();
+		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
 		Set<Long> candidates = (HashSet<Long>) session.getAttribute(DataConfig.SESSION_SELECTED_CANDIDATES);
 		Voting voting = votingService.fetch(votingId);
 		CountingRule rule = voting.getCountingRule();
+		long attendees = delegateService.getNumOfAttendees(congressId);
+		long count = ballotService.count(votingId);
+		
+		if(count == attendees){
+			reAttr.addFlashAttribute("serverError", "Tổng số phiếu đã lưu bằng với tổng số phiếu hợp lệ, vui lòng kiểm tra lại!");
+			return model;
+		}
 		
 		if(candidates == null || candidates.size() < rule.getMinSelected() || candidates.size() > rule.getMaxSelected()){
 			int size = candidates == null ? 0 : candidates.size();

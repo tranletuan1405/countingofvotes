@@ -10,6 +10,7 @@ $(document).ready(function () {
 	
 	initEventModal();
 	loadCandidateTable();
+	initBallotInfo();
 	initCountingRule();
 	initSelectCandidateModal();
 	initCreateBallotModal();
@@ -26,6 +27,23 @@ function initEventModal(){
 	});
 }
 
+/* Num of Ballot */
+function initBallotInfo(){
+	$('.input-ballot-info').on('change keyup', function(){
+		$('#btn-submit-num-of-ballots').removeAttr('disabled');
+		var total = $('#total-ballot').val();
+		var valid = $('#num-of-valid').val();
+		$('#num-of-valid').attr('max', total);
+		
+		if(valid > total){
+			$('#num-of-valid').val(total);
+		}
+	});
+	
+	$('.input-ballot-info').on('focus', function(){
+		$(this).select();
+	});
+}
 
 /* Counting Rule */
 function initCountingRule(){

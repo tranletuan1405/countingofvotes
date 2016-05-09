@@ -53,11 +53,17 @@
 					Số lượng bầu chọn tối thiểu : <span class="standard-text-color"
 						th:text="${voting.countingRule.minSelected}"></span>
 				</h4>
-				
-				<h4>
-					Số lượng bầu chọn tối đa : <span class="standard-text-color"
-						th:text="${voting.countingRule.maxSelected}"></span>
-				</h4>
+
+				<div class="row" style="margin-right: 0px;">
+					<h4 class="col-md-10" style="margin: 0px">
+						Số lượng bầu chọn tối đa : <span class="standard-text-color"
+							th:text="${voting.countingRule.maxSelected}"></span>
+					</h4>
+
+					<a class="col-md-2 btn no-radius standard-color"
+						th:href="'../statistics/' + ${voting.id}"
+						style="font-size: 13pt; color: white; font-weight: bold;">Thống kê</a>
+				</div>
 
 			</div>
 

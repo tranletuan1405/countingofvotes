@@ -9,4 +9,6 @@ public interface IBallotDao {
 	boolean merge(Ballot ballot);
 	
 	int insertDetail(long candidateId, long ballotId);
+	
+	long count(long votingId);
 }

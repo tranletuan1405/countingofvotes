@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,7 +43,7 @@ import vn.edu.uit.models.service.unit.UnitService;
 import vn.edu.uit.models.service.voting.VotingService;
 
 @Controller
-@RequestMapping(value = "/voting_detail/**")
+@RequestMapping(value = "voting_detail/**")
 public class VotingDetailController {
 
 	private static final Logger logger = LoggerFactory.getLogger(VotingDetailController.class);
@@ -175,6 +176,34 @@ public class VotingDetailController {
 			}
 		}
 
+		return model;
+	}
+	
+	@RequestMapping(value = "update_num_of_ballots", method = RequestMethod.POST)
+	public ModelAndView saveBallotInfo(@RequestParam("totalBallot") int totalBallot,
+			@RequestParam("numOfValidBallot") int numOfValidBallot, HttpServletRequest request, RedirectAttributes reAttr) {
+		HttpSession session = request.getSession();
+		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
+		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
+		ModelAndView model = new ModelAndView("redirect:/voting_detail/" + votingId);
+		
+		Voting voting = votingService.fetch(votingId);
+		long attendees = delegateService.getNumOfAttendees(congressId);
+		
+		if(totalBallot < numOfValidBallot){
+			reAttr.addFlashAttribute("serverError", "Số phiếu hợp lệ vừa nhập lớn hơn số phiếu thu vào");
+			return model;
+		}
+		
+		if(totalBallot > attendees){
+			reAttr.addFlashAttribute("serverError", "Số phiếu thu vào lớn hơn số đại biểu tham dự");
+			return model;
+		}
+		
+		voting.setTotalBallot(totalBallot);
+		voting.setNumOfValidBallot(numOfValidBallot);
+		votingService.update(voting);
+		
 		return model;
 	}
 

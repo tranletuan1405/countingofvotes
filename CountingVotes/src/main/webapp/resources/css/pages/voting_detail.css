@@ -1,31 +1,31 @@
 @CHARSET "UTF-8";
 
-#panel-candidate-table, #panel-counting-rules {
+#panel-candidate-table, #panel-counting-rules, #panel-num-of-ballots {
 	border-radius: 0px;
 	border-color: #00aff0;
 }
 
-#heading-candidate-table, #heading-counting-rules {
+#heading-candidate-table, #heading-counting-rules, #heading-num-of-ballots {
 	background-color: #00aff0;
 	border-radius: 0px;
 }
 
-#heading-candidate-table>h2>a, #heading-counting-rules>h2>a {
+#heading-candidate-table>h2>a, #heading-counting-rules>h2>a, #heading-num-of-ballots>h2>a {
 	font-weight: bold;
 	color: white;
 	font-size: 17px;
 }
 
-#panel-counting-rules {
+#panel-counting-rules, #panel-num-of-ballots {
 	margin-top: 15px;
 }
 
 /* COUNTING RULES */
-#min-percent, #max-selected, #min-selected {
+#min-percent, #max-selected, #min-selected, .input-ballot-info {
 	text-align: center;
 	color: black;
 	font-weight: bolder;
-	font-size: 13pt;
+	font-size: 12pt;
 }
 
 /**/

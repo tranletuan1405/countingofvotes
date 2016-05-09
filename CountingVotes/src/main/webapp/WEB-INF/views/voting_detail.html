@@ -81,9 +81,9 @@
 						<li class="active" th:text="${voting.name}"></li>
 					</ol>
 
-					<div th:if="${errorMsg}" class="alert alert-danger no-radius"
-						role="alert">
-						<p th:text="${errorMsg}"></p>
+					<div th:if="${serverError}" class="alert alert-danger no-radius"
+						role="alert" id="server-error">
+						<strong>Lỗi!</strong> <span th:text="${serverError}"></span>
 					</div>
 
 					<!-- Content -->
@@ -231,6 +231,53 @@
 											</div>
 										</div>
 
+									</form>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Total ballot  -->
+						<div th:if="${totalCandidate}" class="panel panel-info" id="panel-num-of-ballots">
+							<div class="panel-heading" role="tab" id="heading-num-of-ballots">
+								<h2 class="panel-title">
+									<a class="collapsed" role="button" data-toggle="collapse"
+										href="#num-of-ballots-content" aria-expanded="true"
+										aria-controls="num-of-ballots-content">Thông tin phiếu</a>
+								</h2>
+							</div>
+
+							<div id="num-of-ballots-content"
+								class="panel-collapse collapsed in" role="tabpanel"
+								aria-labelledby="heading-num-of-ballots">
+								<div class="panel-body">
+									<form id="form-num-of-ballots" class="form-horizontal"
+										autocomplete="off" th:action="@{update_num_of_ballots}"
+										method="POST">
+										
+										<div class="form-group">
+											<label for="total-ballot" class="col-sm-4 control-label">Số phiếu thu vào : </label> 
+											<div class="col-sm-2 input-group">
+												<input type="number" required="true" class="form-control input-ballot-info" id="total-ballot" th:attr="max=${attendees}" th:value="${voting.totalBallot}" name="totalBallot"/>
+											</div>
+										</div>			
+										
+										<div class="form-group">
+											<label for="num-of-valid" class="col-sm-4 control-label">Số phiếu hợp lệ : </label> 
+											<div class="col-sm-2 input-group">
+												<input type="number" required="true" class="form-control input-ballot-info" id="num-of-valid" th:value="${voting.numOfValidBallot}" name="numOfValidBallot"/>
+											</div>
+										</div>			
+										
+										<div class="form-group">
+											<label for="btn-submit-num-of-ballots" class="col-sm-4 control-label"></label>
+											<div class="col-sm-8 input-group">
+												<button type="submit" class="btn btn-success no-radius"
+													id="btn-submit-num-of-ballots" disabled="true">Lưu</button>
+											</div>
+										</div>
+										
+										
+										
 									</form>
 								</div>
 							</div>

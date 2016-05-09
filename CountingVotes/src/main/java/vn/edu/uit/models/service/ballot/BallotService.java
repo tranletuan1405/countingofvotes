@@ -51,4 +51,9 @@ public class BallotService implements IBallotDao{
 		return ballot.getId();
 
 	}
+
+	@Override
+	public long count(long votingId) {
+		return ballotDao.count(votingId);
+	}
 }

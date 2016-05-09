@@ -37,6 +37,12 @@ public class Voting extends AbstractEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "end_time")
 	private Date endTime;
+	
+	@Column(name = "total_ballot")
+	private int totalBallot = 0;
+	
+	@Column(name = "num_of_valid_ballot")
+	private int numOfValidBallot = 0;
 
 	@OneToOne(targetEntity = Congress.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "congress_id", updatable = false)
@@ -109,6 +115,30 @@ public class Voting extends AbstractEntity {
 	
 	public String getEndTimeString() {
 		return SupportMethods.dateToString(this.endTime, DataConfig.DATE_TIME_FORMAT);
+	}
+
+	public int getTotalBallot() {
+		return totalBallot;
+	}
+
+	public void setTotalBallot(int totalBallot) {
+		this.totalBallot = totalBallot;
+	}
+
+	public int getNumOfValidBallot() {
+		return numOfValidBallot;
+	}
+
+	public void setNumOfValidBallot(int numOfValidBallot) {
+		this.numOfValidBallot = numOfValidBallot;
+	}
+
+	public String getBallotPattern() {
+		return ballotPattern;
+	}
+
+	public void setBallotPattern(String ballotPattern) {
+		this.ballotPattern = ballotPattern;
 	}
 
 }
