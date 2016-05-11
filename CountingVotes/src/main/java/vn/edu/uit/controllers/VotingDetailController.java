@@ -190,6 +190,11 @@ public class VotingDetailController {
 		Voting voting = votingService.fetch(votingId);
 		long attendees = delegateService.getNumOfAttendees(congressId);
 		
+		if(totalBallot <= 0 || numOfValidBallot <= 0){
+			reAttr.addFlashAttribute("serverError", "Số phiếu phải lớn hơn 0");
+			return model;
+		}
+		
 		if(totalBallot < numOfValidBallot){
 			reAttr.addFlashAttribute("serverError", "Số phiếu hợp lệ vừa nhập lớn hơn số phiếu thu vào");
 			return model;

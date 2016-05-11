@@ -100,10 +100,9 @@ public class CountingController {
 		Set<Long> candidates = (HashSet<Long>) session.getAttribute(DataConfig.SESSION_SELECTED_CANDIDATES);
 		Voting voting = votingService.fetch(votingId);
 		CountingRule rule = voting.getCountingRule();
-		long attendees = delegateService.getNumOfAttendees(congressId);
 		long count = ballotService.count(votingId);
 		
-		if(count == attendees){
+		if(count == voting.getNumOfValidBallot()){
 			reAttr.addFlashAttribute("serverError", "Tổng số phiếu đã lưu bằng với tổng số phiếu hợp lệ, vui lòng kiểm tra lại!");
 			return model;
 		}

@@ -65,7 +65,7 @@
 								Đơn vị : <span class="standard-text-color"
 									th:text="${totalUnit}"></span>
 							</h4>
-							<a th:if="${totalCandidate}" class="col-md-2 btn no-radius standard-color btn-edit-ballot"
+							<a th:if="${voting.numOfValidBallot > 0}" class="col-md-2 btn no-radius standard-color btn-edit-ballot"
 								th:href="@{../counting}"
 								style="font-size: 13pt; color: white; font-weight: bold;">Kiếm
 								phiếu</a>
@@ -257,14 +257,14 @@
 										<div class="form-group">
 											<label for="total-ballot" class="col-sm-4 control-label">Số phiếu thu vào : </label> 
 											<div class="col-sm-2 input-group">
-												<input type="number" required="true" class="form-control input-ballot-info" id="total-ballot" th:attr="max=${attendees}" th:value="${voting.totalBallot}" name="totalBallot"/>
+												<input type="number" required="true" class="form-control input-ballot-info" id="total-ballot" min='1' th:attr="max=${attendees}" th:value="${voting.totalBallot}" name="totalBallot"/>
 											</div>
 										</div>			
 										
 										<div class="form-group">
 											<label for="num-of-valid" class="col-sm-4 control-label">Số phiếu hợp lệ : </label> 
 											<div class="col-sm-2 input-group">
-												<input type="number" required="true" class="form-control input-ballot-info" id="num-of-valid" th:value="${voting.numOfValidBallot}" name="numOfValidBallot"/>
+												<input type="number" required="true" class="form-control input-ballot-info" id="num-of-valid" min='1' th:attr="max=${voting.totalBallot}" th:value="${voting.numOfValidBallot}" name="numOfValidBallot"/>
 											</div>
 										</div>			
 										

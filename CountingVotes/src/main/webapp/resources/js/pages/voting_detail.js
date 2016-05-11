@@ -29,15 +29,31 @@ function initEventModal(){
 
 /* Num of Ballot */
 function initBallotInfo(){
-	$('.input-ballot-info').on('change keyup', function(){
-		$('#btn-submit-num-of-ballots').removeAttr('disabled');
-		var total = $('#total-ballot').val();
-		var valid = $('#num-of-valid').val();
-		$('#num-of-valid').attr('max', total);
+	var num_of_valid = $('#num-of-valid');
+	var total_ballot = $('#total-ballot');
+	
+	if(num_of_valid.attr('max') == 0){
+		num_of_valid.attr('max', total_ballot.attr('max'));
+	}
+	
+	$('.input-ballot-info').on('change blur keypress keyup', function(){
+		var val = parseInt($(this).val());
+		if(!(val > 0)) $(this).val(1);
 		
-		if(valid > total){
-			$('#num-of-valid').val(total);
+		$('#btn-submit-num-of-ballots').removeAttr('disabled');
+	});
+	
+	total_ballot.on('change keyup blur', function(){
+		var max = parseInt($(this).prop('max'));
+		var val = parseInt($(this).val());
+		var numValid = parseInt(num_of_valid.val());
+		
+		if(numValid > val){
+			
+			num_of_valid.prop('max', val);
+			num_of_valid.val(val);
 		}
+		
 	});
 	
 	$('.input-ballot-info').on('focus', function(){
