@@ -95,7 +95,6 @@ public class CountingController {
 	public ModelAndView submitBallot(HttpServletRequest request, RedirectAttributes reAttr){
 		ModelAndView model = new ModelAndView("redirect:/counting/this");
 		HttpSession session = request.getSession();
-		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
 		Set<Long> candidates = (HashSet<Long>) session.getAttribute(DataConfig.SESSION_SELECTED_CANDIDATES);
 		Voting voting = votingService.fetch(votingId);

@@ -37,4 +37,17 @@ public class CommonController {
 		
 		return image;
 	}
+	
+	@RequestMapping(value = "img/common/{common_path}/{name}",  produces = MediaType.IMAGE_PNG_VALUE)
+	@ResponseBody
+	public byte[] getCommonImage(
+			@PathVariable("common_path") String path,
+			@PathVariable("name") String name) throws IOException {
+		
+		String fullPath = DataConfig.BARCODE_DIRECTORY + path + "/" + name + ".png";
+		FileInputStream is = new FileInputStream(fullPath);
+		byte[] image = IOUtils.toByteArray(is);
+		
+		return image;
+	}
 }

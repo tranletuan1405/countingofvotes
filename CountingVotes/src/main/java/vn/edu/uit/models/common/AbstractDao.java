@@ -51,7 +51,7 @@ public abstract class AbstractDao {
 		}
 	}
 	
-	protected boolean delete(Object obj){
+	protected boolean deleteObject(Object obj){
 		try {
 			getSession().delete(obj);
 			return true;

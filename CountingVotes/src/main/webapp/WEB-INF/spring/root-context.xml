@@ -26,6 +26,7 @@
 	<bean id="candidateDao" class="vn.edu.uit.models.service.candidate.CandidateDao"></bean>
 	<bean id="barcodeDao" class="vn.edu.uit.models.service.barcode.BarcodeDao"></bean>
 	<bean id="ballotDao" class="vn.edu.uit.models.service.ballot.BallotDao"></bean>
+	<bean id="paramDao" class="vn.edu.uit.models.service.parameter.ParamDao"></bean>
 
 	<!-- Data service -->
 	<bean id="congressService" class="vn.edu.uit.models.service.congress.CongressService"></bean>
@@ -37,4 +38,5 @@
 	<bean id="candidateService" class="vn.edu.uit.models.service.candidate.CandidateService"></bean>
 	<bean id="barcodeService" class="vn.edu.uit.models.service.barcode.BarcodeService"></bean>
 	<bean id="ballotService" class="vn.edu.uit.models.service.ballot.BallotService"></bean>
+	<bean id="paramService" class="vn.edu.uit.models.service.parameter.ParamService"></bean>
 </beans>

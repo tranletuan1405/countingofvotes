@@ -120,6 +120,4 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 		return (Boolean) query.uniqueResult();
 	}
 
-
-
 }

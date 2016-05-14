@@ -53,8 +53,7 @@ function initBallotInfo(){
 		
 		if(numValid > val){	
 			num_of_valid.val(val);
-		}
-		
+		}		
 	});
 	
 	$('.input-ballot-info').on('focus', function(){
@@ -400,7 +399,9 @@ function initCreateBallotTable(){
 				$('#code-title').text('Không đồng ý')
 			}
 			
-			initEventModal();			
+			initEventModal();	
+			getSubmitCodePath();
+			
 			$('#create-codes-modal').modal('hide');
 			showModal('#create-ballot-modal');
 			
@@ -431,6 +432,7 @@ function initCreateBallotTable(){
 				title_ballot.empty();
 				body_ballot.empty();
 				
+				
 				title_ballot.append(title);
 				body_ballot.append(body);
 				
@@ -441,8 +443,6 @@ function initCreateBallotTable(){
 			
 					body_ballot.find('thead').empty();
 				}
-				
-				body_ballot.find('tfoot').empty();
 				
 				$('#btn-create-ballot').removeClass('hidden');
 			});
@@ -496,6 +496,26 @@ function initCreateBallotTable(){
             cell.innerHTML = i+1;
         });
     }).draw();
+}
+
+function getSubmitCodePath() {
+	
+	$.ajax({
+		url : "submit_code_path",
+		type : "GET",
+		success : function(path){
+			
+			if(path != ''){
+				
+				$('#img-submit-code').attr('src', '../img/common/' + path);
+				
+			}
+		},
+		error : function(){
+		
+			console.log("Get submit code path failed!");
+		}
+	});
 }
 
 function savePattern() {

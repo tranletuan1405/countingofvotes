@@ -48,7 +48,7 @@
 	display: table-cell;
 }
 
-.table-children-ver-center>tbody>tr>td, .table-children-ver-center>thead>tr>th  {
+.table-children-ver-center>tbody>tr>td, .table-children-ver-center>thead>tr>th, .table-children-ver-center>tfoot>tr>th  {
 	vertical-align: middle;
 	border: 0px;
 	text-align: left;

@@ -31,6 +31,7 @@ import vn.edu.uit.models.Candidate;
 import vn.edu.uit.models.Congress;
 import vn.edu.uit.models.CountingRule;
 import vn.edu.uit.models.Delegate;
+import vn.edu.uit.models.Parameter;
 import vn.edu.uit.models.Voting;
 import vn.edu.uit.models.json.CandidateJson;
 import vn.edu.uit.models.json.CandidateSelectionJson;
@@ -39,6 +40,7 @@ import vn.edu.uit.models.service.barcode.BarcodeService;
 import vn.edu.uit.models.service.candidate.CandidateService;
 import vn.edu.uit.models.service.congress.CongressService;
 import vn.edu.uit.models.service.delegate.DelegateService;
+import vn.edu.uit.models.service.parameter.ParamService;
 import vn.edu.uit.models.service.unit.UnitService;
 import vn.edu.uit.models.service.voting.VotingService;
 
@@ -71,6 +73,9 @@ public class VotingDetailController {
 
 	@Autowired
 	private BarcodeGenerator barcodeGenerator;
+	
+	@Autowired
+	private ParamService paramService;
 
 	// Load Voting Detail
 	@RequestMapping(value = "/{id}")
@@ -266,6 +271,27 @@ public class VotingDetailController {
 	public ModelAndView getCreateBallotModal() {
 		ModelAndView model = new ModelAndView("fragment/create_ballot");
 		return model;
+	}
+	
+	@RequestMapping(value = "/submit_code_path")
+	@ResponseBody
+	public String getSubmitPath() {
+	
+		Parameter submitCode = paramService.fetch(DataConfig.SUBMIT_CODE_PATH);
+		if (submitCode == null || submitCode.getValue().isEmpty()) {
+			String path = barcodeGenerator.generateQR(DataConfig.COMMON_DIRECTORY, "submit_code", "submit", 320);
+			if (path == null || path.isEmpty()) {
+				path = barcodeGenerator.generateQR(DataConfig.COMMON_DIRECTORY, "submit_code", "submit", 320);
+			}
+
+			if (submitCode == null)
+				submitCode = new Parameter();
+			submitCode.setName(DataConfig.SUBMIT_CODE_PATH);
+			submitCode.setValue(path);
+			paramService.saveOrUpdate(submitCode);
+		}
+		
+		return submitCode.getValue();
 	}
 
 	@RequestMapping(value = "/create_codes", produces = { "application/json; charset=UTF-8" })
