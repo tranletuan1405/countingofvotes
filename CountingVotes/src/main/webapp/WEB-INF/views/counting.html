@@ -38,16 +38,6 @@
 
 			<div class="page-header">
 				<h3 th:text="${voting.name}" class="standard-text-color"></h3>
-
-				<h4>
-					Đại biểu hiện diện : <span class="standard-text-color"
-						th:text="${attendees} + ' / ' + ${totalDelegate}"></span>
-				</h4>
-
-				<h4>
-					Số ứng viên : <span class="standard-text-color"
-						th:text="${totalCandidate}"></span>
-				</h4>
 				
 				<h4>
 					Số lượng bầu chọn tối thiểu : <span class="standard-text-color"
@@ -61,12 +51,12 @@
 
 				<div class="row" style="margin-right: 0px;">
 					<h4 class="col-md-10" style="margin: 0px">
-						Số phiếu : <span class="standard-text-color"
+						Số phiếu thật : <span class="standard-text-color"
 							th:text="${voting.numOfValidBallot} + '/' + ${voting.totalBallot}"></span>
 					</h4>
 
 					<a class="col-md-2 btn no-radius standard-color"
-						th:href="'../statistics/' + ${voting.id}"
+						th:href="@{/statistics_detail/}"
 						style="font-size: 13pt; color: white; font-weight: bold;">Thống kê</a>
 				</div>
 

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import vn.edu.uit.models.Candidate;
 import vn.edu.uit.models.Delegate;
+import vn.edu.uit.models.json.CandidateJson;
 
 @Service("candidateService")
 @Transactional
@@ -63,6 +64,11 @@ public class CandidateService implements ICandidateDao {
 	@Override
 	public long getNumOfCandidates(long votingId) {
 		return candidateDao.getNumOfCandidates(votingId);
+	}
+
+	@Override
+	public List<CandidateJson> getStatisticsVoting(long votingId, long totalBallot) {
+		return candidateDao.getStatisticsVoting(votingId, totalBallot);
 	}
 
 	

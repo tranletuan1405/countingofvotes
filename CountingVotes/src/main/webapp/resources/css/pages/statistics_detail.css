@@ -1,0 +1,7 @@
+@CHARSET "UTF-8";
+
+.panel-separate {
+	padding-bottom: 9px;
+	margin-bottom : 10px;
+    border-bottom: 1px solid #eee;
+}

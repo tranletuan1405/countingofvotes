@@ -36,21 +36,22 @@ function initBallotInfo(){
 		num_of_valid.attr('max', total_ballot.attr('max'));
 	}
 	
-	$('.input-ballot-info').on('change blur keypress keyup', function(){
+	$('.input-ballot-info').on('change blur keyup', function(){
 		var val = parseInt($(this).val());
+		var max = parseInt($(this).attr('max'));
 		if(!(val > 0)) $(this).val(1);
+		if(val > max) $(this).val(max);
 		
 		$('#btn-submit-num-of-ballots').removeAttr('disabled');
 	});
 	
 	total_ballot.on('change keyup blur', function(){
-		var max = parseInt($(this).prop('max'));
+		var max = parseInt($(this).attr('max'));
 		var val = parseInt($(this).val());
 		var numValid = parseInt(num_of_valid.val());
+		num_of_valid.attr('max', val);
 		
-		if(numValid > val){
-			
-			num_of_valid.prop('max', val);
+		if(numValid > val){	
 			num_of_valid.val(val);
 		}
 		

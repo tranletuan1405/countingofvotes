@@ -15,6 +15,8 @@ public class CandidateJson {
 	private String countingCodeImagePath;
 	private String countingCode;
 	private boolean isResidual;
+	private long totalVote;
+	private double rate;
 
 	public CandidateJson(Delegate delegate, boolean isResidual) {
 		if (delegate.getId() != null)
@@ -41,6 +43,13 @@ public class CandidateJson {
 
 		this.setResidual(isResidual);
 	}
+	
+	public CandidateJson(){
+		
+	}
+	
+	
+	
 
 	public long getId() {
 		return id;
@@ -112,6 +121,22 @@ public class CandidateJson {
 
 	public void setCountingCode(String countingCode) {
 		this.countingCode = countingCode;
+	}
+
+	public long getTotalVote() {
+		return totalVote;
+	}
+
+	public void setTotalVote(long totalVote) {
+		this.totalVote = totalVote;
+	}
+
+	public double getRate() {
+		return rate;
+	}
+
+	public void setRate(double rate) {
+		this.rate = rate;
 	}
 
 }

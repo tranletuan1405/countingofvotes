@@ -4,6 +4,7 @@ import java.util.List;
 
 import vn.edu.uit.models.Candidate;
 import vn.edu.uit.models.Delegate;
+import vn.edu.uit.models.json.CandidateJson;
 
 public interface ICandidateDao {
 
@@ -27,4 +28,5 @@ public interface ICandidateDao {
 	
 	long getNumOfCandidates(long votingId);
 
+	List<CandidateJson> getStatisticsVoting(long votingId, long totalBallot);
 }

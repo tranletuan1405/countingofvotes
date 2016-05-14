@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+<!-- JQuery -->
+<script type="text/javascript" th:src="@{/js/common/jquery-2.1.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap.min.css}" />
+<script type="text/javascript" th:src="@{/js/common/common.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/common/common.css}" />
+
+<!-- Datatables -->
+<script type="text/javascript" th:src="@{/js/datatables/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/dataTables.bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/dataTables.select.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/dataTables.buttons.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/datatables/buttons.bootstrap.min.js}"></script>
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/datatables/dataTables.bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/datatables/select.bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/datatables/buttons.bootstrap.min.css}" />
+
+<!-- Date Time Picker -->
+<!-- <script type="text/javascript" th:src="@{/js/bootstrap/bootstrap-datetimepicker.min.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap-datetimepicker.min.css}" /> -->
+
+<script type="text/javascript" th:src="@{/js/common/timer.jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/pages/statistics_detail.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/pages/statistics_detail.css}" />
+
+</head>
+<body>
+	<div class="container">
+		<div class="my-container">
+			<div class="page-header">
+				<h2 th:text="${congress.name}" class="standard-text-color"></h2>
+
+				<h3 th:text="${voting.name}" class="standard-text-color"></h3>
+
+				<h4>
+					Đại biểu hiện diện : <span class="standard-text-color"
+						th:text="${attendees} + ' / ' + ${totalDelegate}"></span>
+				</h4>
+
+				<h4>
+					Đơn vị : <span class="standard-text-color" th:text="${totalUnit}"></span>
+				</h4>
+			</div>
+			
+			<ol class="breadcrumb no-radius">
+				<li><a th:href="@{/voting/list}" class="standard-text-color"><span
+						class="glyphicon glyphicon-list-alt"></span> Danh sách bầu cử</a></li>
+				<li><a th:href="@{'/voting_detail/' + ${voting.id}}"
+					class="standard-text-color"><span th:text="${voting.name}"></span></a></li>
+
+				<li><a th:href="@{/counting/}"
+					class="standard-text-color">Kiểm phiếu</a></li>
+					
+				<li class="active">Thống kê</li>
+			</ol>
+			
+			<!-- Total information -->
+			<div class="row">
+			
+				<!-- statistics number -->
+				<div class="col-md-4">
+					<div class="panel panel-default no-radius">
+						<div class="panel-body">
+							<!-- Information about voting -->
+							<div class="panel-separate">
+								<h4>Tín nhiệm tối thiểu : <span class="standard-text-color" th:text="${voting.countingRule.minPercent + '%'}"></span></h4>
+								<h4 th:if="${voting.countingRule.residual}">Loại bầu cử : <span class="standard-text-color">Có dư</span></h4>
+								<h4 th:unless="${voting.countingRule.residual}">Loại bầu cử : <span class="standard-text-color">Không dư</span></h4>
+							</div>
+							
+							<!-- Information about counting -->
+							<div>
+								<h4>Số phiếu thu vào : <span class="standard-text-color" th:text="${voting.totalBallot}"></span></h4>
+								<h4>Số phiếu hợp lệ (trước) : <span class="standard-text-color" th:text="${voting.numOfValidBallot}"></span></h4>
+								<h4>Số phiếu hợp lệ (sau) : <span class="standard-text-color" th:text="${validBallots}"></span></h4>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- table -->
+				<div class="col-md-8">
+					<div class="panel panel-default no-radius">
+						<div class="panel-body">
+							<div class="form-group">
+								<p>Tùy chỉnh hiển thị :</p>
+								<div>
+									<a class="toggle-vis" data-column="2">Năm sinh</a> 
+									<span class="glyphicon glyphicon-asterisk"></span> 
+									<a class="toggle-vis" data-column="3">Giới tính</a> 
+									<span class="glyphicon glyphicon-asterisk"></span> 
+									<a class="toggle-vis" data-column="4">Chức vụ</a>
+								</div>
+							</div>
+
+							<table id="candidate-table" class="table table-hover"
+								cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th>STT</th>
+										<th>Họ tên</th>
+										<th>Năm sinh</th>
+										<th>Giới tính</th>
+										<th>Chức vụ</th>
+										<th>Số bầu chọn</th>
+										<th>Tín nhiệm (%)</th>
+									</tr>
+								</thead>
+
+								<tfoot>
+									<tr>
+										<th>STT</th>
+										<th>Họ tên</th>
+										<th>Năm sinh</th>
+										<th>Giới tính</th>
+										<th>Chức vụ</th>
+										<th>Số bầu chọn</th>
+										<th>Tín nhiệm (%)</th>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Chart -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default no-radius">
+						<div class="panel-body"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<footer th:replace="fragment/footer :: footer"></footer>
+	</div>
+</body>
+</html>
