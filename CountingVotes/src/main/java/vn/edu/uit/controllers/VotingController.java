@@ -76,21 +76,27 @@ public class VotingController {
 		return model;
 	}
 	
-	@RequestMapping(value = "create_voting", method = RequestMethod.POST)
-	public ModelAndView createVoting(@RequestParam("name") String name, HttpServletRequest request) {
+	@RequestMapping(value = "submit_voting", method = RequestMethod.POST)
+	public ModelAndView createVoting(@RequestParam(value = "id", required = false) Long id,
+			@RequestParam("name") String name, HttpServletRequest request) {
 
 		ModelAndView model = new ModelAndView("redirect:/voting/list");
 		if(name == null || name.isEmpty()) return model;
 		
 		HttpSession session = request.getSession();
-		long id = (Long) session.getAttribute(DataConfig.SESSION_NAME);
-		Congress congress = congressService.fetch(id);
 		
-		Voting voting = new Voting();
-		voting.setName(name);
-		voting.setVersion("1");
-		voting.setCongress(congress);
-		votingService.persist(voting);
+		if(id != null && id > 0){
+			Voting voting = votingService.fetch(id);
+			voting.setName(name);
+			votingService.update(voting);
+		} else {
+			long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
+			Congress congress = congressService.fetch(congressId);
+			Voting voting = new Voting();
+			voting.setName(name);
+			voting.setCongress(congress);
+			votingService.persist(voting);
+		}
 		
 		return model;
 

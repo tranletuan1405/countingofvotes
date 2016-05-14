@@ -28,7 +28,7 @@ public class Voting extends AbstractEntity {
 	private String name;
 
 	@Column(name = "version")
-	private String version;
+	private int version = 1;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "start_time")
@@ -69,11 +69,11 @@ public class Voting extends AbstractEntity {
 		this.name = name;
 	}
 
-	public String getVersion() {
+	public int getVersion() {
 		return version;
 	}
 
-	public void setVersion(String version) {
+	public void setVersion(int version) {
 		this.version = version;
 	}
 

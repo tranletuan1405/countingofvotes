@@ -8,7 +8,7 @@ public class VotingJson {
 
 	private long id;
 	private String name;
-	private String version;
+	private int version;
 
 	private String startTime;
 	private String endTime;
@@ -33,11 +33,11 @@ public class VotingJson {
 		this.name = name;
 	}
 
-	public String getVersion() {
+	public int getVersion() {
 		return version;
 	}
 
-	public void setVersion(String version) {
+	public void setVersion(int version) {
 		this.version = version;
 	}
 

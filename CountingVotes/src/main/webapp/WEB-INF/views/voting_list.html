@@ -112,13 +112,14 @@
 				</div>
 				<div class="modal-body">
 					<div class="panel-body">
-						<form class="form-horizontal" id="form-create-voting" th:action="@{create_voting}" method="POST"
+						<form class="form-horizontal" id="form-create-voting" th:action="@{submit_voting}" method="POST"
 							autocomplete="off">
 
 							<div class="form-group">
 								<label for="voting-name" class="col-sm-3 control-label">Tên
 									bầu cử</label>
 								<div class="col-sm-8 input-group">
+									<input th:name="id" type="number" class="hidden" id="voting-id" />
 
 									<input th:name="name" type="text" required="true"
 										class="form-control" id="voting-name" autofocus="true"

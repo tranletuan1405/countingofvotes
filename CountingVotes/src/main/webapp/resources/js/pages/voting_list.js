@@ -5,6 +5,8 @@
 $(document).ready(function(){
 	
 	var voting_table;
+	var selected_row_id;
+	
 	loadVotings();
 	initTableEvents();
 	initCreateModal();
@@ -51,13 +53,13 @@ function loadVotings() {
 			text : "Thêm",
 			className : "btn-primary btn-voting-table no-radius",
 			action : function(){
-				showModal('#modal-create-voting');
+				showAddNewModel();
 			},
 		}, {
 			text : "Sửa",
 			className : "btn-warning btn-voting-table btn-edit disabled no-radius",
 			action : function(){
-				showModal('#modal-create-voting');
+				showEditModel();
 			}
 		}, {
 			text : "Xóa",
@@ -75,6 +77,7 @@ function initTableEvents() {
 	voting_table.on( 'select', function ( e, dt, type, indexes ) {
 	    if ( type == 'row' ) {
 	       $('.btn-edit').removeClass('disabled');
+	       selected_row_id = indexes[0];
 	    }
 	});
 	
@@ -89,11 +92,27 @@ function initTableEvents() {
 function initCreateModal() {
 	$('#modal-create-voting').on('shown.bs.modal', function() {
 		$(this).find('[autofocus]').focus();
+		$(this).find('[autofocus]').select();
 	});
 		
 	$('#btn-submit-voting').click(function() {
 		$('#btn-submit-real').click();
 
 	});
+}
+
+function showAddNewModel(){
+	showModal('#modal-create-voting');
+	$('#voting-name').val('');
+	$('#voting-id').val('');
+}
+
+function showEditModel(){
+	showModal('#modal-create-voting');
+	var data = voting_table.row(selected_row_id).data();
+	var votingName = data['name'];
+	var votingId = data['id'];
+	$('#voting-name').val(votingName);
+	$('#voting-id').val(votingId);
 }
 
