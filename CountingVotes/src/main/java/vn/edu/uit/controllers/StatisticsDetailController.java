@@ -20,6 +20,7 @@ import vn.edu.uit.extra.DataConfig;
 import vn.edu.uit.extra.ListHolder;
 import vn.edu.uit.models.Congress;
 import vn.edu.uit.models.Voting;
+import vn.edu.uit.models.json.CandidateChartJson;
 import vn.edu.uit.models.json.CandidateJson;
 import vn.edu.uit.models.service.ballot.BallotService;
 import vn.edu.uit.models.service.candidate.CandidateService;
@@ -94,5 +95,15 @@ public class StatisticsDetailController {
 		return mapper.writeValueAsString(json);
 	}
 	
-	
+	@RequestMapping(value = "/chart_data", produces = { "application/json; charset=UTF-8"})
+	@ResponseBody
+	public String loadCandidateChart(HttpServletRequest request) throws JsonProcessingException{
+		HttpSession session = request.getSession();
+		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
+		List<CandidateChartJson> candidates = candidateService.getChartVoting(votingId);
+		ListHolder<CandidateChartJson> json = new ListHolder<CandidateChartJson>();
+		
+		json.setData(candidates);
+		return mapper.writeValueAsString(json);
+	}
 }

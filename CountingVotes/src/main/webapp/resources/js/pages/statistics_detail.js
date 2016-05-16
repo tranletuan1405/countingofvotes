@@ -4,7 +4,10 @@
 $(document).ready(function(){
 	
 	var candidate_table;
+	var candidate_chart;
+	
 	initCandidateTable();
+	intiChart();
 });
 
 
@@ -14,6 +17,7 @@ function initCandidateTable(){
 		destroy : true,
 		ajax : "statistics_detail/candidate_table",
 		rowId : "id",
+		order: [[ 5, "desc" ]],
 		columns : [ {
 			data : "id",
 			orderable : false,
@@ -53,6 +57,9 @@ function initCandidateTable(){
 		        // Toggle the visibility
 		        column.visible( ! column.visible() );
 		    } );
+			
+			
+			intiChart();
 		}
 	});
 	
@@ -61,4 +68,30 @@ function initCandidateTable(){
             cell.innerHTML = i+1;
         });
     }).draw();
+}
+
+
+/*===========CHART CONTAINER ================*/
+function intiChart(){
+	//var chart_data = candidate_table.
+	$.ajax({
+		url : "statistics/chart_data",
+		type : "GET",
+		success : function (chart_data){
+			var chart_title = $('#voting-name').html();
+			candidate_chart = new CanvasJS.Chart('chart-candidate-container', {
+				title : { text : "Thống kê " + chart_title },
+				data : [ {
+					type : 'column',
+					dataPoints : chart_data['data'],
+				} ],
+			});
+			candidate_chart.render();
+			
+			$('.canvasjs-chart-credit').remove();
+		},
+		error : function (){
+			console.log('load chart data failed');
+		}
+	});
 }

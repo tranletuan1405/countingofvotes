@@ -26,6 +26,7 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap-datetimepicker.min.css}" /> -->
 
 <script type="text/javascript" th:src="@{/js/common/timer.jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/common/canvasjs.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/pages/statistics_detail.js}"></script>
 <link rel="stylesheet" type="text/css" th:href="@{/css/pages/statistics_detail.css}" />
 
@@ -36,7 +37,7 @@
 			<div class="page-header">
 				<h2 th:text="${congress.name}" class="standard-text-color"></h2>
 
-				<h3 th:text="${voting.name}" class="standard-text-color"></h3>
+				<h3 th:text="${voting.name}" class="standard-text-color" id="voting-name"></h3>
 
 				<h4>
 					Đại biểu hiện diện : <span class="standard-text-color"
@@ -134,7 +135,9 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="panel panel-default no-radius">
-						<div class="panel-body"></div>
+						<div class="panel-body">
+							<div id="chart-candidate-container" style="height: 400px; width: 100%;"></div>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -19,6 +19,7 @@ import vn.edu.uit.models.Candidate;
 import vn.edu.uit.models.Delegate;
 import vn.edu.uit.models.Voting;
 import vn.edu.uit.models.common.AbstractDao;
+import vn.edu.uit.models.json.CandidateChartJson;
 import vn.edu.uit.models.json.CandidateJson;
 
 @Repository("candidateDao")
@@ -150,4 +151,26 @@ public class CandidateDao extends AbstractDao implements ICandidateDao {
 		return result;
 	}
 
+	@Override
+	public List<CandidateChartJson> getChartVoting(long votingId) {
+		String sql = "SELECT delegate.id, delegate.name, delegate.date_of_birth, delegate.gender, delegate.position, count(*) as total_vote FROM ballot_detail "
+				+ "inner join candidate on (ballot_detail.candidate_id = candidate.id)"
+				+ "inner join delegate on (delegate.id = candidate.delegate_id)"
+				+ "WHERE ballot_id in (SELECT id FROM BALLOT WHERE voting_id = :votingId)"
+				+ "GROUP BY candidate_id";
+		
+		Query query = getSession().createSQLQuery(sql);
+		query.setParameter("votingId", votingId);
+		List<Object[]> candidates = query.list();
+		List<CandidateChartJson> result = new ArrayList<CandidateChartJson>();
+		
+		for(Object[] c : candidates){
+			CandidateChartJson candidate = new CandidateChartJson();
+			candidate.setLabel(c[1].toString());
+			candidate.setY(Long.valueOf(c[5].toString()));
+			result.add(candidate);
+		}
+		
+		return result;
+	}
 }
