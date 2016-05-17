@@ -85,4 +85,9 @@ public class VotingService implements IVotingDao {
 		return votingDao.getCountingType(votingId);
 	}
 
+	@Override
+	public boolean checkCountingCode(long votingId) {
+		return votingDao.checkCountingCode(votingId);
+	}
+
 }

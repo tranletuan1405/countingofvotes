@@ -1,5 +1,6 @@
 package vn.edu.uit.models.service.voting;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -118,6 +119,19 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 		query.setParameter("votingId", votingId);
 		query.setParameter("isEnabled", true);
 		return (Boolean) query.uniqueResult();
+	}
+
+	@Override
+	public boolean checkCountingCode(long votingId) {
+		String sql = "SELECT COUNT(*) FROM delegate INNER JOIN candidate "
+				+ "ON delegate.id = candidate.delegate_id "
+				+ "WHERE candidate.voting_id = :votingId AND delegate.counting_code_id IS NULL;";
+		
+		Query query = getSession().createSQLQuery(sql);
+		query.setParameter("votingId", votingId);
+		Long result = ((BigInteger) query.uniqueResult()).longValue();
+		
+		return result > 0 ? false : true;
 	}
 
 }

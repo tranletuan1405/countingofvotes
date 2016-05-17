@@ -35,5 +35,7 @@ public interface IVotingDao {
 	boolean updateCountingRule(CountingRule rule);
 	
 	boolean getCountingType(long votingId);
+	
+	boolean checkCountingCode(long votingId);
 
 }

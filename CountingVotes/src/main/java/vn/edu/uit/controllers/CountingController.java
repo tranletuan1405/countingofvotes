@@ -62,7 +62,7 @@ public class CountingController {
 	private ObjectMapper mapper;
 	
 	@RequestMapping(value = { "/", "this" })
-	public ModelAndView loadCountingPage(HttpServletRequest request){
+	public ModelAndView loadCountingPage(HttpServletRequest request, RedirectAttributes reAttr){
 		HttpSession session = request.getSession();
 		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		long votingId = (Long) session.getAttribute(DataConfig.SESSION_VOTING_NAME);
@@ -71,6 +71,14 @@ public class CountingController {
 		
 		Voting voting = votingService.fetch(votingId);
 		ModelAndView model = new ModelAndView("counting");
+		
+		boolean checkCountingCode = votingService.checkCountingCode(votingId);
+		String pattern  = votingService.getPattern(votingId);
+		if(!checkCountingCode || pattern == null || pattern.isEmpty()){
+			model.setViewName("redirect:/voting_detail/" + votingId);
+			reAttr.addFlashAttribute("serverError", "Bầu cử tồn tại Đại biểu chưa có mã phiếu, vui lòng tạo mã phiếu cho tất cả Đại biểu");
+			return model;
+		}
 		
 		long totalCandidate = candidateService.getTotalCandidate(votingId);
 		long attendees = delegateService.getNumOfAttendees(congressId);
@@ -154,12 +162,13 @@ public class CountingController {
 		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
 		Set<Long> candidates = (HashSet<Long>) session.getAttribute(DataConfig.SESSION_SELECTED_CANDIDATES);
 		if(candidates == null) candidates = new HashSet<Long>();
-		
+		logger.info(encode + " ");
 		Congress congress = congressService.fetch(congressId);
 		TripleDes tDes = new TripleDes(congress.getCongressKey(), congress.getCongressIv());
 		long delegateId = Long.valueOf(tDes.decryptText(encode));
-		
+		logger.info(delegateId + " ");
 		long candidateId = candidateService.isExists(delegateId, votingId);
+		logger.info(candidateId + " ");
 		if (candidateId > 0) {
 			candidates.add(candidateId);
 			session.setAttribute(DataConfig.SESSION_SELECTED_CANDIDATES, candidates);
