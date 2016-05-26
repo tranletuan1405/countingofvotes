@@ -4,6 +4,7 @@ import java.util.List;
 
 import vn.edu.uit.models.CountingRule;
 import vn.edu.uit.models.Voting;
+import vn.edu.uit.models.json.VotingJson;
 
 public interface IVotingDao {
 
@@ -36,6 +37,9 @@ public interface IVotingDao {
 	
 	boolean getCountingType(long votingId);
 	
+	//Statistics 
 	boolean checkCountingCode(long votingId);
+	
+	List<VotingJson> getStatisticsVotings(long congressId);
 
 }

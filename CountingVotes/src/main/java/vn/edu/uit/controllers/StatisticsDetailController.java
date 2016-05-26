@@ -57,7 +57,31 @@ public class StatisticsDetailController {
 	@Autowired
 	private ObjectMapper mapper;
 
-	@RequestMapping(value = { "/", "/this" })
+	@RequestMapping(value = "/{id}")
+	public ModelAndView loadStatisticsDetailById(@PathVariable("id") long votingId, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);
+		session.setAttribute(DataConfig.SESSION_VOTING_NAME, votingId);
+		
+		ModelAndView model = new ModelAndView("statistics_detail");
+		Congress congress = congressService.fetch(congressId);
+		Voting voting = votingService.fetch(votingId);
+		long attendees = delegateService.getNumOfAttendees(congressId);
+		long totalDelegate = delegateService.getTotalDelegate(congressId);
+		long totalUnit = unitService.getTotalUnit(congressId);
+		long validBallots = ballotService.count(votingId);
+		
+		model.addObject("validBallots", validBallots);
+		model.addObject("totalUnit", totalUnit);
+		model.addObject("totalDelegate", totalDelegate);
+		model.addObject("attendees", attendees);
+		model.addObject("congress", congress);
+		model.addObject("voting", voting);
+		return model;
+	}
+	
+	
+	@RequestMapping(value = "/this")
 	public ModelAndView loadStatisticsDetail(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		long congressId = (Long) session.getAttribute(DataConfig.SESSION_NAME);

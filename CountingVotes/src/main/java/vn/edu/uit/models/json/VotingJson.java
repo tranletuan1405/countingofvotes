@@ -15,6 +15,8 @@ public class VotingJson {
 	
 	private long numOfCandidates;
 	private int numOfBallots;
+	private int numOfValidBallots;
+	private long countedBallots;
 	
 	public VotingJson(Voting voting) {
 		this.setId(voting.getId());
@@ -22,6 +24,10 @@ public class VotingJson {
 		this.setVersion(voting.getVersion());
 		this.setStartTime(voting.getStartTimeString());
 		this.setEndTime(voting.getEndTimeString());
+	}
+	
+	public VotingJson(){
+		
 	}
 
 	
@@ -98,4 +104,22 @@ public class VotingJson {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+	public long getCountedBallots() {
+		return countedBallots;
+	}
+
+	public void setCountedBallots(long countedBallots) {
+		this.countedBallots = countedBallots;
+	}
+
+	public int getNumOfValidBallots() {
+		return numOfValidBallots;
+	}
+
+	public void setNumOfValidBallots(int numOfValidBallots) {
+		this.numOfValidBallots = numOfValidBallots;
+	}
+
+
 }

@@ -1,6 +1,7 @@
 package vn.edu.uit.models.service.voting;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Repository;
 import vn.edu.uit.models.CountingRule;
 import vn.edu.uit.models.Voting;
 import vn.edu.uit.models.common.AbstractDao;
+import vn.edu.uit.models.json.CongressJson;
+import vn.edu.uit.models.json.VotingJson;
 
 @Repository("votingDao")
 public class VotingDao extends AbstractDao implements IVotingDao {
@@ -132,6 +135,38 @@ public class VotingDao extends AbstractDao implements IVotingDao {
 		Long result = ((BigInteger) query.uniqueResult()).longValue();
 		
 		return result > 0 ? false : true;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<VotingJson> getStatisticsVotings(long congressId) {
+		String sql = "SELECT  v.id, v.name, v.version, v.start_time, v.end_time, v.num_of_valid_ballot, v.total_ballot, count(*) as total_candidate, counted_ballot FROM candidate inner join "
+				+ "(SELECT voting.id, voting.name, voting.version, voting.start_time, voting.end_time, voting.num_of_valid_ballot, voting.total_ballot, count(*) as counted_ballot FROM voting inner join ballot on voting.id = ballot.voting_id "
+				+ "WHERE voting.congress_id = :congressId AND (SELECT COUNT(*) as counted_ballot FROM ballot WHERE ballot.voting_id = voting.id) > 0 "
+				+ "GROUP BY voting.id) as v "
+				+ "on v.id = candidate.voting_id "
+				+ "GROUP BY v.id";
+		
+		Query query = getSession().createSQLQuery(sql);
+		query.setParameter("congressId", congressId);
+		List<Object[]> votings = query.list();
+		List<VotingJson> result = new ArrayList<VotingJson>();
+		
+		for(Object[] v : votings){
+			VotingJson voting = new VotingJson();
+			voting.setId(Long.valueOf(v[0].toString()));
+			voting.setName(v[1].toString());
+			voting.setVersion(Integer.valueOf(v[2].toString()));
+			try {voting.setStartTime(v[3].toString());}catch(Exception e){}
+			try {voting.setEndTime(v[4].toString());}catch(Exception e){}
+			voting.setNumOfValidBallots(Integer.valueOf(v[5].toString()));
+			voting.setNumOfBallots(Integer.valueOf(v[6].toString()));
+			voting.setNumOfCandidates(Long.valueOf(v[7].toString()));
+			voting.setCountedBallots(Long.valueOf(v[8].toString()));
+			result.add(voting);
+		}
+	
+		return result;
 	}
 
 }

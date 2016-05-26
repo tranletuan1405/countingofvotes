@@ -10,8 +10,7 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 	<context:component-scan base-package="vn.edu.uit">
-		<context:exclude-filter expression="org.springframework.stereotype.Controller"
-			type="annotation" />
+		<context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation" />
 	</context:component-scan>
 
 	<bean id="mapper" class="com.fasterxml.jackson.databind.ObjectMapper"></bean>
@@ -27,7 +26,9 @@
 	<bean id="barcodeDao" class="vn.edu.uit.models.service.barcode.BarcodeDao"></bean>
 	<bean id="ballotDao" class="vn.edu.uit.models.service.ballot.BallotDao"></bean>
 	<bean id="paramDao" class="vn.edu.uit.models.service.parameter.ParamDao"></bean>
-
+	<bean id="userDao" class="vn.edu.uit.models.service.user.UserDao"></bean>
+	
+	
 	<!-- Data service -->
 	<bean id="congressService" class="vn.edu.uit.models.service.congress.CongressService"></bean>
 	<bean id="delegateService" class="vn.edu.uit.models.service.delegate.DelegateService"></bean>
@@ -39,4 +40,5 @@
 	<bean id="barcodeService" class="vn.edu.uit.models.service.barcode.BarcodeService"></bean>
 	<bean id="ballotService" class="vn.edu.uit.models.service.ballot.BallotService"></bean>
 	<bean id="paramService" class="vn.edu.uit.models.service.parameter.ParamService"></bean>
+	<bean id="userService" class="vn.edu.uit.models.service.user.UserService"></bean>
 </beans>

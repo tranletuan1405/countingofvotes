@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:bean xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-4.1.xsd">
+
+	<http use-expressions="true" auto-config="true">
+		
+		<!-- <intercept-url pattern="/**" access="isAuthenticated()" /> -->
+		<intercept-url pattern="/sign-in/**" access="permitAll" />
+		<intercept-url pattern="/**" access="hasRole('ROLE_MANAGER')" />
+		
+		<form-login 
+			login-page="/sign-in" 
+			default-target-url="/"
+			always-use-default-target="false"
+			login-processing-url="/j_spring_security_check"
+			authentication-failure-url="/sign-in/error" 
+			username-parameter="j_username"
+			password-parameter="j_password" />
+
+		<logout logout-success-url="/" 
+				invalidate-session="false" 
+				logout-url="/j_spring_security_logout" 
+				delete-cookies="JSESSIONID" />
+				
+				
+		<session-management>
+			<concurrency-control max-sessions="1" expired-url="/sign-in"/>
+		</session-management>
+		<!-- <csrf/> -->
+		
+	</http>
+	
+	<authentication-manager>
+		<!-- <authentication-provider user-service-ref="userService">
+			<password-encoder hash="bcrypt"></password-encoder>
+		</authentication-provider> -->
+		
+		<authentication-provider>
+		  <user-service>
+			<user name="tuan" password="123456" authorities="ROLE_MANAGER" />
+		  </user-service>
+		</authentication-provider>
+	</authentication-manager>
+	
+</beans:bean>

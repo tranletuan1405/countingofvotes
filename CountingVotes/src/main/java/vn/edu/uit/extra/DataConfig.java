@@ -21,5 +21,9 @@ public class DataConfig {
 	public static final String ERROR_MESSAGE_NAME = "errorMsg";
 	public static final String SUCCESS_MESSAGE_NAME = "successMsg";
 	
+	//Role
+	public static final String ROLE_USER = "ROLE_USER";
+	public static final String ROLE_MANAGER = "ROLE_MANAGER";
+	public static final String ROLE_ADMIN = "ROLE_ADMIN";
 	
 }

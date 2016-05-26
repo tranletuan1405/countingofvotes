@@ -83,6 +83,7 @@ public class CountingController {
 		long totalCandidate = candidateService.getTotalCandidate(votingId);
 		long attendees = delegateService.getNumOfAttendees(congressId);
 		long totalDelegate = delegateService.getTotalDelegate(congressId);
+		long countedBallot = ballotService.count(votingId);
 		
 		//Redirect if candidate list is empty
 		if(totalCandidate <= 0) {
@@ -90,6 +91,7 @@ public class CountingController {
 			return model;
 		}
 		
+		model.addObject("countedBallot", countedBallot);
 		model.addObject("attendees", attendees);
 		model.addObject("totalCandidate", totalCandidate);
 		model.addObject("totalDelegate", totalDelegate);

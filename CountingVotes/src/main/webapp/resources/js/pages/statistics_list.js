@@ -14,7 +14,7 @@ function initStatisticsTable(){
 	
 	statistics_table = $('#statistics-table').DataTable({
 		destroy : true,
-		ajax : "table",
+		ajax : "statistics_table",
 		rowId : "id",
 		columns : [{
 			data : "name",
@@ -27,20 +27,21 @@ function initStatisticsTable(){
 		}, {
 			data : "numOfCandidates",
 		}, {
+			data : "numOfBallots"
+		}, {
+			data : "countedBallots"
+		},{
 			data : "id",
 			orderable : false,
 			searchable : false,
-		}, {
-			data : "id",
-			visible : false,
 		},],
 		"columnDefs" : [ {
 			"render" : function(data, type, row) {
-				return "<a class='btn btn-default no-radius' href='../voting_detail/" + data + "'>Chi tiết</a>";
+				return "<a class='btn btn-default no-radius' href='../statistics_detail/" + data + "'>Chi tiết</a>";
 			},				
-			"targets" : 5,		
+			"targets" : 7,		
 			},],
-		"order": [[ 6, "desc" ]],
+		"order": [[ 7, "desc" ]],
 	
 		"lengthMenu" : [ [ 5, 10, 15, -1 ], [ 5, 10, 15, "Tất cả" ] ],
 		select : "single",

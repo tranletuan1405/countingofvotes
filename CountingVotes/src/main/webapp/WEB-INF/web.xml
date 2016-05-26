@@ -28,9 +28,10 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-           /WEB-INF/spring/hibernate-config.xml,
-           /WEB-INF/spring/transaction-config.xml,
-           /WEB-INF/spring/root-context.xml
+           	/WEB-INF/spring/hibernate-config.xml,
+           	/WEB-INF/spring/transaction-config.xml,
+           	/WEB-INF/spring/root-context.xml,
+           	/WEB-INF/spring/spring-security.xml,
          </param-value>
 	</context-param>
 		
@@ -56,5 +57,24 @@
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	
+	<!-- Spring Security -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
 
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<listener>
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
+
+	<session-config>
+		<session-timeout>10</session-timeout>
+	</session-config>
 </web-app>

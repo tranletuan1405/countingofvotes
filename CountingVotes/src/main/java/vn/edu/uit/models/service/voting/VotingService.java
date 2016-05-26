@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import vn.edu.uit.models.CountingRule;
 import vn.edu.uit.models.Voting;
+import vn.edu.uit.models.json.VotingJson;
 
 @Service("votingService")
 @Transactional
@@ -88,6 +89,11 @@ public class VotingService implements IVotingDao {
 	@Override
 	public boolean checkCountingCode(long votingId) {
 		return votingDao.checkCountingCode(votingId);
+	}
+
+	@Override
+	public List<VotingJson> getStatisticsVotings(long congressId) {
+		return votingDao.getStatisticsVotings(congressId);
 	}
 
 }

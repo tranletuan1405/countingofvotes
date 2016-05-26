@@ -33,17 +33,14 @@ function loadVotings() {
 			data : "id",
 			orderable : false,
 			searchable : false,
-		}, {
-			data : "id",
-			visible : false,
-		},],
+		}],
 		"columnDefs" : [ {
 			"render" : function(data, type, row) {
 				return "<a class='btn btn-default no-radius' href='../voting_detail/" + data + "'>Chi tiết</a>";
 			},				
 			"targets" : 5,		
 			},],
-		"order": [[ 6, "desc" ]],
+		"order": [[ 5, "desc" ]],
 		
 		dom : "<'row'<'col-sm-4'B><'col-sm-4'l><'col-sm-4'f>>"
 			+ "<'row'<'col-sm-12'tr>>"
